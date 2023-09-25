@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/template_torch",
+  "textures": {
+    "torch": "examplemod:block/mana_totem"
+  },
+  "render_type": "cutout"
+}
