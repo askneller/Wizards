@@ -1,0 +1,17 @@
+Wizards
+
+
+Spell Casting
+
+first pass
+
+[client]
+- client side is managed by the ClientSpellCastingSystem
+- a player has a list of Spells and ManaSources
+- when a player joins for the first time the server will tell them what mana sources and spells they have
+- when the player casts a spell (presses the key, whatever) the system sends an AttemptCastEvent with the spell to cast
+
+[server]
+- the event is sent to the server side CastingSystem which first queries the ManaSystem to see if the player has enough to cast the spell (maybe some other validation first)
+- if so the system decreases the amount of mana the player has (informing player by event) and implements the spells effects
+- final authority on spells known and mana sources available is the server side
