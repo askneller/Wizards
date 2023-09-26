@@ -2,6 +2,7 @@ package com.example.examplemod;
 
 import com.example.examplemod.client.ManaOverlay;
 import com.example.examplemod.client.renderer.entity.ManaTotemRenderer;
+import com.example.wizards.ManaTotemBlock;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.KeyMapping;
@@ -66,7 +67,7 @@ import net.minecraftforge.registries.RegistryObject;
 import org.slf4j.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file
-@Mod(ExampleMod.MODID)
+//@Mod(ExampleMod.MODID)
 public class ExampleMod
 {
     // Define mod id in a common place for everything to reference
