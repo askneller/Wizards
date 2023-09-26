@@ -1,7 +1,7 @@
 package com.example.examplemod;
 
 import com.example.examplemod.client.ManaOverlay;
-import com.example.examplemod.client.renderer.entity.ManaTotemRenderer;
+//import com.example.examplemod.client.renderer.entity.ManaTotemRenderer;
 import com.example.wizards.ManaTotemBlock;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.logging.LogUtils;
@@ -98,8 +98,8 @@ public class ExampleMod
     public static final RegistryObject<Item> EXAMPLE_BLOCK_ITEM = ITEMS.register("example_block", () -> new BlockItem(EXAMPLE_BLOCK.get(), new Item.Properties()));
     public static final RegistryObject<Item> MANA_TOTEM_BLOCK_ITEM = ITEMS.register("mana_totem", () -> new StandingAndWallBlockItem(MANA_TOTEM_BLOCK.get(), Blocks.WALL_TORCH, new Item.Properties(), Direction.DOWN));
 
-    public static final RegistryObject<BlockEntityType<ManaTotemBlockEntity>> MANA_TOTEM_BLOCK_ENTITY = BLOCK_ENTITY_TYPES.register("mana_totem_entity",
-            () -> BlockEntityType.Builder.of(ManaTotemBlockEntity::new, MANA_TOTEM_BLOCK.get()).build(null));
+//    public static final RegistryObject<BlockEntityType<ManaTotemBlockEntity>> MANA_TOTEM_BLOCK_ENTITY = BLOCK_ENTITY_TYPES.register("mana_totem_entity",
+//            () -> BlockEntityType.Builder.of(ManaTotemBlockEntity::new, MANA_TOTEM_BLOCK.get()).build(null));
 
     // Creates a new food item with the id "examplemod:example_id", nutrition 1 and saturation 2
     public static final RegistryObject<Item> EXAMPLE_ITEM = ITEMS.register("example_item", () -> new Item(new Item.Properties().food(new FoodProperties.Builder()
@@ -317,7 +317,7 @@ public class ExampleMod
         @SubscribeEvent
         public static void registerRenderers(final EntityRenderersEvent.RegisterRenderers event) {
             logger.info("Registering renderers");
-            event.registerBlockEntityRenderer(MANA_TOTEM_BLOCK_ENTITY.get(), ManaTotemRenderer::new);
+//            event.registerBlockEntityRenderer(MANA_TOTEM_BLOCK_ENTITY.get(), ManaTotemRenderer::new);
         }
 
         @SubscribeEvent

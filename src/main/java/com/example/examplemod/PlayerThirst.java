@@ -6,7 +6,7 @@ import net.minecraftforge.common.capabilities.AutoRegisterCapability;
 @AutoRegisterCapability
 public class PlayerThirst {
     private int thirst = 0;
-    private ManaTotemBlockEntity source; // todo will become an interface
+//    private ManaTotemBlockEntity source; // todo will become an interface
     private final int MAX_THIRST = 10;
     private final int MIN_THIRST = 0;
 

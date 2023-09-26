@@ -19,6 +19,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import org.slf4j.Logger;
 
 import static com.example.wizards.ModBlocksAndItems.BLOCKS;
+import static com.example.wizards.ModBlocksAndItems.BLOCK_ENTITY_TYPES;
 import static com.example.wizards.ModBlocksAndItems.ITEMS;
 
 @Mod(Wizards.MOD_ID)
@@ -40,7 +41,7 @@ public class Wizards {
         BLOCKS.register(modEventBus);
 //        // Register the Deferred Register to the mod event bus so items get registered
         ITEMS.register(modEventBus);
-//        BLOCK_ENTITY_TYPES.register(modEventBus);
+        BLOCK_ENTITY_TYPES.register(modEventBus);
 //        // Register the Deferred Register to the mod event bus so tabs get registered
 //        CREATIVE_MODE_TABS.register(modEventBus);
 
