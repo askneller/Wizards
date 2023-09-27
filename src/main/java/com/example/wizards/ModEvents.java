@@ -1,9 +1,5 @@
 package com.example.wizards;
 
-import com.example.examplemod.PacketHandler;
-import com.example.examplemod.PlayerThirst;
-import com.example.examplemod.PlayerThirstProvider;
-import com.example.examplemod.ThirstDataSyncS2CPacket;
 import com.mojang.logging.LogUtils;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -12,6 +8,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
@@ -57,15 +54,29 @@ public class ModEvents {
                     logger.info("Adding ManaSource {}", source);
                     pool.addSource(source);
                     logger.info("Added source: pool {}", pool);
-//                    if (event.player instanceof ServerPlayer) {
-//                        logger.info("Sending to server player: {}", pool.getThirst());
-//                        PacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) event.player),
-//                                new ThirstDataSyncS2CPacket(pool.getThirst()));
-//                    }
+                    if (event.player instanceof ServerPlayer) {
+                        logger.info("Sending new pool to client player: {}", pool);
+                        PacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) event.player),
+                                new ManaPoolSyncS2CPacket(pool));
+                    }
 
                 }
                 if (event.player.level().getGameTime() % 300 == 0) logger.info("Pool: {}", pool);
             });
+        }
+    }
+
+    @SubscribeEvent
+    public static void onJoinLevel(EntityJoinLevelEvent event) {
+        if (!event.getLevel().isClientSide) {
+            if (event.getEntity() instanceof ServerPlayer player) {
+                logger.info("Server player join. Checking for mana: {}", player.getCapability(MANA_POOL).isPresent());
+                player.getCapability(MANA_POOL).ifPresent(pool -> {
+                    logger.info("OnJoinLevelEvent Sending to client player: {}", pool);
+                    PacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player),
+                            new ManaPoolSyncS2CPacket(pool));
+                });
+            }
         }
     }
 

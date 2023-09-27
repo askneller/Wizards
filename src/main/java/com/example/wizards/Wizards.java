@@ -2,7 +2,6 @@ package com.example.wizards;
 
 import com.example.examplemod.CastingSystem;
 import com.example.examplemod.Config;
-import com.example.examplemod.PacketHandler;
 import com.mojang.logging.LogUtils;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.MinecraftForge;
@@ -55,7 +54,7 @@ public class Wizards {
         // Register our mod's ForgeConfigSpec so that Forge can create and load the config file for us
 //        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC);
 
-//        PacketHandler.init();
+        PacketHandler.init();
     }
 
     private void commonSetup(final FMLCommonSetupEvent event)

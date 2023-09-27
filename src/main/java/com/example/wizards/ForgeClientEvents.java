@@ -2,6 +2,7 @@ package com.example.wizards;
 
 import com.example.examplemod.PacketHandler;
 import com.example.examplemod.TestPacket;
+import com.example.wizards.client.ClientManaPool;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
@@ -30,7 +31,8 @@ public class ForgeClientEvents {
             logger.info("Player: {}", player);
             assert player != null;
             player.getCapability(MANA_POOL).ifPresent(pool -> {
-                logger.info("Pool present: {}", pool);
+                logger.info("Client Pool cap present: {}", pool);
+                logger.info("ClientManaPool: {}", ClientManaPool.getPlayerPool());
             });
         }
     }
