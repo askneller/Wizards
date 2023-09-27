@@ -1,8 +1,10 @@
 package com.example.wizards;
 
+import com.example.wizards.client.ManaOverlay;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -23,4 +25,8 @@ public class ModClientEvents {
         logger.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
     }
 
+    @SubscribeEvent
+    public static void registerGuiOverlays(RegisterGuiOverlaysEvent event) {
+        event.registerAboveAll("mana", ManaOverlay.GUI_OVERLAY);
+    }
 }
