@@ -2,7 +2,6 @@ package com.example.wizards;
 
 import com.example.examplemod.CastingSystem;
 import com.example.examplemod.Config;
-import com.example.examplemod.ModEvents;
 import com.example.examplemod.PacketHandler;
 import com.mojang.logging.LogUtils;
 import net.minecraft.world.level.block.Blocks;
@@ -48,7 +47,7 @@ public class Wizards {
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
 //        MinecraftForge.EVENT_BUS.register(CastingSystem.class);
-//        MinecraftForge.EVENT_BUS.register(ModEvents.class);
+        MinecraftForge.EVENT_BUS.register(ModEvents.class);
 
         // Register the item to a creative tab
 //        modEventBus.addListener(this::addCreative);
@@ -64,13 +63,6 @@ public class Wizards {
         // Some common setup code
         logger.info("HELLO FROM COMMON SETUP");
 
-    }
-
-    @SubscribeEvent
-    public void onServerStarting(ServerStartingEvent event)
-    {
-        // Do something when the server starts
-        logger.info("HELLO from server starting");
     }
 
 }
