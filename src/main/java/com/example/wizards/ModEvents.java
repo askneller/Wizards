@@ -12,7 +12,6 @@ import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
-import net.minecraftforge.network.PacketDistributor;
 import org.slf4j.Logger;
 
 import static com.example.wizards.ManaPoolProvider.MANA_POOL;
@@ -56,8 +55,7 @@ public class ModEvents {
                     logger.info("Added source: pool {}", pool);
                     if (event.player instanceof ServerPlayer) {
                         logger.info("Sending new pool to client player: {}", pool);
-                        PacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) event.player),
-                                new ManaPoolSyncS2CPacket(pool));
+                        PacketHandler.sendToPlayer((ServerPlayer) event.player, pool);
                     }
 
                 }
@@ -73,8 +71,7 @@ public class ModEvents {
                 logger.info("Server player join. Checking for mana: {}", player.getCapability(MANA_POOL).isPresent());
                 player.getCapability(MANA_POOL).ifPresent(pool -> {
                     logger.info("OnJoinLevelEvent Sending to client player: {}", pool);
-                    PacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player),
-                            new ManaPoolSyncS2CPacket(pool));
+                    PacketHandler.sendToPlayer(player, pool);
                 });
             }
         }

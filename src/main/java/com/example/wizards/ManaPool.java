@@ -25,6 +25,16 @@ public class ManaPool {
         this.sources.add(source);
     }
 
+    public boolean isEmpty() {
+        return this.sources == null || this.sources.isEmpty();
+    }
+
+    public void incMana() {
+        if (!isEmpty()) {
+            this.sources.get(0).addAmount(1);
+        }
+    }
+
     public void saveNBTDate(CompoundTag nbt) {
         ListTag sourcesList = new ListTag();
         for (ManaSource source : sources) {

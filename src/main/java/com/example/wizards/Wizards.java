@@ -1,19 +1,11 @@
 package com.example.wizards;
 
-import com.example.examplemod.CastingSystem;
-import com.example.examplemod.Config;
 import com.mojang.logging.LogUtils;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.slf4j.Logger;
 
 import static com.example.wizards.ModBlocksAndItems.BLOCKS;
@@ -35,17 +27,13 @@ public class Wizards {
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
 
-        // Register the Deferred Register to the mod event bus so blocks get registered
         BLOCKS.register(modEventBus);
-//        // Register the Deferred Register to the mod event bus so items get registered
         ITEMS.register(modEventBus);
         BLOCK_ENTITY_TYPES.register(modEventBus);
-//        // Register the Deferred Register to the mod event bus so tabs get registered
-//        CREATIVE_MODE_TABS.register(modEventBus);
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
-//        MinecraftForge.EVENT_BUS.register(CastingSystem.class);
+        MinecraftForge.EVENT_BUS.register(CastingSystem.class);
         MinecraftForge.EVENT_BUS.register(ModEvents.class);
 
         // Register the item to a creative tab
@@ -61,7 +49,6 @@ public class Wizards {
     {
         // Some common setup code
         logger.info("HELLO FROM COMMON SETUP");
-
     }
 
 }

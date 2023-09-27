@@ -17,20 +17,16 @@ import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.RenderShape;
-import net.minecraft.world.level.block.TorchBlock;
-import net.minecraft.world.level.block.entity.BeehiveBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.block.entity.ChestBlockEntity;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
-//import static com.example.examplemod.ExampleMod.MANA_TOTEM_BLOCK_ENTITY;
+import static com.example.wizards.ModBlocksAndItems.MANA_TOTEM_BLOCK_ENTITY;
 
 // Only the entity will be unique for every mana totem placed. The block is only instantiated once
 public class ManaTotemBlock extends BaseEntityBlock {
@@ -67,8 +63,8 @@ public class ManaTotemBlock extends BaseEntityBlock {
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level p_153212_, BlockState p_153213_, BlockEntityType<T> p_153214_) {
-//        logger.info("getTicker called");
-        return null; //p_153212_.isClientSide ? null : createTickerHelper(p_153214_, MANA_TOTEM_BLOCK_ENTITY.get(), ManaTotemBlockEntity::serverTick);
+        logger.info("getTicker called");
+        return p_153212_.isClientSide ? null : createTickerHelper(p_153214_, MANA_TOTEM_BLOCK_ENTITY.get(), ManaTotemBlockEntity::serverTick);
     }
 
     public void setPlacedBy(Level level, BlockPos pos, BlockState state, LivingEntity entity, ItemStack stack) {
@@ -77,13 +73,13 @@ public class ManaTotemBlock extends BaseEntityBlock {
 //        logger.info("(this.entity is {})", this.entity);
         BlockEntity blockEntity = level.getBlockEntity(pos);
         logger.info("blockEntity at place {} is {}", pos, blockEntity);
-//        if (blockEntity instanceof ManaTotemBlockEntity mtbe) {
-//            if (!level.isClientSide() && entity instanceof ServerPlayer) {
-//                logger.info("setting placed by");
-//                mtbe.setPlacedBy(entity);
-//                logger.info("mtbe {}", mtbe);
-//            }
-//        }
+        if (blockEntity instanceof ManaTotemBlockEntity mtbe) {
+            if (!level.isClientSide() && entity instanceof ServerPlayer) {
+                logger.info("setting placed by");
+                mtbe.setPlacedBy(entity);
+                logger.info("mtbe {}", mtbe);
+            }
+        }
 //        this.placedBy = entity;
     }
 

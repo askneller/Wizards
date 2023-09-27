@@ -1,6 +1,5 @@
 package com.example.wizards;
 
-import com.example.examplemod.ExampleMod;
 import com.example.examplemod.ManaRegenerateEvent;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
@@ -61,6 +60,7 @@ public class ManaTotemBlockEntity extends BlockEntity {
                 this.available = true;
                 ManaRegenerateEvent event = new ManaRegenerateEvent(1, this, placedBy);
                 MinecraftForge.EVENT_BUS.post(event);
+                this.countdown = COUNT_TIME;
             }
         }
     }
@@ -70,15 +70,6 @@ public class ManaTotemBlockEntity extends BlockEntity {
             logger.info("Server tick: {}\n{}\n{}\n{}", p_155145_, p_155146_, p_155147_, p_155148_);
         }
         p_155148_.decrementCount();
-//        tickOccupants(p_155145_, p_155146_, p_155147_, p_155148_.stored, p_155148_.savedFlowerPos);
-//        if (!p_155148_.stored.isEmpty() && p_155145_.getRandom().nextDouble() < 0.005D) {
-//            double d0 = (double)p_155146_.getX() + 0.5D;
-//            double d1 = (double)p_155146_.getY();
-//            double d2 = (double)p_155146_.getZ() + 0.5D;
-//            p_155145_.playSound((Player)null, d0, d1, d2, SoundEvents.BEEHIVE_WORK, SoundSource.BLOCKS, 1.0F, 1.0F);
-//        }
-//
-//        DebugPackets.sendHiveInfo(p_155145_, p_155146_, p_155147_, p_155148_);
     }
 
     @Override

@@ -33,6 +33,10 @@ public class ManaSource {
         this.amount = amount;
     }
 
+    public void addAmount(int amount) {
+        this.amount += amount;
+    }
+
     public String getType() {
         return type;
     }
