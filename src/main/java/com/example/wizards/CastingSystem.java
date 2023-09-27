@@ -1,6 +1,5 @@
 package com.example.wizards;
 
-import com.example.examplemod.ManaRegenerateEvent;
 import com.mojang.logging.LogUtils;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;

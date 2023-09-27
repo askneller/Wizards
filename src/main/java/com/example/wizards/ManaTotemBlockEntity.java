@@ -1,6 +1,5 @@
 package com.example.wizards;
 
-import com.example.examplemod.ManaRegenerateEvent;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.LivingEntity;

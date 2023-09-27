@@ -130,8 +130,8 @@ public class ExampleMod
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
-        MinecraftForge.EVENT_BUS.register(CastingSystem.class);
-        MinecraftForge.EVENT_BUS.register(ModEvents.class);
+//        MinecraftForge.EVENT_BUS.register(CastingSystem.class);
+//        MinecraftForge.EVENT_BUS.register(ModEvents.class);
 
         // Register the item to a creative tab
         modEventBus.addListener(this::addCreative);
@@ -208,68 +208,68 @@ public class ExampleMod
         }
     }
 
-    @SubscribeEvent
-    public void onAttachCapabilitiesPlayer(AttachCapabilitiesEvent<Entity> event) {
-        if (event.getObject() instanceof Player) {
-            if (!event.getObject().getCapability(PlayerThirstProvider.PLAYER_THIRST).isPresent()) {
-                logger.info("Attaching capability");
-                event.addCapability(new ResourceLocation(ExampleMod.MODID, "properties"), new PlayerThirstProvider());
-            }
-        }
-    }
+//    @SubscribeEvent
+//    public void onAttachCapabilitiesPlayer(AttachCapabilitiesEvent<Entity> event) {
+//        if (event.getObject() instanceof Player) {
+//            if (!event.getObject().getCapability(PlayerThirstProvider.PLAYER_THIRST).isPresent()) {
+//                logger.info("Attaching capability");
+//                event.addCapability(new ResourceLocation(ExampleMod.MODID, "properties"), new PlayerThirstProvider());
+//            }
+//        }
+//    }
 
-    @SubscribeEvent
-    public void onPlayerCloned(PlayerEvent.Clone event) {
-        if (event.isWasDeath()) {
-            event.getOriginal().getCapability(PlayerThirstProvider.PLAYER_THIRST).ifPresent(oldStore -> {
-                event.getOriginal().getCapability(PlayerThirstProvider.PLAYER_THIRST).ifPresent(newStore -> {
-                    newStore.copyFrom(oldStore);
-                });
-            });
-        }
-    }
+//    @SubscribeEvent
+//    public void onPlayerCloned(PlayerEvent.Clone event) {
+//        if (event.isWasDeath()) {
+//            event.getOriginal().getCapability(PlayerThirstProvider.PLAYER_THIRST).ifPresent(oldStore -> {
+//                event.getOriginal().getCapability(PlayerThirstProvider.PLAYER_THIRST).ifPresent(newStore -> {
+//                    newStore.copyFrom(oldStore);
+//                });
+//            });
+//        }
+//    }
 
-    @SubscribeEvent
-    public void onRegisterCapabilities(RegisterCapabilitiesEvent event) {
-        logger.info("Registering capability");
-        event.register(PlayerThirst.class);
-    }
+//    @SubscribeEvent
+//    public void onRegisterCapabilities(RegisterCapabilitiesEvent event) {
+//        logger.info("Registering capability");
+//        event.register(PlayerThirst.class);
+//    }
 
-    @SubscribeEvent
-    public void onPlayerTick(TickEvent.PlayerTickEvent event) {
-        if (event.side == LogicalSide.SERVER) {
-//            logger.info("Checking for thirst: {}", event.player.getCapability(PlayerThirstProvider.PLAYER_THIRST).isPresent());
-            event.player.getCapability(PlayerThirstProvider.PLAYER_THIRST).ifPresent(thirst -> {
-                if (thirst.getThirst() > 0) {
-                    if (event.player.getRandom().nextFloat() < 0.00005f) {
-                        logger.info("Has thirst: {}, subtracting",
-                                event.player.getCapability(PlayerThirstProvider.PLAYER_THIRST).orElse(new PlayerThirst()));
-                        thirst.subThirst(1);
-//                        event.player.sendSystemMessage(Component.literal("Subtracted Thirst"));
-                        if (event.player instanceof ServerPlayer) {
-                            logger.info("Sending to server player: {}", thirst.getThirst());
-                            PacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) event.player),
-                                    new ThirstDataSyncS2CPacket(thirst.getThirst()));
-                        }
-                    }
-                }
-            });
-        }
-    }
+//    @SubscribeEvent
+//    public void onPlayerTick(TickEvent.PlayerTickEvent event) {
+//        if (event.side == LogicalSide.SERVER) {
+////            logger.info("Checking for thirst: {}", event.player.getCapability(PlayerThirstProvider.PLAYER_THIRST).isPresent());
+//            event.player.getCapability(PlayerThirstProvider.PLAYER_THIRST).ifPresent(thirst -> {
+//                if (thirst.getThirst() > 0) {
+//                    if (event.player.getRandom().nextFloat() < 0.00005f) {
+//                        logger.info("Has thirst: {}, subtracting",
+//                                event.player.getCapability(PlayerThirstProvider.PLAYER_THIRST).orElse(new PlayerThirst()));
+//                        thirst.subThirst(1);
+////                        event.player.sendSystemMessage(Component.literal("Subtracted Thirst"));
+//                        if (event.player instanceof ServerPlayer) {
+//                            logger.info("Sending to server player: {}", thirst.getThirst());
+//                            PacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) event.player),
+//                                    new ThirstDataSyncS2CPacket(thirst.getThirst()));
+//                        }
+//                    }
+//                }
+//            });
+//        }
+//    }
 
-    @SubscribeEvent
-    public void onJoinLevel(EntityJoinLevelEvent event) {
-        if (!event.getLevel().isClientSide) {
-//            logger.info("Checking for thirst: {}", event.player.getCapability(PlayerThirstProvider.PLAYER_THIRST).isPresent());
-            if (event.getEntity() instanceof ServerPlayer player) {
-                player.getCapability(PlayerThirstProvider.PLAYER_THIRST).ifPresent(thirst -> {
-                    logger.info("OnJoinLevelEvent Sending to server player: {}", thirst.getThirst());
-                    PacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player),
-                            new ThirstDataSyncS2CPacket(thirst.getThirst()));
-                });
-            }
-        }
-    }
+//    @SubscribeEvent
+//    public void onJoinLevel(EntityJoinLevelEvent event) {
+//        if (!event.getLevel().isClientSide) {
+////            logger.info("Checking for thirst: {}", event.player.getCapability(PlayerThirstProvider.PLAYER_THIRST).isPresent());
+//            if (event.getEntity() instanceof ServerPlayer player) {
+//                player.getCapability(PlayerThirstProvider.PLAYER_THIRST).ifPresent(thirst -> {
+//                    logger.info("OnJoinLevelEvent Sending to server player: {}", thirst.getThirst());
+//                    PacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player),
+//                            new ThirstDataSyncS2CPacket(thirst.getThirst()));
+//                });
+//            }
+//        }
+//    }
 
     @SubscribeEvent
     public void onPlaceBlock(BlockEvent.EntityPlaceEvent event) {
