@@ -29,7 +29,7 @@ public class PacketHandler {
 
     public static void init() {
         logger.info("Init");
-        register(TestPacket.class, TestPacket::encode, TestPacket::new, TestPacket::handle);
+//        register(TestPacket.class, TestPacket::encode, TestPacket::new, TestPacket::handle);
         register(ThirstDataSyncS2CPacket.class, ThirstDataSyncS2CPacket::toBytes, ThirstDataSyncS2CPacket::new, ThirstDataSyncS2CPacket::handle, NetworkDirection.PLAY_TO_CLIENT);
     }
 

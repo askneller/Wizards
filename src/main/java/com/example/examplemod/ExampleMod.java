@@ -361,14 +361,14 @@ public class ExampleMod
         }
         */
 
-        @SubscribeEvent
-        public static void onKeyPress(InputEvent.Key event)
-        {
-            // Some client setup code
-            if (event.getKey() == InputConstants.KEY_R && event.getAction() == InputConstants.PRESS) {
-                logger.info("onKeyPress {}, {}, {}", event.getClass(), event.getKey(), event.getAction());
-                PacketHandler.INSTANCE.sendToServer(new TestPacket("R"));
-            }
-        }
+//        @SubscribeEvent
+//        public static void onKeyPress(InputEvent.Key event)
+//        {
+//            // Some client setup code
+//            if (event.getKey() == InputConstants.KEY_R && event.getAction() == InputConstants.PRESS) {
+//                logger.info("onKeyPress {}, {}, {}", event.getClass(), event.getKey(), event.getAction());
+//                PacketHandler.INSTANCE.sendToServer(new TestPacket("R"));
+//            }
+//        }
     }
 }
