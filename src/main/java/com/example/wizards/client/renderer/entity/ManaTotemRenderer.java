@@ -1,6 +1,5 @@
 //package com.example.wizards.client.renderer.entity;
 //
-//import com.example.examplemod.ManaTotemBlockEntity;
 //import com.mojang.blaze3d.vertex.PoseStack;
 //import com.mojang.logging.LogUtils;
 //import net.minecraft.client.renderer.MultiBufferSource;
