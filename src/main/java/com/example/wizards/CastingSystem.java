@@ -23,11 +23,6 @@ public class CastingSystem {
         logger.info("Player {} trying to cast spell {}", player, event.getSpell());
         ManaPool pool = player.getCapability(MANA_POOL).orElseGet(() -> new ManaPool());
         logger.info("Player pool {}", pool);
-        if (player.level().isClientSide) {
-            logger.info("ClientManaPool {}", ClientManaPool.getPlayerPool());
-            logger.info("Send to server");
-            PacketHandler.sendToServer(player, event.getSpell());
-        }
 
         if (pool.isExhausted()) {
             logger.info("PLAYER HAS NO MANA!");
