@@ -8,8 +8,12 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.MinecraftForge;
 import org.slf4j.Logger;
+
+import java.util.List;
 
 import static com.example.wizards.ModBlocksAndItems.MANA_TOTEM_BLOCK_ENTITY;
 
@@ -17,10 +21,12 @@ public class ManaTotemBlockEntity extends BlockEntity {
 
     private static final Logger logger = LogUtils.getLogger();
 
+    public static double CHECK_DISTANCE = 500.0;
+
     private int COUNT_TIME = 200;
     private LivingEntity placedBy;
-    private int placedById = -1;
-    private boolean loaded = false;
+    private String placedByUuid = null;
+    private int loadedTries = 100;
     private int countdown = COUNT_TIME;
     private boolean available = false;
 
@@ -42,16 +48,16 @@ public class ManaTotemBlockEntity extends BlockEntity {
     public void load(CompoundTag tag) {
         super.load(tag);
         logger.info("load {}", tag);
-        if (tag.contains("placed_by_id")) {
-            placedById = tag.getInt("placed_by_id");
+        if (tag.contains("placed_by_uuid")) {
+            placedByUuid = tag.getString("placed_by_uuid");
         }
-        logger.info("this.placedBy {}", this.placedById);
+        logger.info("this.placedByUuid {}", this.placedByUuid);
     }
 
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
         if (placedBy != null) {
-            tag.putInt("placed_by_id", placedBy.getId());
+            tag.putString("placed_by_uuid", placedBy.getStringUUID());
             logger.info("saveAdditional {}", tag);
         }
     }
@@ -86,17 +92,24 @@ public class ManaTotemBlockEntity extends BlockEntity {
     }
 
     public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, ManaTotemBlockEntity entity) {
-        // TODO find some way to save and load as entity ids don't persist over sessions
-        if (entity.placedById >= 0 && entity.placedBy == null && !entity.loaded) {
-            logger.info("placedBy null {}", entity.placedById);
-            Entity levelEntity = level.getEntity(entity.placedById);
-            logger.info("levelEntity {}", levelEntity);
-            if (levelEntity instanceof LivingEntity living) {
-                entity.placedBy = living;
-                entity.placedById = -1;
+        if (entity.placedByUuid != null && entity.placedBy == null && entity.loadedTries > 0) {
+            logger.info("placedBy currently null {}", entity.placedByUuid);
+
+            // TODO find better way to save and load entity over sessions
+            Vec3 vec = new Vec3(blockPos.getX(), blockPos.getY(), blockPos.getZ());
+            List<Entity> entities =
+                    level.getEntities(null, AABB.ofSize(vec, CHECK_DISTANCE, CHECK_DISTANCE, CHECK_DISTANCE));
+            Entity entity1 = entities.stream()
+                    .filter(e -> e.getStringUUID().equals(entity.placedByUuid))
+                    .findFirst()
+                    .orElse(null);
+            logger.info("entity1 {}", entity1);
+            if (entity1 instanceof LivingEntity livingEntity) {
+                entity.placedBy = livingEntity;
                 logger.info("Set placedBy to {}", entity.placedBy);
             }
-            entity.loaded = true;
+
+            entity.loadedTries--;
         }
 //        if (level.getGameTime() % 60 == 0) {
 //            logger.info("Server tick: {}\n{}\n{}\n{}", level, blockPos, blockState, entity);
