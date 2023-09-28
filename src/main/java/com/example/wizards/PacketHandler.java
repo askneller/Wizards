@@ -1,6 +1,7 @@
 package com.example.wizards;
 
 import com.mojang.logging.LogUtils;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -72,5 +73,9 @@ public class PacketHandler {
 
     public static void sendToServer(Player player, int spellId) {
         INSTANCE.sendToServer(new AttemptCastC2SPacket(spellId, player.getId()));
+    }
+
+    public static void sendToServer(Player player, int spellId, BlockPos blockPos) {
+        INSTANCE.sendToServer(new AttemptCastC2SPacket(spellId, player.getId(), blockPos));
     }
 }

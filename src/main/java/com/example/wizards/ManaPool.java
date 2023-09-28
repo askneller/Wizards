@@ -1,15 +1,24 @@
 package com.example.wizards;
 
+import com.mojang.logging.LogUtils;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraftforge.common.capabilities.AutoRegisterCapability;
+import org.slf4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @AutoRegisterCapability
 public class ManaPool {
+
+    private static final Logger logger = LogUtils.getLogger();
+
+    public static final ManaPool EMPTY = new ManaPool();
 
     private List<ManaSource> sources = new ArrayList<>();
 
@@ -31,6 +40,15 @@ public class ManaPool {
 
     public boolean isExhausted() {
         return isEmpty() || this.sources.stream().allMatch(ManaSource::isEmpty);
+    }
+
+    public boolean has(int amount, String type) {
+        Map<String, List<ManaSource>> collect = this.sources.stream().collect(Collectors.groupingBy(ManaSource::getType));
+        logger.info("Sources\n{}", collect);
+        List<ManaSource> typeSources = collect.get(type);
+        Integer typeAmount = typeSources.stream().map(ManaSource::getAmount).reduce(Integer::sum).orElse(0);
+        logger.info("{} {}", type, typeAmount);
+        return typeAmount >= amount;
     }
 
     public void incMana() {

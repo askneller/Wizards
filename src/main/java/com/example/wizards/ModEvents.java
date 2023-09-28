@@ -59,7 +59,7 @@ public class ModEvents {
                     }
 
                 }
-                if (event.player.level().getGameTime() % 300 == 0) logger.info("Pool: {}", pool);
+//                if (event.player.level().getGameTime() % 300 == 0) logger.info("Pool: {}", pool);
             });
         }
     }

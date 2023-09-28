@@ -5,6 +5,10 @@ import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.common.MinecraftForge;
@@ -30,12 +34,30 @@ public class ForgeClientEvents {
             LocalPlayer player = Minecraft.getInstance().player;
             logger.info("Player: {}", player);
             assert player != null;
+
+
+            HitResult hitResult = Minecraft.getInstance().hitResult;
+            logger.info("Hit {} {}", hitResult.getType(), hitResult.getType() != HitResult.Type.MISS ? hitResult.getLocation() : null);
+            BlockPos pos = null;
+            if (hitResult.getType() == HitResult.Type.BLOCK) {
+                BlockHitResult result = (BlockHitResult) hitResult;
+                logger.info("Block {} {}", result.getBlockPos(), result.getDirection());
+                pos = result.getBlockPos();
+            } else if (hitResult.getType() == HitResult.Type.ENTITY) {
+                EntityHitResult result = (EntityHitResult) hitResult;
+                logger.info("Entity {}", result.getEntity());
+            }
+
+            BlockPos finalPos = pos;
             player.getCapability(MANA_POOL).ifPresent(pool -> {
                 logger.info("Client Pool cap present: {}", pool);
                 logger.info("ClientManaPool: {}", ClientManaPool.getPlayerPool());
 
-                PacketHandler.sendToServer(player, 1);
-//                MinecraftForge.EVENT_BUS.post(new AttemptCastEvent(1, player));
+                if (finalPos == null) {
+                    PacketHandler.sendToServer(player, 1);
+                } else {
+                    PacketHandler.sendToServer(player, 2, finalPos);
+                }
             });
         }
     }

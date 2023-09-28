@@ -2,6 +2,8 @@ package com.example.wizards;
 
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -17,6 +19,8 @@ public class ManaTotemBlockEntity extends BlockEntity {
 
     private int COUNT_TIME = 200;
     private LivingEntity placedBy;
+    private int placedById = -1;
+    private boolean loaded = false;
     private int countdown = COUNT_TIME;
     private boolean available = false;
 
@@ -33,6 +37,23 @@ public class ManaTotemBlockEntity extends BlockEntity {
         this(blockPos, blockState);
         this.placedBy = placedBy;
         logger.info("Created ManaTotemBlockEntity: {}, {}", blockPos, blockState);
+    }
+
+    public void load(CompoundTag tag) {
+        super.load(tag);
+        logger.info("load {}", tag);
+        if (tag.contains("placed_by_id")) {
+            placedById = tag.getInt("placed_by_id");
+        }
+        logger.info("this.placedBy {}", this.placedById);
+    }
+
+    protected void saveAdditional(CompoundTag tag) {
+        super.saveAdditional(tag);
+        if (placedBy != null) {
+            tag.putInt("placed_by_id", placedBy.getId());
+            logger.info("saveAdditional {}", tag);
+        }
     }
 
     public boolean isAvailable() {
@@ -64,11 +85,23 @@ public class ManaTotemBlockEntity extends BlockEntity {
         }
     }
 
-    public static void serverTick(Level p_155145_, BlockPos p_155146_, BlockState p_155147_, ManaTotemBlockEntity p_155148_) {
-        if (p_155145_.getGameTime() % 60 == 0) {
-            logger.info("Server tick: {}\n{}\n{}\n{}", p_155145_, p_155146_, p_155147_, p_155148_);
+    public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, ManaTotemBlockEntity entity) {
+        // TODO find some way to save and load as entity ids don't persist over sessions
+        if (entity.placedById >= 0 && entity.placedBy == null && !entity.loaded) {
+            logger.info("placedBy null {}", entity.placedById);
+            Entity levelEntity = level.getEntity(entity.placedById);
+            logger.info("levelEntity {}", levelEntity);
+            if (levelEntity instanceof LivingEntity living) {
+                entity.placedBy = living;
+                entity.placedById = -1;
+                logger.info("Set placedBy to {}", entity.placedBy);
+            }
+            entity.loaded = true;
         }
-        p_155148_.decrementCount();
+//        if (level.getGameTime() % 60 == 0) {
+//            logger.info("Server tick: {}\n{}\n{}\n{}", level, blockPos, blockState, entity);
+//        }
+        entity.decrementCount();
     }
 
     @Override

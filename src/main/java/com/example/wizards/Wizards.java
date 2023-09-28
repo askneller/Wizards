@@ -34,6 +34,7 @@ public class Wizards {
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(CastingSystem.class);
+        MinecraftForge.EVENT_BUS.register(ManaSystem.class);
         MinecraftForge.EVENT_BUS.register(ModEvents.class);
 
         // Register the item to a creative tab
