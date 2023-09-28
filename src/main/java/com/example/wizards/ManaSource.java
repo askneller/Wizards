@@ -29,12 +29,20 @@ public class ManaSource {
         return amount;
     }
 
+    public boolean isEmpty() {
+        return amount == 0;
+    }
+
     public void setAmount(int amount) {
         this.amount = amount;
     }
 
     public void addAmount(int amount) {
         this.amount += amount;
+    }
+
+    public void subtractAmount(int amount) {
+        this.amount = Math.max(this.amount - amount, 0);
     }
 
     public String getType() {

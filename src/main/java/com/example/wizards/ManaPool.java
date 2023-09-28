@@ -29,9 +29,19 @@ public class ManaPool {
         return this.sources == null || this.sources.isEmpty();
     }
 
+    public boolean isExhausted() {
+        return isEmpty() || this.sources.stream().allMatch(ManaSource::isEmpty);
+    }
+
     public void incMana() {
         if (!isEmpty()) {
             this.sources.get(0).addAmount(1);
+        }
+    }
+
+    public void decMana() {
+        if (!isEmpty()) {
+            this.sources.get(0).subtractAmount(1);
         }
     }
 

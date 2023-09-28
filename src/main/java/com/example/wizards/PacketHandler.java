@@ -4,6 +4,7 @@ import com.mojang.logging.LogUtils;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.network.NetworkRegistry;
@@ -34,11 +35,11 @@ public class PacketHandler {
 
     public static void init() {
         logger.info("Init PacketHandler");
-        register(ManaPoolSyncS2CPacket.class,
-                ManaPoolSyncS2CPacket::toBytes,
-                ManaPoolSyncS2CPacket::new,
-                ManaPoolSyncS2CPacket::handle,
-                NetworkDirection.PLAY_TO_CLIENT);
+        register(ManaPoolSyncS2CPacket.class, ManaPoolSyncS2CPacket::toBytes, ManaPoolSyncS2CPacket::new,
+                ManaPoolSyncS2CPacket::handle, NetworkDirection.PLAY_TO_CLIENT);
+
+        register(AttemptCastC2SPacket.class, AttemptCastC2SPacket::toBytes, AttemptCastC2SPacket::new,
+                AttemptCastC2SPacket::handle, NetworkDirection.PLAY_TO_SERVER);
     }
 
     private static <T> void register(Class<T> cls,
@@ -69,4 +70,7 @@ public class PacketHandler {
                 new ManaPoolSyncS2CPacket(pool));
     }
 
+    public static void sendToServer(Player player, int spellId) {
+        INSTANCE.sendToServer(new AttemptCastC2SPacket(spellId, player.getId()));
+    }
 }
