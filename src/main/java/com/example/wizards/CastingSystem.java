@@ -24,7 +24,7 @@ public class CastingSystem {
     public static void onAttemptCast(AttemptCastEvent event) {
         Player player = event.getPlayer();
         logger.info("Player {} trying to cast spell {}", player, event.getSpell());
-        ConsumeManaEvent consumeManaEvent = new ConsumeManaEvent(event.getSpell(), "generic", player);
+        ConsumeManaEvent consumeManaEvent = new ConsumeManaEvent(event.getSpell(), ManaColor.COLORLESS, player);
         MinecraftForge.EVENT_BUS.post(consumeManaEvent);
 
         logger.info("ConsumeManaEvent result: {}", consumeManaEvent.getResult());

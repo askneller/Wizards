@@ -2,10 +2,12 @@ package com.example.wizards;
 
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
@@ -29,10 +31,7 @@ public class ManaTotemBlockEntity extends BlockEntity {
     private int loadedTries = 100;
     private int countdown = COUNT_TIME;
     private boolean available = false;
-
-//    public ManaTotemBlockEntity(BlockEntityType<?> p_155228_, BlockPos p_155229_, BlockState p_155230_) {
-//        super(p_155228_, p_155229_, p_155230_);
-//    }
+    private ManaColor color = null;
 
     public ManaTotemBlockEntity(BlockPos blockPos, BlockState blockState) {
         super(MANA_TOTEM_BLOCK_ENTITY.get(), blockPos, blockState);
@@ -92,6 +91,12 @@ public class ManaTotemBlockEntity extends BlockEntity {
     }
 
     public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, ManaTotemBlockEntity entity) {
+        if (entity.color == null) {
+            Holder<Biome> biome = level.getBiome(entity.getBlockPos());
+            logger.info("Biome {}", getBiomeStr(biome));
+            entity.color = getColor(getBiomeStr(biome));
+            logger.info("Color {}", entity.color);
+        }
         if (entity.placedByUuid != null && entity.placedBy == null && entity.loadedTries > 0) {
             logger.info("placedBy currently null {}", entity.placedByUuid);
 
@@ -107,6 +112,8 @@ public class ManaTotemBlockEntity extends BlockEntity {
             if (entity1 instanceof LivingEntity livingEntity) {
                 entity.placedBy = livingEntity;
                 logger.info("Set placedBy to {}", entity.placedBy);
+                logger.info("So entity is {}", entity);
+                entity.loadedTries = 0;
             }
 
             entity.loadedTries--;
@@ -117,12 +124,29 @@ public class ManaTotemBlockEntity extends BlockEntity {
         entity.decrementCount();
     }
 
+    private static String getBiomeStr(Holder<Biome> p_205375_) {
+        return p_205375_.unwrap().map((p_205377_) -> {
+            return p_205377_.location().toString();
+        }, (p_205367_) -> {
+            return "[unregistered " + p_205367_ + "]";
+        });
+    }
+
+    private static ManaColor getColor(String biome) {
+        if (biome.contains("savanna") || biome.contains("plain")) {
+            return ManaColor.WHITE;
+        }
+
+        return ManaColor.COLORLESS;
+    }
+
     @Override
     public String toString() {
         return "ManaTotemBlockEntity{" +
                 "placedBy=" + placedBy +
                 ", countdown=" + countdown +
                 ", available=" + available +
+                ", color=" + color +
                 '}';
     }
 }

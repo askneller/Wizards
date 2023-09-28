@@ -16,7 +16,7 @@ public class ManaSystem {
     @SubscribeEvent
     public static void onConsumeMana(ConsumeManaEvent event) {
         Player player = event.getPlayer();
-        logger.info("Player {} trying to cast spell for {} {}", player, event.getAmount(), event.getType());
+        logger.info("Player {} trying to cast spell for {} {}", player, event.getAmount(), event.getColor());
         ManaPool pool = player.getCapability(MANA_POOL).orElseGet(() -> ManaPool.EMPTY);
         logger.info("Player pool {}", pool);
 
@@ -26,7 +26,7 @@ public class ManaSystem {
             return;
         }
 
-        if (!pool.has(event.getAmount(), event.getType())) {
+        if (!pool.has(event.getAmount(), event.getColor())) {
             logger.info("Insufficient Mana");
             event.setResult(Event.Result.DENY);
             return;

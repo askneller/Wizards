@@ -8,21 +8,21 @@ import net.minecraftforge.eventbus.api.Event.HasResult;
 public class ConsumeManaEvent extends Event {
 
     private final int amount;
-    private final String type;
+    private final ManaColor color;
     private final Player player;
 
-    public ConsumeManaEvent(int amount, String type, Player player) {
+    public ConsumeManaEvent(int amount, ManaColor color, Player player) {
         this.amount = amount;
-        this.type = type;
         this.player = player;
+        this.color = color;
     }
 
     public int getAmount() {
         return amount;
     }
 
-    public String getType() {
-        return type;
+    public ManaColor getColor() {
+        return color;
     }
 
     public Player getPlayer() {

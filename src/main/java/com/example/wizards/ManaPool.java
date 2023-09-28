@@ -10,7 +10,6 @@ import org.slf4j.Logger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @AutoRegisterCapability
@@ -21,14 +20,6 @@ public class ManaPool {
     public static final ManaPool EMPTY = new ManaPool();
 
     private List<ManaSource> sources = new ArrayList<>();
-
-    public List<ManaSource> getSources() {
-        return sources;
-    }
-
-    public void setSources(List<ManaSource> sources) {
-        this.sources = sources;
-    }
 
     public void addSource(ManaSource source) {
         this.sources.add(source);
@@ -42,13 +33,20 @@ public class ManaPool {
         return isEmpty() || this.sources.stream().allMatch(ManaSource::isEmpty);
     }
 
-    public boolean has(int amount, String type) {
-        Map<String, List<ManaSource>> collect = this.sources.stream().collect(Collectors.groupingBy(ManaSource::getType));
-        logger.info("Sources\n{}", collect);
-        List<ManaSource> typeSources = collect.get(type);
-        Integer typeAmount = typeSources.stream().map(ManaSource::getAmount).reduce(Integer::sum).orElse(0);
+    public boolean has(int amount, ManaColor type) {
+        Map<ManaColor, Integer> colorIntegerMap = getMap();
+        logger.info("Sources\n{}", colorIntegerMap);
+        Integer typeAmount = colorIntegerMap.getOrDefault(type, 0);
         logger.info("{} {}", type, typeAmount);
         return typeAmount >= amount;
+    }
+
+    public Map<ManaColor, Integer> getMap() {
+        return this.sources.stream().collect(
+                Collectors.toMap(
+                        ManaSource::getColor,
+                        ManaSource::getAmount,
+                        Integer::sum));
     }
 
     public void incMana() {

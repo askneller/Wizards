@@ -6,23 +6,19 @@ public class ManaSource {
 
     private int id;
     private int amount;
-    private String type = "generic"; // todo generic for now,  will become color
+    private ManaColor color;
 
     public ManaSource() {
     }
 
-    public ManaSource(int id, int amount, String type) {
+    public ManaSource(int id, int amount, ManaColor color) {
         this.id = id;
         this.amount = amount;
-        this.type = type;
+        this.color = color;
     }
 
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public int getAmount() {
@@ -33,10 +29,6 @@ public class ManaSource {
         return amount == 0;
     }
 
-    public void setAmount(int amount) {
-        this.amount = amount;
-    }
-
     public void addAmount(int amount) {
         this.amount += amount;
     }
@@ -45,24 +37,20 @@ public class ManaSource {
         this.amount = Math.max(this.amount - amount, 0);
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
+    public ManaColor getColor() {
+        return color;
     }
 
     public void saveNBTDate(CompoundTag nbt) {
-        nbt.putString("mana_source_type", type);
         nbt.putInt("mana_source_amount", amount);
         nbt.putInt("mana_source_id", id);
+        nbt.putInt("mana_source_color", color.ordinal());
     }
 
     public void loadNBTData(CompoundTag nbt) {
-        type = nbt.getString("mana_source_type");
         amount = nbt.getInt("mana_source_amount");
         id = nbt.getInt("mana_source_id");
+        color = ManaColor.values()[nbt.getInt("mana_source_color")];
     }
 
     @Override
@@ -70,7 +58,7 @@ public class ManaSource {
         return "ManaSource{" +
                 "id=" + id +
                 ", amount=" + amount +
-                ", type='" + type + '\'' +
+                ", color=" + color +
                 '}';
     }
 }
