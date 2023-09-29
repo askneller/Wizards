@@ -41,7 +41,7 @@ public class ManaOverlay {
     });
 
     private static String getManaString(ManaPool pool) {
-        Map<ManaColor, Integer> colorIntegerMap = pool.getMap();
+        Map<ManaColor, Integer> colorIntegerMap = pool.getTotalMap();
         StringJoiner joiner = new StringJoiner(", ");
         for (Map.Entry<ManaColor, Integer> entry : colorIntegerMap.entrySet()){
             String str = entry.getKey().getChar() + " " + entry.getValue();

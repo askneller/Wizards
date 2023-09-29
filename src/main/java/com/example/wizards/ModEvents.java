@@ -46,29 +46,29 @@ public class ModEvents {
     @SubscribeEvent
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
         if (event.side == LogicalSide.SERVER) {
-            event.player.getCapability(MANA_POOL).ifPresent(pool -> {
-                if (pool.isEmpty()) {
-                    logger.info("Player ManaPool empty: {}", pool);
-                    addDefaultMana(pool);
-                    logger.info("Added source/s: pool {}", pool);
-                    if (event.player instanceof ServerPlayer) {
-                        logger.info("Sending new pool to client player: {}", pool);
-                        PacketHandler.sendToPlayer((ServerPlayer) event.player, pool);
-                    }
-                }
+//            event.player.getCapability(MANA_POOL).ifPresent(pool -> {
+//                if (pool.isEmpty()) {
+//                    logger.info("Player ManaPool empty: {}", pool);
+//                    addDefaultMana(pool);
+//                    logger.info("Added source/s: pool {}", pool);
+//                    if (event.player instanceof ServerPlayer) {
+//                        logger.info("Sending new pool to client player: {}", pool);
+//                        PacketHandler.sendToPlayer((ServerPlayer) event.player, pool);
+//                    }
+//                }
 //                if (event.player.level().getGameTime() % 300 == 0) logger.info("Pool: {}", pool);
-            });
+//            });
         }
     }
 
-    private static void addDefaultMana(ManaPool pool) {
-        ManaSource source = new ManaSource(0, 1, ManaColor.COLORLESS);
-        pool.addSource(source);
-        source = new ManaSource(0, 1, ManaColor.RED);
-        pool.addSource(source);
-        source = new ManaSource(0, 1, ManaColor.WHITE);
-        pool.addSource(source);
-    }
+//    private static void addDefaultMana(ManaPool pool) {
+//        ManaSource source = new ManaSource(0, 1, ManaColor.COLORLESS, true);
+//        pool.addSource(source);
+//        source = new ManaSource(0, 1, ManaColor.RED, true);
+//        pool.addSource(source);
+//        source = new ManaSource(0, 1, ManaColor.WHITE, true);
+//        pool.addSource(source);
+//    }
 
     @SubscribeEvent
     public static void onJoinLevel(EntityJoinLevelEvent event) {

@@ -3,6 +3,7 @@ package com.example.wizards;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerPlayer;
@@ -13,6 +14,7 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -23,9 +25,12 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.common.MinecraftForge;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
+import static com.example.wizards.ManaTotemBlockEntity.getBiomeStr;
+import static com.example.wizards.ManaTotemBlockEntity.getColorForBiome;
 import static com.example.wizards.ModBlocksAndItems.MANA_TOTEM_BLOCK_ENTITY;
 
 // Only the entity will be unique for every mana totem placed. The block is only instantiated once
@@ -58,12 +63,16 @@ public class ManaTotemBlock extends BaseEntityBlock {
 //        if (entity != null) {
 //            logger.warn("Creating new entity from {}, existing {}", this, entity);
 //        }
+//        logger.info("\n\nnewBlockEntity STACK TRACE");
+//        Util.printStackTrace(25);
         return new ManaTotemBlockEntity(blockPos, blockState, null);
     }
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level p_153212_, BlockState p_153213_, BlockEntityType<T> p_153214_) {
         logger.info("getTicker called");
+//        logger.info("\n\ngetTicker STACK TRACE");
+//        Util.printStackTrace(25);
         return p_153212_.isClientSide ? null : createTickerHelper(p_153214_, MANA_TOTEM_BLOCK_ENTITY.get(), ManaTotemBlockEntity::serverTick);
     }
 
@@ -78,6 +87,16 @@ public class ManaTotemBlock extends BaseEntityBlock {
                 logger.info("setting placed by");
                 mtbe.setPlacedBy(entity);
                 logger.info("mtbe {}", mtbe);
+
+                if (mtbe.getColor() == null) {
+                    Holder<Biome> biome = level.getBiome(pos);
+                    logger.info("Biome {}", getBiomeStr(biome));
+                    mtbe.setColor(getColorForBiome(getBiomeStr(biome)));
+                    logger.info("Color {}", mtbe.getColor());
+                }
+
+                logger.info("Sending AddManaSourceEvent from setPlacedBy");
+                MinecraftForge.EVENT_BUS.post(new AddManaSourceEvent(entity, mtbe));
             }
         }
 //        this.placedBy = entity;

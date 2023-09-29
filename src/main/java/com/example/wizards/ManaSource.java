@@ -1,20 +1,30 @@
 package com.example.wizards;
 
+import com.mojang.logging.LogUtils;
 import net.minecraft.nbt.CompoundTag;
+import org.slf4j.Logger;
 
 public class ManaSource {
+
+    private static final Logger logger = LogUtils.getLogger();
 
     private int id;
     private int amount;
     private ManaColor color;
+    private boolean available = true;
+    private ManaTotemBlockEntity entity;
 
     public ManaSource() {
+        logger.info("Create empty");
     }
 
-    public ManaSource(int id, int amount, ManaColor color) {
+    public ManaSource(int id, int amount, ManaColor color, boolean available, ManaTotemBlockEntity source) {
         this.id = id;
         this.amount = amount;
         this.color = color;
+        this.available = available;
+        this.entity = source;
+        logger.info("Create params");
     }
 
     public int getId() {
@@ -41,16 +51,37 @@ public class ManaSource {
         return color;
     }
 
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public int spend() {
+        if (isAvailable()) {
+            this.available = false;
+            if (this.entity != null) {
+                this.entity.reset(this);
+            } else {
+                logger.error("Cannot reset source {} as entity is null", this);
+            }
+            return amount;
+        }
+        return 0;
+    }
+
+    // ManaSources are not saved as they will be reloaded with their corresponding ManaTotemBlockEntity
+    // and sent to the user via an AddManaSourceEvent
     public void saveNBTDate(CompoundTag nbt) {
         nbt.putInt("mana_source_amount", amount);
         nbt.putInt("mana_source_id", id);
         nbt.putInt("mana_source_color", color.ordinal());
+        nbt.putBoolean("mana_source_available", available);
     }
 
     public void loadNBTData(CompoundTag nbt) {
         amount = nbt.getInt("mana_source_amount");
         id = nbt.getInt("mana_source_id");
         color = ManaColor.values()[nbt.getInt("mana_source_color")];
+        available = nbt.getBoolean("mana_source_available");
     }
 
     @Override
@@ -59,6 +90,7 @@ public class ManaSource {
                 "id=" + id +
                 ", amount=" + amount +
                 ", color=" + color +
+                ", available=" + available +
                 '}';
     }
 }

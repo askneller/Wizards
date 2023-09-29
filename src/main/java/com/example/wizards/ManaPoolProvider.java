@@ -44,12 +44,14 @@ public class ManaPoolProvider implements ICapabilityProvider, INBTSerializable<C
         CompoundTag nbt = new CompoundTag();
         createManaPool().saveNBTDate(nbt);
         logger.info("Serialized NBT data: {}", nbt);
+//        Util.printStackTrace(15);
         return nbt;
     }
 
     @Override
     public void deserializeNBT(CompoundTag nbt) {
         logger.info("Deserializing NBT from: {}", nbt);
-        createManaPool().loadNBTData(nbt);
+//        createManaPool().loadNBTData(nbt);
+        logger.info("Not loading from tag, will reconstruct via events");
     }
 }

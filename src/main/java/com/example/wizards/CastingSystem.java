@@ -66,6 +66,7 @@ public class CastingSystem {
                 logger.info("PLAYER MANA EMPTY");
             } else {
                 logger.info("Regen {} mana", event.getAmount());
+                // todo changed to new system
                 pool.incMana();
                 if (player instanceof ServerPlayer serverPlayer) {
                     logger.info("Sending to client: {}", pool);

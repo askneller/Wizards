@@ -8,6 +8,7 @@ import net.minecraftforge.common.capabilities.AutoRegisterCapability;
 import org.slf4j.Logger;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -34,19 +35,30 @@ public class ManaPool {
     }
 
     public boolean has(int amount, ManaColor type) {
-        Map<ManaColor, Integer> colorIntegerMap = getMap();
+        Map<ManaColor, Integer> colorIntegerMap = getTotalMap();
         logger.info("Sources\n{}", colorIntegerMap);
-        Integer typeAmount = colorIntegerMap.getOrDefault(type, 0);
-        logger.info("{} {}", type, typeAmount);
-        return typeAmount >= amount;
+        if (type != ManaColor.COLORLESS) {
+            Integer typeAmount = colorIntegerMap.getOrDefault(type, 0);
+            logger.info("{} {}", type, typeAmount);
+            return typeAmount >= amount;
+        } else {
+            Integer total = colorIntegerMap.values().stream().reduce(0, Integer::sum);
+            logger.info("total {}", total);
+            return total >= amount;
+        }
     }
 
-    public Map<ManaColor, Integer> getMap() {
-        return this.sources.stream().collect(
-                Collectors.toMap(
-                        ManaSource::getColor,
-                        ManaSource::getAmount,
-                        Integer::sum));
+    public Map<ManaColor, Integer> getTotalMap() {
+        return this.sources.stream()
+                .collect(
+                        Collectors.toMap(
+                                ManaSource::getColor,
+                                source -> source.isAvailable() ? source.getAmount() : 0,
+                                Integer::sum));
+    }
+
+    public Map<ManaColor, List<ManaSource>> getMap() {
+        return this.sources.stream().collect(Collectors.groupingBy(ManaSource::getColor));
     }
 
     public void incMana() {
@@ -58,6 +70,32 @@ public class ManaPool {
     public void decMana() {
         if (!isEmpty()) {
             this.sources.get(0).subtractAmount(1);
+        }
+    }
+
+    public boolean consume(int amount, ManaColor type) {
+        Map<ManaColor, List<ManaSource>> map = getMap();
+        if (type != ManaColor.COLORLESS) {
+            List<ManaSource> list = map.get(type);
+            list = list.stream()
+                    .filter(ManaSource::isAvailable)
+                    .sorted(Comparator.comparing(ManaSource::getAmount))
+                    .collect(Collectors.toList());
+            logger.info("consume {} {}", type, list);
+//            int acc = 0;
+            return false;
+        } else {
+            sources.sort(Comparator.comparing(ManaSource::getAmount));
+            int acc = 0;
+            for (int i = 0; i < sources.size(); i++) {
+                ManaSource source = sources.get(i);
+                acc += source.spend();
+                if (acc >= amount) {
+                    logger.info("consume COLORLESS {}", acc);
+                    return true;
+                }
+            }
+            return false;
         }
     }
 
