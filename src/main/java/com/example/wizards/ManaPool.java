@@ -67,6 +67,15 @@ public class ManaPool {
         }
     }
 
+    public void replenishSource(int id) {
+        if (!isEmpty()) {
+            this.sources.stream()
+                    .filter(source -> source.getId() == id)
+                    .findFirst()
+                    .ifPresent(ManaSource::replenish);
+        }
+    }
+
     public void decMana() {
         if (!isEmpty()) {
             this.sources.get(0).subtractAmount(1);

@@ -19,6 +19,9 @@ import java.util.List;
 
 import static com.example.wizards.ModBlocksAndItems.MANA_TOTEM_BLOCK_ENTITY;
 
+// TODO this class will become the ManaSource, turn it into an interface and implement here
+
+// TODO source not removed from player when block is destroyed
 public class ManaTotemBlockEntity extends BlockEntity {
 
     private static final Logger logger = LogUtils.getLogger();
@@ -107,9 +110,11 @@ public class ManaTotemBlockEntity extends BlockEntity {
         this.color = color;
     }
 
-    public void reset(ManaSource fromSource) {
+    public void spent(ManaSource fromSource) {
         logger.info("Resetting source entity. From {} (this {})", fromSource.getId(), this.id);
         if (this.id == fromSource.getId()) {
+            logger.info("Set available false, resetting count");
+            this.available = false;
             this.countdown = COUNT_TIME;
         } else {
             logger.error("Error in reset: id mismatch. From {}, this {}", fromSource.getId(), this.id);
@@ -120,11 +125,13 @@ public class ManaTotemBlockEntity extends BlockEntity {
         if (this.countdown > 0) {
             this.countdown--;
             if (this.countdown == 0) {
-                logger.info("Mana ready");
-                this.available = true;
-                ManaRegenerateEvent event = new ManaRegenerateEvent(1, this, placedBy);
-                MinecraftForge.EVENT_BUS.post(event);
-                this.countdown = COUNT_TIME;
+                logger.info("Countdown 0: {}", id);
+                if (!this.available) {
+                    logger.info("Mana ready");
+                    this.available = true;
+                    ManaRegenerateEvent event = new ManaRegenerateEvent(1, this, placedBy);
+                    MinecraftForge.EVENT_BUS.post(event);
+                }
             }
         }
     }

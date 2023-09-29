@@ -67,7 +67,7 @@ public class CastingSystem {
             } else {
                 logger.info("Regen {} mana", event.getAmount());
                 // todo changed to new system
-                pool.incMana();
+                pool.replenishSource(event.getBlockSource().getId());
                 if (player instanceof ServerPlayer serverPlayer) {
                     logger.info("Sending to client: {}", pool);
                     PacketHandler.sendToPlayer(serverPlayer, pool);

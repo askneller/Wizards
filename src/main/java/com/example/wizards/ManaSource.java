@@ -4,6 +4,7 @@ import com.mojang.logging.LogUtils;
 import net.minecraft.nbt.CompoundTag;
 import org.slf4j.Logger;
 
+// TODO will become and interface on ManaTotemBlockEntity
 public class ManaSource {
 
     private static final Logger logger = LogUtils.getLogger();
@@ -59,13 +60,20 @@ public class ManaSource {
         if (isAvailable()) {
             this.available = false;
             if (this.entity != null) {
-                this.entity.reset(this);
+                this.entity.spent(this);
             } else {
                 logger.error("Cannot reset source {} as entity is null", this);
             }
             return amount;
         }
         return 0;
+    }
+
+    public void replenish() {
+        if (!isAvailable()) {
+            this.available = true;
+            logger.info("replenish {}", id);
+        }
     }
 
     // ManaSources are not saved as they will be reloaded with their corresponding ManaTotemBlockEntity

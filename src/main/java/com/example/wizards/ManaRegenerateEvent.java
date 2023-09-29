@@ -7,10 +7,10 @@ import net.minecraftforge.eventbus.api.Event;
 public class ManaRegenerateEvent extends Event {
 
     private int amount;
-    private BlockEntity blockSource;
+    private ManaTotemBlockEntity blockSource;
     private LivingEntity owner;
 
-    public ManaRegenerateEvent(int amount, BlockEntity blockSource, LivingEntity owner) {
+    public ManaRegenerateEvent(int amount, ManaTotemBlockEntity blockSource, LivingEntity owner) {
         super();
         this.amount = amount;
         this.blockSource = blockSource;
@@ -25,11 +25,11 @@ public class ManaRegenerateEvent extends Event {
         this.amount = amount;
     }
 
-    public BlockEntity getBlockSource() {
+    public ManaTotemBlockEntity getBlockSource() {
         return blockSource;
     }
 
-    public void setBlockSource(BlockEntity blockSource) {
+    public void setBlockSource(ManaTotemBlockEntity blockSource) {
         this.blockSource = blockSource;
     }
 
