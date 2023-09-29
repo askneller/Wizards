@@ -56,7 +56,7 @@ public class ForgeClientEvents {
                 if (finalPos == null) {
                     PacketHandler.sendToServer(player, 1);
                 } else {
-                    PacketHandler.sendToServer(player, 2, finalPos);
+                    PacketHandler.sendToServer(player, 3, finalPos);
                 }
             });
         }

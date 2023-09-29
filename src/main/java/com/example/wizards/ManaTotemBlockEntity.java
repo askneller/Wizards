@@ -136,6 +136,7 @@ public class ManaTotemBlockEntity extends BlockEntity {
         }
     }
 
+    // TODO Source does not re-attach to player after respawn from death
     public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, ManaTotemBlockEntity entity) {
 //        if (!level.isClientSide) logger.info("server tick {}", entity);
         if (entity.color == null) {
