@@ -15,3 +15,17 @@ first pass
 - the event is sent to the server side CastingSystem which first queries the ManaSystem to see if the player has enough to cast the spell (maybe some other validation first)
 - if so the system decreases the amount of mana the player has (informing player by event) and implements the spells effects
 - final authority on spells known and mana sources available is the server side
+
+
+TODO
+- Spell catalog capability
+- Spell selection interaction
+- Summoned creature visual indicator (e.g. particles)
+- Casting visual indicator (more particles), and progress bar
+- Mana totems invisible to non-owner
+- Summoned creature behaviour
+- ManaSource as interface on ManaTotemBlockEntity
+- Separate out spell effect system
+- Spells as json files
+- Spell castable predicates that check position, surrounding blocks etc.
+-

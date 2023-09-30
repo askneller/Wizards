@@ -4,7 +4,9 @@ import com.mojang.logging.LogUtils;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
@@ -46,6 +48,13 @@ public class ModEvents {
     @SubscribeEvent
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
         if (event.side == LogicalSide.SERVER) {
+            if (event.player instanceof ServerPlayer serverPlayer) {
+                Inventory inventory = serverPlayer.getInventory();
+                if (inventory.isEmpty()) {
+                    ItemStack stack = new ItemStack(ModBlocksAndItems.MANA_TOTEM_BLOCK_ITEM.get(), 3);
+                    inventory.add(stack);
+                }
+            }
 //            event.player.getCapability(MANA_POOL).ifPresent(pool -> {
 //                if (pool.isEmpty()) {
 //                    logger.info("Player ManaPool empty: {}", pool);

@@ -188,11 +188,16 @@ public class ManaTotemBlockEntity extends BlockEntity {
     public static ManaColor getColorForBiome(String biome) {
         if (biome.contains("savanna") || biome.contains("plain")) {
             return ManaColor.WHITE;
-        } else if (biome.contains("forest")) {
+        } else if (biome.contains("forest") || biome.contains("taiga")) {
             return ManaColor.GREEN;
         } else if (biome.contains("swamp")) {
             return ManaColor.BLACK;
+        } else if (biome.contains("hills") || biome.contains("slopes") || biome.contains("peaks")) {
+            return ManaColor.RED;
+        } else if (biome.contains("river") || biome.contains("beach") || biome.contains("shore") || biome.contains("ocean")) {
+            return ManaColor.BLUE;
         }
+        // to decide: desert, jungle, badlands, meadow, grove, mushroom_fields, caves
 
         return ManaColor.COLORLESS;
     }

@@ -24,7 +24,7 @@ public class ManaOverlay {
         int x = screenWidth / 2;
         int y = screenHeight;
         int startX = x + 100;
-        int startY = y - 20;
+        int startY = y - 30;
 
         if (fadeStartTimer > 0) {
             fadeStartTimer--;

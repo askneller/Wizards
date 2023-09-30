@@ -1,18 +1,19 @@
 package com.example.wizards;
 
 import com.example.wizards.client.ClientManaPool;
+import com.example.wizards.client.ClientSpellList;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.logging.LogUtils;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.InputEvent;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.slf4j.Logger;
@@ -26,8 +27,33 @@ public class ForgeClientEvents {
     private static final Logger logger = LogUtils.getLogger();
 
     @SubscribeEvent
+    public static void onMouseWheel(InputEvent.MouseScrollingEvent event) {
+//        logger.info("scrolling {}", event.getScrollDelta());
+        // delta either -1 or 1
+//        logger.info("{}", ClientSpellList.keyDown);
+        if (ClientSpellList.keyDown) {
+            if (event.getScrollDelta() > 0) {
+                ClientSpellList.inc();
+            } else if (event.getScrollDelta() < 0) {
+                ClientSpellList.dec();
+            }
+//            logger.info("{} cancelling", ClientSpellList.keyDown);
+            event.setCanceled(true);
+        }
+    }
+
+    @SubscribeEvent
     public static void onKeyPress(InputEvent.Key event)
     {
+        if (event.getKey() == InputConstants.KEY_LALT &&
+                (event.getAction() == InputConstants.REPEAT || event.getAction() == InputConstants.PRESS)) {
+//            logger.info("Down LALT");
+            ClientSpellList.keyDown = true;
+        }
+        if (event.getKey() == InputConstants.KEY_LALT && event.getAction() == InputConstants.RELEASE) {
+//            logger.info("Release LALT");
+            ClientSpellList.keyDown = false;
+        }
         // Some client setup code
         if (event.getKey() == InputConstants.KEY_R && event.getAction() == InputConstants.PRESS) {
             logger.info("onKeyPress {}, {}, {}", event.getClass(), event.getKey(), event.getAction());
@@ -53,10 +79,15 @@ public class ForgeClientEvents {
                 logger.info("Client Pool cap present: {}", pool);
                 logger.info("ClientManaPool: {}", ClientManaPool.getPlayerPool());
 
-                if (finalPos == null) {
-                    PacketHandler.sendToServer(player, 1);
+                int spellNumber = ClientSpellList.getSelected();
+                if (finalPos == null && spellNumber > 2) {
+                    player.sendSystemMessage(Component.literal("Cannot cast spell: No target position").withStyle(ChatFormatting.RED));
                 } else {
-                    PacketHandler.sendToServer(player, 3, finalPos);
+                    if (finalPos == null) {
+                        PacketHandler.sendToServer(player, spellNumber);
+                    } else {
+                        PacketHandler.sendToServer(player, spellNumber, finalPos);
+                    }
                 }
             });
         }

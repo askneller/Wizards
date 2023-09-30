@@ -1,6 +1,7 @@
 package com.example.wizards;
 
 import com.example.wizards.client.ManaOverlay;
+import com.example.wizards.client.SelectedSpellOverlay;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.api.distmarker.Dist;
@@ -28,5 +29,6 @@ public class ModClientEvents {
     @SubscribeEvent
     public static void registerGuiOverlays(RegisterGuiOverlaysEvent event) {
         event.registerAboveAll("mana", ManaOverlay.GUI_OVERLAY);
+        event.registerAboveAll("selected_spell", SelectedSpellOverlay.GUI_OVERLAY);
     }
 }
