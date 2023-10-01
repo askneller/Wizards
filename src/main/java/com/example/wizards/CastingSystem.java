@@ -63,42 +63,53 @@ public class CastingSystem {
             player.level().addFreshEntity(fireball);
             spellCast = "Large Fireball";
         } else if (event.getBlockPos() != null && !event.getBlockPos().equals(BlockPos.ZERO)) {
+            Vec3 spawnPos = new Vec3(
+                    event.getBlockPos().getX() + 0.5,
+                    event.getBlockPos().getY() + 1.0,
+                    event.getBlockPos().getZ() + 0.5);
             if (event.getSpell() == 3) {
                 Zombie zombie = new Zombie(EntityType.ZOMBIE, player.level());
-                zombie.setPos(event.getBlockPos().getX(), event.getBlockPos().getY() + 1, event.getBlockPos().getZ());
+                zombie.setPos(spawnPos);
                 logger.info("Zombie {}", zombie);
                 player.level().addFreshEntity(zombie);
                 spellCast = "Summon Zombie";
             } else if (event.getSpell() == 4) {
                 Skeleton monster = new Skeleton(EntityType.SKELETON, player.level());
-                monster.setPos(event.getBlockPos().getX(), event.getBlockPos().getY() + 1, event.getBlockPos().getZ());
+                monster.setPos(spawnPos);
                 logger.info("Skeleton {}", monster);
                 player.level().addFreshEntity(monster);
                 spellCast = "Summon Skeleton";
             } else if (event.getSpell() == 5) {
                 Spider monster = new Spider(EntityType.SPIDER, player.level());
-                monster.setPos(event.getBlockPos().getX(), event.getBlockPos().getY() + 1, event.getBlockPos().getZ());
+                monster.setPos(spawnPos);
                 logger.info("Spider {}", monster);
                 player.level().addFreshEntity(monster);
                 spellCast = "Summon Spider";
             } else if (event.getSpell() == 6) {
                 Piglin monster = new Piglin(EntityType.PIGLIN, player.level());
-                monster.setPos(event.getBlockPos().getX(), event.getBlockPos().getY() + 1, event.getBlockPos().getZ());
+                monster.setPos(spawnPos);
                 logger.info("Piglin {}", monster);
                 player.level().addFreshEntity(monster);
                 spellCast = "Summon Piglin";
             } else if (event.getSpell() == 7) {
                 Witch monster = new Witch(EntityType.WITCH, player.level());
-                monster.setPos(event.getBlockPos().getX(), event.getBlockPos().getY() + 1, event.getBlockPos().getZ());
+                monster.setPos(spawnPos);
                 logger.info("Witch {}", monster);
                 player.level().addFreshEntity(monster);
                 spellCast = "Summon Witch";
             } else if (event.getSpell() == 8) {
                 Slime monster = new Slime(EntityType.SLIME, player.level());
-                monster.setPos(event.getBlockPos().getX(), event.getBlockPos().getY() + 1, event.getBlockPos().getZ());
+                monster.setPos(spawnPos);
                 logger.info("Slime {}", monster);
                 player.level().addFreshEntity(monster);
                 spellCast = "Summon Slime";
+            }
+            if (player instanceof ServerPlayer serverPlayer) {
+                // TODO change the BlockPos to Vec3 spawnPos above
+                // Spawn particles at summon position
+                PacketHandler.sendToPlayer(serverPlayer, event.getSpell(), true, event.getBlockPos());
+            } else {
+                logger.error("Not a ServerPlayer");
             }
         }
         if (spellCast != null) {

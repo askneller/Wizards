@@ -8,7 +8,11 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -43,8 +47,7 @@ public class ForgeClientEvents {
     }
 
     @SubscribeEvent
-    public static void onKeyPress(InputEvent.Key event)
-    {
+    public static void onKeyPress(InputEvent.Key event) {
         if (event.getKey() == InputConstants.KEY_LALT &&
                 (event.getAction() == InputConstants.REPEAT || event.getAction() == InputConstants.PRESS)) {
 //            logger.info("Down LALT");
@@ -90,6 +93,27 @@ public class ForgeClientEvents {
                     }
                 }
             });
+        }
+    }
+
+    public static void makeParticles(Level level, Player player, BlockPos blockPos) {
+//        logger.info("====== Particles at {}", blockPos);
+        RandomSource randomsource = level.getRandom();
+
+        // TODO change color or particles (something purple-y)
+        // TODO try to find Zombie death particle spawn code
+        for (int i = 0; i < 20; i++) {
+            double rx = (randomsource.nextDouble() * 1.5 - 0.75);
+            double rz = (randomsource.nextDouble() * 1.5 - 0.75);
+            level.addParticle(ParticleTypes.EFFECT, false,
+                    // position
+                    blockPos.getX() + 0.5 + rx,
+                    blockPos.getY() + 1.0,
+                    blockPos.getZ() + 0.5 + rz,
+                    // impulse
+                    0.0,
+                    0.5,
+                    0.0);
         }
     }
 }

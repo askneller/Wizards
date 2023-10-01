@@ -41,13 +41,16 @@ public class PacketHandler {
 
         register(AttemptCastC2SPacket.class, AttemptCastC2SPacket::toBytes, AttemptCastC2SPacket::new,
                 AttemptCastC2SPacket::handle, NetworkDirection.PLAY_TO_SERVER);
+
+        register(CastResultS2CPacket.class, CastResultS2CPacket::toBytes, CastResultS2CPacket::new,
+                CastResultS2CPacket::handle, NetworkDirection.PLAY_TO_CLIENT);
+
     }
 
     private static <T> void register(Class<T> cls,
                                      BiConsumer<T, FriendlyByteBuf> encoder,
                                      Function<FriendlyByteBuf, T> decoder,
-                                     BiConsumer<T, NetworkEvent.Context> handler)
-    {
+                                     BiConsumer<T, NetworkEvent.Context> handler) {
         INSTANCE.registerMessage(ID.getAndIncrement(), cls, encoder, decoder, (packet, context) -> {
             context.get().setPacketHandled(true);
             handler.accept(packet, context.get());
@@ -58,8 +61,7 @@ public class PacketHandler {
                                      BiConsumer<T, FriendlyByteBuf> encoder,
                                      Function<FriendlyByteBuf, T> decoder,
                                      BiConsumer<T, NetworkEvent.Context> handler,
-                                     NetworkDirection direction)
-    {
+                                     NetworkDirection direction) {
         INSTANCE.registerMessage(ID.getAndIncrement(), cls, encoder, decoder, (packet, context) -> {
             context.get().setPacketHandled(true);
             handler.accept(packet, context.get());
@@ -69,6 +71,11 @@ public class PacketHandler {
     public static void sendToPlayer(ServerPlayer player, ManaPool pool) {
         INSTANCE.send(PacketDistributor.PLAYER.with(() -> player),
                 new ManaPoolSyncS2CPacket(pool));
+    }
+
+    public static void sendToPlayer(ServerPlayer player, int spell, boolean success, BlockPos pos) {
+        INSTANCE.send(PacketDistributor.PLAYER.with(() -> player),
+                new CastResultS2CPacket(spell, success, pos));
     }
 
     public static void sendToServer(Player player, int spellId) {
