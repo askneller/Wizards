@@ -18,9 +18,6 @@ first pass
 
 
 TODO
-- Spell catalog capability
-- Spell selection interaction
-- Summoned creature visual indicator (e.g. particles)
 - Casting visual indicator (more particles), and progress bar
 - Mana totems invisible to non-owner
 - Summoned creature behaviour

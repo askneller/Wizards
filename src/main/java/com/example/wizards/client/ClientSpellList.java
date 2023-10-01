@@ -9,7 +9,7 @@ public class ClientSpellList {
 
     private static int index = 0;
 
-    public static int[] spells = {1, 2, 3, 4, 5, 6, 7, 8};
+    public static int[] spells = {1, 2, 3, 4, 5, 6, 7, 8, 9};
     public static boolean keyDown = false;
 
     public static void inc() {
@@ -43,11 +43,13 @@ public class ClientSpellList {
             case 5:
                 return "Spider";
             case 6:
-                return "Piglin";
+                return "Polar Bear";
             case 7:
-                return "Witch";
+                return "Phantom";
             case 8:
                 return "Slime";
+            case 9:
+                return "Skeleton Archer";
             default:
                 return "None";
         }

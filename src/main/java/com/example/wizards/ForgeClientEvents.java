@@ -1,6 +1,5 @@
 package com.example.wizards;
 
-import com.example.wizards.client.ClientManaPool;
 import com.example.wizards.client.ClientSpellList;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.logging.LogUtils;
@@ -102,6 +101,7 @@ public class ForgeClientEvents {
 
         // TODO change color or particles (something purple-y)
         // TODO try to find Zombie death particle spawn code
+        // TODO find Witch potion explode code, has different colored particles
         for (int i = 0; i < 20; i++) {
             double rx = (randomsource.nextDouble() * 1.5 - 0.75);
             double rz = (randomsource.nextDouble() * 1.5 - 0.75);

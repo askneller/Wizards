@@ -1,17 +1,15 @@
 package com.example.wizards;
 
 import com.mojang.logging.LogUtils;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.monster.Skeleton;
-import net.minecraft.world.entity.monster.Slime;
-import net.minecraft.world.entity.monster.Spider;
-import net.minecraft.world.entity.monster.Witch;
-import net.minecraft.world.entity.monster.Zombie;
-import net.minecraft.world.entity.monster.piglin.Piglin;
+import net.minecraft.world.entity.animal.PolarBear;
+import net.minecraft.world.entity.monster.Phantom;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.LargeFireball;
 import net.minecraft.world.entity.projectile.SmallFireball;
@@ -68,39 +66,45 @@ public class CastingSystem {
                     event.getBlockPos().getY() + 1.0,
                     event.getBlockPos().getZ() + 0.5);
             if (event.getSpell() == 3) {
-                Zombie zombie = new Zombie(EntityType.ZOMBIE, player.level());
+                SummonedZombie zombie = new SummonedZombie(EntityType.ZOMBIE, player.level());
                 zombie.setPos(spawnPos);
-                logger.info("Zombie {}", zombie);
+                logger.info("SummonedZombie {}", zombie);
                 player.level().addFreshEntity(zombie);
                 spellCast = "Summon Zombie";
             } else if (event.getSpell() == 4) {
-                Skeleton monster = new Skeleton(EntityType.SKELETON, player.level());
+                SummonedSkeleton monster = new SummonedSkeleton(EntityType.SKELETON, player.level());
                 monster.setPos(spawnPos);
-                logger.info("Skeleton {}", monster);
+                logger.info("SummonedSkeleton {}", monster);
                 player.level().addFreshEntity(monster);
                 spellCast = "Summon Skeleton";
             } else if (event.getSpell() == 5) {
-                Spider monster = new Spider(EntityType.SPIDER, player.level());
+                SummonedSpider monster = new SummonedSpider(EntityType.SPIDER, player.level());
                 monster.setPos(spawnPos);
-                logger.info("Spider {}", monster);
+                logger.info("SummonedSpider {}", monster);
                 player.level().addFreshEntity(monster);
                 spellCast = "Summon Spider";
             } else if (event.getSpell() == 6) {
-                Piglin monster = new Piglin(EntityType.PIGLIN, player.level());
+                SummonedPolarBear monster = new SummonedPolarBear(EntityType.POLAR_BEAR, player.level());
                 monster.setPos(spawnPos);
-                logger.info("Piglin {}", monster);
+                logger.info("SummonedPolarBear {}", monster);
                 player.level().addFreshEntity(monster);
-                spellCast = "Summon Piglin";
+                spellCast = "Summon Polar Bear";
             } else if (event.getSpell() == 7) {
-                Witch monster = new Witch(EntityType.WITCH, player.level());
+                SummonedPhantom monster = new SummonedPhantom(EntityType.PHANTOM, player.level());
                 monster.setPos(spawnPos);
-                logger.info("Witch {}", monster);
+                logger.info("SummonedPhantom {}", monster);
                 player.level().addFreshEntity(monster);
-                spellCast = "Summon Witch";
+                spellCast = "Summon Phantom";
             } else if (event.getSpell() == 8) {
-                Slime monster = new Slime(EntityType.SLIME, player.level());
+                SummonedSlime monster = new SummonedSlime(EntityType.SLIME, player.level());
                 monster.setPos(spawnPos);
-                logger.info("Slime {}", monster);
+                logger.info("SummonedSlime {}", monster);
+                player.level().addFreshEntity(monster);
+                spellCast = "Summon Slime";
+            } else if (event.getSpell() == 9) {
+                SummonedSkeletonArcher monster = new SummonedSkeletonArcher(EntityType.SKELETON, player.level());
+                monster.setPos(spawnPos);
+                logger.info("SummonedSkeletonArcher {}", monster);
                 player.level().addFreshEntity(monster);
                 spellCast = "Summon Slime";
             }
@@ -113,7 +117,10 @@ public class CastingSystem {
             }
         }
         if (spellCast != null) {
-            player.sendSystemMessage(Component.literal(String.format("%s cast %s", player.getName().getString(), spellCast)));
+            MutableComponent message = Component.literal(player.getName().getString()).withStyle(ChatFormatting.GREEN);
+            message.append(Component.literal(" cast ").withStyle(ChatFormatting.WHITE));
+            message.append(Component.literal(spellCast).withStyle(ChatFormatting.AQUA));
+            player.sendSystemMessage(message);
         }
     }
 
