@@ -47,14 +47,14 @@ public class ManaTotemBlockEntity extends BlockEntity {
 //            color = getColorForBiome(getBiomeStr(biome));
 //            logger.info("Color {}", color);
 //        }
-        logger.info("Created state and pos: {}, {}", blockPos, blockState);
+//        logger.info("Created state and pos: {}, {}", blockPos, blockState);
     }
 
     public ManaTotemBlockEntity(BlockPos blockPos, BlockState blockState, LivingEntity placedBy) {
         // this.level is null at this point
         this(blockPos, blockState);
         this.placedBy = placedBy;
-        logger.info("Created ManaTotemBlockEntity w/placedBy: {}, {}, {}", blockPos, blockState, placedBy);
+//        logger.info("Created ManaTotemBlockEntity w/placedBy: {}, {}, {}", blockPos, blockState, placedBy);
     }
 
     // id, countdown, available, and color are not saved
@@ -63,11 +63,11 @@ public class ManaTotemBlockEntity extends BlockEntity {
     // color is inferred from the location's biome
     public void load(CompoundTag tag) {
         super.load(tag);
-        logger.info("load {}", tag);
+//        logger.info("load {}", tag);
         if (tag.contains("placed_by_uuid")) {
             placedByUuid = tag.getString("placed_by_uuid");
         }
-        logger.info("this.placedByUuid {}", this.placedByUuid);
+//        logger.info("this.placedByUuid {}", this.placedByUuid);
 
 //        logger.info("setting changed");
 //        this.setChanged();
@@ -79,7 +79,7 @@ public class ManaTotemBlockEntity extends BlockEntity {
         if (placedBy != null) {
             tag.putString("placed_by_uuid", placedBy.getStringUUID());
         }
-        logger.info("saveAdditional {}", tag);
+//        logger.info("saveAdditional {}", tag);
     }
 
     public int getId() {
@@ -111,9 +111,9 @@ public class ManaTotemBlockEntity extends BlockEntity {
     }
 
     public void spent(ManaSource fromSource) {
-        logger.info("Resetting source entity. From {} (this {})", fromSource.getId(), this.id);
+//        logger.info("Resetting source entity. From {} (this {})", fromSource.getId(), this.id);
         if (this.id == fromSource.getId()) {
-            logger.info("Set available false, resetting count");
+//            logger.info("Set available false, resetting count");
             this.available = false;
             this.countdown = COUNT_TIME;
         } else {
@@ -125,9 +125,9 @@ public class ManaTotemBlockEntity extends BlockEntity {
         if (this.countdown > 0) {
             this.countdown--;
             if (this.countdown == 0) {
-                logger.info("Countdown 0: {}", id);
+//                logger.info("Countdown 0: {}", id);
                 if (!this.available) {
-                    logger.info("Mana ready");
+//                    logger.info("Mana ready");
                     this.available = true;
                     ManaRegenerateEvent event = new ManaRegenerateEvent(1, this, placedBy);
                     MinecraftForge.EVENT_BUS.post(event);
@@ -141,12 +141,12 @@ public class ManaTotemBlockEntity extends BlockEntity {
 //        if (!level.isClientSide) logger.info("server tick {}", entity);
         if (entity.color == null) {
             Holder<Biome> biome = level.getBiome(entity.getBlockPos());
-            logger.info("Biome {}", getBiomeStr(biome));
+//            logger.info("Biome {}", getBiomeStr(biome));
             entity.color = getColorForBiome(getBiomeStr(biome));
-            logger.info("Color {}", entity.color);
+//            logger.info("Color {}", entity.color);
         }
         if (entity.placedByUuid != null && entity.placedBy == null && entity.loadedTries > 0) {
-            logger.info("placedBy currently null {}", entity.placedByUuid);
+//            logger.info("placedBy currently null {}", entity.placedByUuid);
 
             // TODO find better way to save and load entity over sessions
             Vec3 vec = new Vec3(blockPos.getX(), blockPos.getY(), blockPos.getZ());
@@ -156,16 +156,16 @@ public class ManaTotemBlockEntity extends BlockEntity {
                     .filter(e -> e.getStringUUID().equals(entity.placedByUuid))
                     .findFirst()
                     .orElse(null);
-            logger.info("entity1 {}", entity1);
+//            logger.info("entity1 {}", entity1);
             if (entity1 instanceof LivingEntity livingEntity) {
                 entity.placedBy = livingEntity;
-                logger.info("serverTick Set placedBy to {}", entity.placedBy);
-                logger.info("serverTick So entity is {}", entity);
+//                logger.info("serverTick Set placedBy to {}", entity.placedBy);
+//                logger.info("serverTick So entity is {}", entity);
                 entity.loadedTries = 0;
-                logger.info("serverTick setting changed");
+//                logger.info("serverTick setting changed");
                 entity.setChanged();
 
-                logger.info("Sending AddManaSourceEvent from serverTick");
+//                logger.info("Sending AddManaSourceEvent from serverTick");
                 MinecraftForge.EVENT_BUS.post(new AddManaSourceEvent(livingEntity, entity));
             }
 

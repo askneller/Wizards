@@ -36,14 +36,14 @@ public class ManaPool {
 
     public boolean has(int amount, ManaColor type) {
         Map<ManaColor, Integer> colorIntegerMap = getTotalMap();
-        logger.info("Sources\n{}", colorIntegerMap);
+//        logger.info("Sources\n{}", colorIntegerMap);
         if (type != ManaColor.COLORLESS) {
             Integer typeAmount = colorIntegerMap.getOrDefault(type, 0);
-            logger.info("{} {}", type, typeAmount);
+//            logger.info("{} {}", type, typeAmount);
             return typeAmount >= amount;
         } else {
             Integer total = colorIntegerMap.values().stream().reduce(0, Integer::sum);
-            logger.info("total {}", total);
+//            logger.info("total {}", total);
             return total >= amount;
         }
     }
@@ -90,7 +90,7 @@ public class ManaPool {
                     .filter(ManaSource::isAvailable)
                     .sorted(Comparator.comparing(ManaSource::getAmount))
                     .collect(Collectors.toList());
-            logger.info("consume {} {}", type, list);
+//            logger.info("consume {} {}", type, list);
 //            int acc = 0;
             return false;
         } else {
@@ -100,7 +100,7 @@ public class ManaPool {
                 ManaSource source = sources.get(i);
                 acc += source.spend();
                 if (acc >= amount) {
-                    logger.info("consume COLORLESS {}", acc);
+//                    logger.info("consume COLORLESS {}", acc);
                     return true;
                 }
             }

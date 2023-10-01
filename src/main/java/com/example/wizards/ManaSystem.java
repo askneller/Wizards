@@ -22,28 +22,28 @@ public class ManaSystem {
     @SubscribeEvent
     public static void onConsumeMana(ConsumeManaEvent event) {
         Player player = event.getPlayer();
-        logger.info("Player {} trying to cast a spell for {} {}", player, event.getAmount(), event.getColor());
+//        logger.info("Player {} trying to cast a spell for {} {}", player, event.getAmount(), event.getColor());
         ManaPool pool = player.getCapability(MANA_POOL).orElseGet(() -> ManaPool.EMPTY);
-        logger.info("Player pool {}", pool);
+//        logger.info("Player pool {}", pool);
 
         if (pool.isExhausted()) {
-            logger.info("PLAYER HAS NO MANA!");
+//            logger.info("PLAYER HAS NO MANA!");
             event.setResult(Event.Result.DENY);
             return;
         }
 
         if (!pool.has(event.getAmount(), event.getColor())) {
-            logger.info("Insufficient Mana");
+//            logger.info("Insufficient Mana");
             event.setResult(Event.Result.DENY);
             return;
         }
 
         // TODO should the mana check and the consumption be separated
 
-        logger.info("Sufficient mana to cast");
+//        logger.info("Sufficient mana to cast");
         if (pool.consume(event.getAmount(), event.getColor())) {
             if (player instanceof ServerPlayer serverPlayer) {
-                logger.info("Sending updated pool to client: {}", pool);
+//                logger.info("Sending updated pool to client: {}", pool);
                 PacketHandler.sendToPlayer(serverPlayer, pool);
             }
         } else {
@@ -54,16 +54,16 @@ public class ManaSystem {
 
     @SubscribeEvent
     public static void onAddManaSource(AddManaSourceEvent event) {
-        logger.info("AddManaSourceEvent {}", event);
+//        logger.info("AddManaSourceEvent {}", event);
 
         if (event.getOwner() instanceof Player player) {
             ManaTotemBlockEntity source = event.getSource();
             ManaPool pool = player.getCapability(MANA_POOL).orElseGet(() -> ManaPool.EMPTY);
-            logger.info("Is player and has pool {}", pool);
+//            logger.info("Is player and has pool {}", pool);
             pool.addSource(new ManaSource(source.getId(), source.getMana(), source.getColor(), source.isAvailable(), source));
 
             if (player instanceof ServerPlayer serverPlayer) {
-                logger.info("Sending updated pool to client: {}", pool);
+//                logger.info("Sending updated pool to client: {}", pool);
                 PacketHandler.sendToPlayer(serverPlayer, pool);
             }
         }

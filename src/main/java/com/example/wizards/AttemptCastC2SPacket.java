@@ -27,18 +27,18 @@ public class AttemptCastC2SPacket {
         this.spell = spell;
         this.playerId = playerId;
         this.blockPos = blockPos;
-        logger.info("ManaPoolSyncS2CPacket pool construct. {} {}", this.spell, this.blockPos);
+//        logger.info("ManaPoolSyncS2CPacket pool construct. {} {}", this.spell, this.blockPos);
     }
 
     public AttemptCastC2SPacket(FriendlyByteBuf buf) {
         this.spell = buf.readInt();
         this.playerId = buf.readInt();
         this.blockPos = buf.readBlockPos();
-        logger.info("ManaPoolSyncS2CPacket buf construct. spell {} playerId {}", this.spell, this.blockPos);
+//        logger.info("ManaPoolSyncS2CPacket buf construct. spell {} playerId {}", this.spell, this.blockPos);
     }
 
     public void toBytes(FriendlyByteBuf buf) {
-        logger.info("toBytes s {} p {}", spell, playerId);
+//        logger.info("toBytes s {} p {}", spell, playerId);
         buf.writeInt(this.spell);
         buf.writeInt(this.playerId);
         buf.writeBlockPos(this.blockPos);
@@ -48,8 +48,8 @@ public class AttemptCastC2SPacket {
         context.enqueueWork(() -> {
             // ON THE SERVER?
             ServerPlayer sender = context.getSender();
-            logger.info("AttemptCast received {} {}", spell, blockPos);
-            logger.info("From {}", sender);
+//            logger.info("AttemptCast received {} {}", spell, blockPos);
+//            logger.info("From {}", sender);
             MinecraftForge.EVENT_BUS.post(new AttemptCastEvent(spell, sender, blockPos));
         });
         return true;

@@ -59,28 +59,28 @@ public class ForgeClientEvents {
         }
         // Some client setup code
         if (event.getKey() == InputConstants.KEY_R && event.getAction() == InputConstants.PRESS) {
-            logger.info("onKeyPress {}, {}, {}", event.getClass(), event.getKey(), event.getAction());
+//            logger.info("onKeyPress {}, {}, {}", event.getClass(), event.getKey(), event.getAction());
             LocalPlayer player = Minecraft.getInstance().player;
-            logger.info("Player: {}", player);
+//            logger.info("Player: {}", player);
             assert player != null;
 
 
             HitResult hitResult = Minecraft.getInstance().hitResult;
-            logger.info("Hit {} {}", hitResult.getType(), hitResult.getType() != HitResult.Type.MISS ? hitResult.getLocation() : null);
+//            logger.info("Hit {} {}", hitResult.getType(), hitResult.getType() != HitResult.Type.MISS ? hitResult.getLocation() : null);
             BlockPos pos = null;
             if (hitResult.getType() == HitResult.Type.BLOCK) {
                 BlockHitResult result = (BlockHitResult) hitResult;
-                logger.info("Block {} {}", result.getBlockPos(), result.getDirection());
+//                logger.info("Block {} {}", result.getBlockPos(), result.getDirection());
                 pos = result.getBlockPos();
             } else if (hitResult.getType() == HitResult.Type.ENTITY) {
                 EntityHitResult result = (EntityHitResult) hitResult;
-                logger.info("Entity {}", result.getEntity());
+//                logger.info("Entity {}", result.getEntity());
             }
 
             BlockPos finalPos = pos;
             player.getCapability(MANA_POOL).ifPresent(pool -> {
-                logger.info("Client Pool cap present: {}", pool);
-                logger.info("ClientManaPool: {}", ClientManaPool.getPlayerPool());
+//                logger.info("Client Pool cap present: {}", pool);
+//                logger.info("ClientManaPool: {}", ClientManaPool.getPlayerPool());
 
                 int spellNumber = ClientSpellList.getSelected();
                 if (finalPos == null && spellNumber > 2) {

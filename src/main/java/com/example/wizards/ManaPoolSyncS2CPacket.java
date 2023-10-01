@@ -15,21 +15,21 @@ public class ManaPoolSyncS2CPacket {
 
     public ManaPoolSyncS2CPacket(ManaPool pool) {
         this.pool = pool;
-        logger.info("ManaPoolSyncS2CPacket pool construct. {}", this.pool);
+//        logger.info("ManaPoolSyncS2CPacket pool construct. {}", this.pool);
     }
 
     public ManaPoolSyncS2CPacket(FriendlyByteBuf buf) {
         CompoundTag tag = buf.readNbt();
-        logger.info("Read tag. {}", tag);
+//        logger.info("Read tag. {}", tag);
         this.pool = new ManaPool();
         this.pool.loadNBTData(tag);
-        logger.info("ManaPoolSyncS2CPacket buf construct. {}", this.pool);
+//        logger.info("ManaPoolSyncS2CPacket buf construct. {}", this.pool);
     }
 
     public void toBytes(FriendlyByteBuf buf) {
         CompoundTag tag = new CompoundTag();
         this.pool.saveNBTDate(tag);
-        logger.info("saved to tag. {}", tag);
+//        logger.info("saved to tag. {}", tag);
         buf.writeNbt(tag);
     }
 
@@ -46,7 +46,7 @@ public class ManaPoolSyncS2CPacket {
         context.enqueueWork(() -> {
             // HERE WE ARE ON THE CLIENT
             ClientManaPool.set(pool);
-            logger.info("Set client mana pool {}", pool);
+//            logger.info("Set client mana pool {}", pool);
         });
         return true;
     }

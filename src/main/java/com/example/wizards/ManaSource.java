@@ -16,7 +16,7 @@ public class ManaSource {
     private ManaTotemBlockEntity entity;
 
     public ManaSource() {
-        logger.info("Create empty");
+//        logger.info("Create empty");
     }
 
     public ManaSource(int id, int amount, ManaColor color, boolean available, ManaTotemBlockEntity source) {
@@ -25,7 +25,7 @@ public class ManaSource {
         this.color = color;
         this.available = available;
         this.entity = source;
-        logger.info("Create params");
+//        logger.info("Create params");
     }
 
     public int getId() {
@@ -72,7 +72,7 @@ public class ManaSource {
     public void replenish() {
         if (!isAvailable()) {
             this.available = true;
-            logger.info("replenish {}", id);
+//            logger.info("replenish {}", id);
         }
     }
 

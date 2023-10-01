@@ -49,7 +49,7 @@ public class ManaTotemBlock extends BaseEntityBlock {
     public ManaTotemBlock(Properties p_57491_, ParticleOptions p_57492_) {
         super(p_57491_);
         this.flameParticle = p_57492_;
-        logger.info("Created ManaTotemBlock");
+//        logger.info("Created ManaTotemBlock");
     }
 
     public RenderShape getRenderShape(BlockState p_49090_) {
@@ -59,7 +59,7 @@ public class ManaTotemBlock extends BaseEntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        logger.info("newBlockEntity: {}, {}", blockPos, blockState);
+//        logger.info("newBlockEntity: {}, {}", blockPos, blockState);
 //        if (entity != null) {
 //            logger.warn("Creating new entity from {}, existing {}", this, entity);
 //        }
@@ -70,7 +70,7 @@ public class ManaTotemBlock extends BaseEntityBlock {
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level p_153212_, BlockState p_153213_, BlockEntityType<T> p_153214_) {
-        logger.info("getTicker called");
+//        logger.info("getTicker called");
 //        logger.info("\n\ngetTicker STACK TRACE");
 //        Util.printStackTrace(25);
         return p_153212_.isClientSide ? null : createTickerHelper(p_153214_, MANA_TOTEM_BLOCK_ENTITY.get(), ManaTotemBlockEntity::serverTick);
@@ -78,24 +78,24 @@ public class ManaTotemBlock extends BaseEntityBlock {
 
     public void setPlacedBy(Level level, BlockPos pos, BlockState state, LivingEntity entity, ItemStack stack) {
         super.setPlacedBy(level, pos, state, entity, stack);
-        logger.info("setPlacedBy {} at {}, state {}", entity, pos, state);
+//        logger.info("setPlacedBy {} at {}, state {}", entity, pos, state);
 //        logger.info("(this.entity is {})", this.entity);
         BlockEntity blockEntity = level.getBlockEntity(pos);
-        logger.info("blockEntity at place {} is {}", pos, blockEntity);
+//        logger.info("blockEntity at place {} is {}", pos, blockEntity);
         if (blockEntity instanceof ManaTotemBlockEntity mtbe) {
             if (!level.isClientSide() && entity instanceof ServerPlayer) {
-                logger.info("setting placed by");
+//                logger.info("setting placed by");
                 mtbe.setPlacedBy(entity);
-                logger.info("mtbe {}", mtbe);
+//                logger.info("mtbe {}", mtbe);
 
                 if (mtbe.getColor() == null) {
                     Holder<Biome> biome = level.getBiome(pos);
-                    logger.info("Biome {}", getBiomeStr(biome));
+//                    logger.info("Biome {}", getBiomeStr(biome));
                     mtbe.setColor(getColorForBiome(getBiomeStr(biome)));
-                    logger.info("Color {}", mtbe.getColor());
+//                    logger.info("Color {}", mtbe.getColor());
                 }
 
-                logger.info("Sending AddManaSourceEvent from setPlacedBy");
+//                logger.info("Sending AddManaSourceEvent from setPlacedBy");
                 MinecraftForge.EVENT_BUS.post(new AddManaSourceEvent(entity, mtbe));
             }
         }
