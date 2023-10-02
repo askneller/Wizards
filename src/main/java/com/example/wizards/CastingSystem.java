@@ -8,8 +8,6 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.animal.PolarBear;
-import net.minecraft.world.entity.monster.Phantom;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.LargeFireball;
 import net.minecraft.world.entity.projectile.SmallFireball;
@@ -70,12 +68,14 @@ public class CastingSystem {
                 zombie.setPos(spawnPos);
                 logger.info("SummonedZombie {}", zombie);
                 player.level().addFreshEntity(zombie);
+                zombie.setController(player);
                 spellCast = "Summon Zombie";
             } else if (event.getSpell() == 4) {
                 SummonedSkeleton monster = new SummonedSkeleton(EntityType.SKELETON, player.level());
                 monster.setPos(spawnPos);
                 logger.info("SummonedSkeleton {}", monster);
                 player.level().addFreshEntity(monster);
+                monster.setController(player);
                 spellCast = "Summon Skeleton";
             } else if (event.getSpell() == 5) {
                 SummonedSpider monster = new SummonedSpider(EntityType.SPIDER, player.level());
@@ -127,19 +127,19 @@ public class CastingSystem {
     @SubscribeEvent
     public static void onManaRegenerate(ManaRegenerateEvent event) {
         LivingEntity owner = event.getOwner();
-        logger.info("Entity {} regenerated mana: {}", owner, event.getAmount());
+//        logger.info("Entity {} regenerated mana: {}", owner, event.getAmount());
         if (owner instanceof Player player) {
             ManaPool pool = player.getCapability(MANA_POOL).orElseGet(() -> ManaPool.EMPTY);
-            logger.info("Pool {}", pool);
+//            logger.info("Pool {}", pool);
 
             if (pool.isEmpty()) {
-                logger.info("PLAYER MANA EMPTY");
+//                logger.info("PLAYER MANA EMPTY");
             } else {
-                logger.info("Regen {} mana", event.getAmount());
+//                logger.info("Regen {} mana", event.getAmount());
                 // todo changed to new system
                 pool.replenishSource(event.getBlockSource().getId());
                 if (player instanceof ServerPlayer serverPlayer) {
-                    logger.info("Sending to client: {}", pool);
+//                    logger.info("Sending to client: {}", pool);
                     PacketHandler.sendToPlayer(serverPlayer, pool);
                 }
             }
