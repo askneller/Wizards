@@ -25,4 +25,4 @@ TODO
 - Separate out spell effect system
 - Spells as json files
 - Spell castable predicates that check position, surrounding blocks etc.
--
+- Remove mana sources on destroy totem

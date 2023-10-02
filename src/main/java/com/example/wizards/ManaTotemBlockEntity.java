@@ -186,7 +186,7 @@ public class ManaTotemBlockEntity extends BlockEntity {
     }
 
     public static ManaColor getColorForBiome(String biome) {
-        if (biome.contains("savanna") || biome.contains("plain")) {
+        if (biome.contains("savanna") || biome.contains("plain") || biome.contains("meadow")) {
             return ManaColor.WHITE;
         } else if (biome.contains("forest") || biome.contains("taiga")) {
             return ManaColor.GREEN;

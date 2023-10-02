@@ -12,6 +12,10 @@ import java.util.EnumSet;
 public class FollowControllerGoal extends Goal {
 
     private static final Logger logger = LogUtils.getLogger();
+    private static final double DISTANCE = 8.0;
+    private static final double DISTANCE_SQ = DISTANCE * DISTANCE;
+    private static final double MAX_DISTANCE = 20.0;
+    private static final double MAX_DISTANCE_SQ = MAX_DISTANCE * MAX_DISTANCE;
 
     private final PathfinderMob entity;
 
@@ -30,7 +34,7 @@ public class FollowControllerGoal extends Goal {
 
     public boolean canUse() {
         this.parent = this.controller;
-        return this.parent != null && this.entity.distanceToSqr(this.parent) >= 9.0;
+        return this.parent != null && this.entity.distanceToSqr(this.parent) >= DISTANCE_SQ;
     }
 
     public boolean canContinueToUse() {
@@ -39,7 +43,7 @@ public class FollowControllerGoal extends Goal {
         } else {
             double d0 = this.entity.distanceToSqr(this.parent);
             // TODO change distances
-            return !(d0 < 9.0D) && !(d0 > 256.0D);
+            return !(d0 < DISTANCE_SQ) && !(d0 > MAX_DISTANCE_SQ);
         }
     }
 
