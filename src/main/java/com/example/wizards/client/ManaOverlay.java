@@ -51,7 +51,7 @@ public class ManaOverlay {
     }
 
     private static String getAltDown() {
-        if (ClientSideHelper.leftAltKeyDown) {
+        if (ClientSideHelper.isLeftAltDown()) {
             return "     Alt Down";
         }
         return "";

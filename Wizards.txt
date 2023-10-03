@@ -27,4 +27,4 @@ TODO
 - Spells as json files
 - Spell castable predicates that check position, surrounding blocks etc.
 - Extend summon creature range limit beyond ui block outline limit
-- Assign target when clicking with nothing in hand
+- Consolidate client GUIs into one

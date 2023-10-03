@@ -10,9 +10,7 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
-import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -30,9 +28,7 @@ public class ForgeClientEvents {
     @SubscribeEvent
     public static void onMouseClick(InputEvent.MouseButton.Pre event) {
         if (event.getButton() == InputConstants.MOUSE_BUTTON_RIGHT && event.getAction() == InputConstants.PRESS) {
-//            logger.info("Mouse click b {}, a {}, m {}", event.getButton(), event.getAction(), event.getModifiers());
-//            logger.info("Alt Down {}", ClientSideHelper.altKeyDown);
-            if (ClientSideHelper.leftAltKeyDown) {
+            if (ClientSideHelper.isLeftAltDown()) {
                 EntityHitResult cursorEntityHit = ClientSideHelper.getCursorEntityHit();
                 if (cursorEntityHit != null) {
                     Entity hit = cursorEntityHit.getEntity();
@@ -47,7 +43,7 @@ public class ForgeClientEvents {
 
     @SubscribeEvent
     public static void onMouseWheel(InputEvent.MouseScrollingEvent event) {
-        if (ClientSideHelper.leftAltKeyDown) {
+        if (ClientSideHelper.isLeftAltDown()) {
             if (event.getScrollDelta() > 0) {
                 ClientSpellList.inc();
             } else if (event.getScrollDelta() < 0) {
@@ -61,36 +57,19 @@ public class ForgeClientEvents {
     public static void onKeyPress(InputEvent.Key event) {
         if (event.getKey() == InputConstants.KEY_LALT &&
                 (event.getAction() == InputConstants.REPEAT || event.getAction() == InputConstants.PRESS)) {
-            ClientSideHelper.leftAltKeyDown = true;
+            ClientSideHelper.setLeftAltKeyDown(true);
         }
         if (event.getKey() == InputConstants.KEY_LALT && event.getAction() == InputConstants.RELEASE) {
-            ClientSideHelper.leftAltKeyDown = false;
+            ClientSideHelper.setLeftAltKeyDown(false);
         }
 
         // Some client setup code
         if (event.getKey() == InputConstants.KEY_R && event.getAction() == InputConstants.PRESS) {
-//            logger.info("onKeyPress {}, {}, {}", event.getClass(), event.getKey(), event.getAction());
             LocalPlayer player = Minecraft.getInstance().player;
-//            logger.info("Player: {}", player);
             assert player != null;
 
-
-            HitResult hitResult = Minecraft.getInstance().hitResult;
-//            logger.info("Hit {} {}", hitResult.getType(), hitResult.getType() != HitResult.Type.MISS ? hitResult.getLocation() : null);
-            BlockPos pos = null;
-            if (hitResult.getType() == HitResult.Type.BLOCK) {
-                BlockHitResult result = (BlockHitResult) hitResult;
-//                logger.info("Block {} {}", result.getBlockPos(), result.getDirection());
-                pos = result.getBlockPos();
-            } else if (hitResult.getType() == HitResult.Type.ENTITY) {
-                EntityHitResult result = (EntityHitResult) hitResult;
-//                logger.info("Entity {}", result.getEntity());
-            }
-
-            BlockPos finalPos = pos;
+            BlockPos finalPos = ClientSideHelper.getBlockHitLocation();
             player.getCapability(MANA_POOL).ifPresent(pool -> {
-//                logger.info("Client Pool cap present: {}", pool);
-//                logger.info("ClientManaPool: {}", ClientManaPool.getPlayerPool());
 
                 int spellNumber = ClientSpellList.getSelected();
                 if (finalPos == null && spellNumber > 2) {

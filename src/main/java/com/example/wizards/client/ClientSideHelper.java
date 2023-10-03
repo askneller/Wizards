@@ -10,18 +10,21 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import org.slf4j.Logger;
 
 public class ClientSideHelper {
 
-    public static final double MAX_HIT_DISTANCE = 20.0;
+    public static final double MAX_ENTITY_DISTANCE = 20.0;
+    public static final double MAX_BLOCK_DISTANCE = 10.0;
 
     private static final Logger logger = LogUtils.getLogger();
 
     private static Entity selectedEntity;
-    public static boolean leftAltKeyDown = false;
+    private static boolean leftAltKeyDown = false;
 
     public static Entity getSelectedEntity() {
         return selectedEntity;
@@ -31,11 +34,19 @@ public class ClientSideHelper {
         ClientSideHelper.selectedEntity = selectedEntity;
     }
 
+    public static boolean isLeftAltDown() {
+        return leftAltKeyDown;
+    }
+
+    public static void setLeftAltKeyDown(boolean leftAltKeyDown) {
+        ClientSideHelper.leftAltKeyDown = leftAltKeyDown;
+    }
+
     public static EntityHitResult getCursorEntityHit() {
         Entity entity = Minecraft.getInstance().getCameraEntity();
         if (entity != null) {
             float offset = 0.0f; // offset?
-            double distance = MAX_HIT_DISTANCE; // distance
+            double distance = MAX_ENTITY_DISTANCE; // distance
             boolean p_19910_ = false; // fluid
             Vec3 eyePosition = entity.getEyePosition(offset);
             Vec3 viewVector = entity.getViewVector(offset);
@@ -43,9 +54,9 @@ public class ClientSideHelper {
 //            BlockHitResult clip = entity.level().clip(new ClipContext(vec3, vec32, ClipContext.Block.OUTLINE, p_19910_ ? ClipContext.Fluid.ANY : ClipContext.Fluid.NONE, entity));
 //            logger.info("hit res {} type {}", clip, clip.getType());
 
-            double d0 = MAX_HIT_DISTANCE; //(double)Minecraft.getInstance().gameMode.getPickRange();
+            double d0 = MAX_ENTITY_DISTANCE; //(double)Minecraft.getInstance().gameMode.getPickRange();
             double d1 = d0 * d0;
-            AABB aabb = entity.getBoundingBox().expandTowards(viewVector.scale(d0)).inflate(MAX_HIT_DISTANCE, MAX_HIT_DISTANCE, MAX_HIT_DISTANCE);
+            AABB aabb = entity.getBoundingBox().expandTowards(viewVector.scale(d0)).inflate(MAX_ENTITY_DISTANCE, MAX_ENTITY_DISTANCE, MAX_ENTITY_DISTANCE);
             EntityHitResult entityhitresult = ProjectileUtil.getEntityHitResult(entity, eyePosition, scaledView, aabb, (p_234237_) -> {
                 return true; // !p_234237_.isSpectator() && p_234237_.isPickable();
             }, d1);
@@ -57,6 +68,17 @@ public class ClientSideHelper {
                 logger.info("dist {}", entity.distanceTo(hit));
             }
             return entityhitresult;
+        }
+        return null;
+    }
+
+    public static BlockPos getBlockHitLocation() {
+        Entity entity = Minecraft.getInstance().getCameraEntity();
+        float offset = 0.0f;
+        boolean pickFluid = false;
+        HitResult hitResult = entity.pick(MAX_BLOCK_DISTANCE, offset, pickFluid);
+        if (hitResult.getType() == HitResult.Type.BLOCK) {
+            return ((BlockHitResult) hitResult).getBlockPos();
         }
         return null;
     }
