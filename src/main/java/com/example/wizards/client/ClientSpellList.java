@@ -8,22 +8,18 @@ public class ClientSpellList {
     private static final Logger logger = LogUtils.getLogger();
 
     private static int index = 0;
-
     public static int[] spells = {1, 2, 3, 4, 5, 6, 7, 8, 9};
-    public static boolean keyDown = false;
 
     public static void inc() {
         ++index;
         if (index >= spells.length)
             index = 0;
-//        logger.info("New index {}, spell {}", index, spells[index]);
     }
 
     public static void dec() {
         --index;
         if (index < 0)
             index = spells.length - 1;
-//        logger.info("New index {}, spell {}", index, spells[index]);
     }
 
     public static int getSelected() {

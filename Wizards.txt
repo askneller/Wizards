@@ -20,9 +20,11 @@ first pass
 TODO
 - Casting visual indicator (more particles), and progress bar
 - Mana totems invisible to non-owner
-- Summoned creature behaviour
+- Remove mana sources on destroy totem
+- Summoned creature behaviour (lots done)
 - ManaSource as interface on ManaTotemBlockEntity
 - Separate out spell effect system
 - Spells as json files
 - Spell castable predicates that check position, surrounding blocks etc.
-- Remove mana sources on destroy totem
+- Extend summon creature range limit beyond ui block outline limit
+- Assign target when clicking with nothing in hand

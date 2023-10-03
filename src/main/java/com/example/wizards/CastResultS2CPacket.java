@@ -1,6 +1,6 @@
 package com.example.wizards;
 
-import com.example.wizards.client.ClientManaPool;
+import com.example.wizards.client.ClientSideHelper;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
@@ -38,7 +38,7 @@ public class CastResultS2CPacket {
     public boolean handle(NetworkEvent.Context context) {
         context.enqueueWork(() -> {
             // HERE WE ARE ON THE CLIENT
-            ClientManaPool.particles(blockPos);
+            ClientSideHelper.particles(blockPos);
         });
         return true;
     }

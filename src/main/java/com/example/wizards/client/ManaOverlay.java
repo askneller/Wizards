@@ -36,7 +36,7 @@ public class ManaOverlay {
         float alpha = (float) fadeCountdown / COUNTDOWN_MAX;
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
-        String str = "Mana: " + getManaString(ClientManaPool.getPlayerPool());
+        String str = "Mana: " + getManaString(ClientManaPool.getPlayerPool()) + getAltDown();
         guiGraphics.drawString(Minecraft.getInstance().font, str, startX, startY, 14737632);
     });
 
@@ -48,6 +48,13 @@ public class ManaOverlay {
             joiner.add(str);
         }
         return joiner.toString();
+    }
+
+    private static String getAltDown() {
+        if (ClientSideHelper.leftAltKeyDown) {
+            return "     Alt Down";
+        }
+        return "";
     }
 
     private static String getPercentageString() {
