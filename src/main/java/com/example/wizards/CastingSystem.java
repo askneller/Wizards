@@ -11,11 +11,16 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.LargeFireball;
 import net.minecraft.world.entity.projectile.SmallFireball;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import org.slf4j.Logger;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.Optional;
 
 import static com.example.wizards.ManaPoolProvider.MANA_POOL;
 
@@ -63,51 +68,63 @@ public class CastingSystem {
                     event.getBlockPos().getX() + 0.5,
                     event.getBlockPos().getY() + 1.0,
                     event.getBlockPos().getZ() + 0.5);
-            if (event.getSpell() == 3) {
-                SummonedZombie zombie = new SummonedZombie(EntityType.ZOMBIE, player.level());
-                zombie.setPos(spawnPos);
-                logger.info("SummonedZombie {}", zombie);
-                player.level().addFreshEntity(zombie);
-                zombie.setController(player);
-                spellCast = "Summon Zombie";
-            } else if (event.getSpell() == 4) {
-                SummonedSkeleton monster = new SummonedSkeleton(EntityType.SKELETON, player.level());
-                monster.setPos(spawnPos);
-                logger.info("SummonedSkeleton {}", monster);
-                player.level().addFreshEntity(monster);
-                monster.setController(player);
-                spellCast = "Summon Skeleton";
-            } else if (event.getSpell() == 5) {
-                SummonedSpider monster = new SummonedSpider(EntityType.SPIDER, player.level());
-                monster.setPos(spawnPos);
-                logger.info("SummonedSpider {}", monster);
-                player.level().addFreshEntity(monster);
-                spellCast = "Summon Spider";
-            } else if (event.getSpell() == 6) {
-                SummonedPolarBear monster = new SummonedPolarBear(EntityType.POLAR_BEAR, player.level());
-                monster.setPos(spawnPos);
-                logger.info("SummonedPolarBear {}", monster);
-                player.level().addFreshEntity(monster);
-                spellCast = "Summon Polar Bear";
-            } else if (event.getSpell() == 7) {
-                SummonedPhantom monster = new SummonedPhantom(EntityType.PHANTOM, player.level());
-                monster.setPos(spawnPos);
-                logger.info("SummonedPhantom {}", monster);
-                player.level().addFreshEntity(monster);
-                spellCast = "Summon Phantom";
-            } else if (event.getSpell() == 8) {
-                SummonedSlime monster = new SummonedSlime(EntityType.SLIME, player.level());
-                monster.setPos(spawnPos);
-                logger.info("SummonedSlime {}", monster);
-                player.level().addFreshEntity(monster);
-                spellCast = "Summon Slime";
-            } else if (event.getSpell() == 9) {
-                SummonedSkeletonArcher monster = new SummonedSkeletonArcher(EntityType.SKELETON, player.level());
-                monster.setPos(spawnPos);
-                logger.info("SummonedSkeletonArcher {}", monster);
-                player.level().addFreshEntity(monster);
-                spellCast = "Summon Slime";
+
+            if (event.getSpellName() != null) {
+                Optional<Spell> spellOptional = Spells.getSpellByName(event.getSpellName());
+                if (spellOptional.isPresent()) {
+                    Object summonedEntity = spawnSummonedEntity(spellOptional.get(), player.level(), spawnPos, player);
+                    spellCast = "Summon " + spellOptional.get().getName();
+                    logger.info("SPECIAL!! Summoned creature successfully");
+                }
             }
+
+//            else
+//            if (event.getSpell() == 3) {
+//                SummonedZombie zombie = new SummonedZombie(EntityType.ZOMBIE, player.level());
+//                zombie.setPos(spawnPos);
+//                logger.info("SummonedZombie {}", zombie);
+//                player.level().addFreshEntity(zombie);
+//                zombie.setController(player);
+//                spellCast = "Summon Zombie";
+//            } else if (event.getSpell() == 4) {
+//                SummonedSkeleton monster = new SummonedSkeleton(EntityType.SKELETON, player.level());
+//                monster.setPos(spawnPos);
+//                logger.info("SummonedSkeleton {}", monster);
+//                player.level().addFreshEntity(monster);
+//                monster.setController(player);
+//                spellCast = "Summon Skeleton";
+//            } else if (event.getSpell() == 5) {
+//                SummonedSpider monster = new SummonedSpider(EntityType.SPIDER, player.level());
+//                monster.setPos(spawnPos);
+//                logger.info("SummonedSpider {}", monster);
+//                player.level().addFreshEntity(monster);
+//                spellCast = "Summon Spider";
+//            } else if (event.getSpell() == 6) {
+//                SummonedPolarBear monster = new SummonedPolarBear(EntityType.POLAR_BEAR, player.level());
+//                monster.setPos(spawnPos);
+//                logger.info("SummonedPolarBear {}", monster);
+//                player.level().addFreshEntity(monster);
+//                spellCast = "Summon Polar Bear";
+//            } else if (event.getSpell() == 7) {
+//                SummonedPhantom monster = new SummonedPhantom(EntityType.PHANTOM, player.level());
+//                monster.setPos(spawnPos);
+//                logger.info("SummonedPhantom {}", monster);
+//                player.level().addFreshEntity(monster);
+//                spellCast = "Summon Phantom";
+//            } else if (event.getSpell() == 8) {
+//                SummonedSlime monster = new SummonedSlime(EntityType.SLIME, player.level());
+//                monster.setPos(spawnPos);
+//                logger.info("SummonedSlime {}", monster);
+//                player.level().addFreshEntity(monster);
+//                spellCast = "Summon Slime";
+//            } else if (event.getSpell() == 9) {
+//                SummonedSkeletonArcher monster = new SummonedSkeletonArcher(EntityType.SKELETON, player.level());
+//                monster.setPos(spawnPos);
+//                logger.info("SummonedSkeletonArcher {}", monster);
+//                player.level().addFreshEntity(monster);
+//                spellCast = "Summon Skeleton Archer";
+//            }
+
             if (player instanceof ServerPlayer serverPlayer) {
                 // TODO change the BlockPos to Vec3 spawnPos above
                 // Spawn particles at summon position
@@ -121,6 +138,29 @@ public class CastingSystem {
             message.append(Component.literal(" cast ").withStyle(ChatFormatting.WHITE));
             message.append(Component.literal(spellCast).withStyle(ChatFormatting.AQUA));
             player.sendSystemMessage(message);
+        }
+    }
+
+    private static Object spawnSummonedEntity(Spell spell, Level level, Vec3 spawnPos, Player controller) {
+        try {
+            Class creatureClass = spell.getCreatureClass();
+            Constructor<?> constructor = creatureClass.getConstructor(EntityType.class, Level.class);
+            Object o = constructor.newInstance(spell.getEntityType(), level);
+            logger.info("Spell {}, {}", o, o.getClass());
+            if (o instanceof LivingEntity le) {
+                le.setPos(spawnPos);
+                logger.info("Summoned le {}", le);
+                level.addFreshEntity(le);
+                if (le instanceof ControlledEntity ce) {
+                    logger.info("ce is controlled");
+                    ce.setController(controller);
+                }
+            }
+            return o;
+        } catch (NoSuchMethodException | InstantiationException | IllegalAccessException |
+                 InvocationTargetException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 

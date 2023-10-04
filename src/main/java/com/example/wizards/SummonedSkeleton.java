@@ -22,10 +22,11 @@ public class SummonedSkeleton extends Skeleton implements ControlledEntity {
     private static final Logger logger = LogUtils.getLogger();
 
     private FollowControllerGoal followControllerGoal;
+    private ControllerHurtByTargetGoal controllerHurtByTargetGoal;
 
     public SummonedSkeleton(EntityType<? extends Skeleton> p_33570_, Level p_33571_) {
         super(p_33570_, p_33571_);
-        logger.info("SummonedSkeleton here");
+//        logger.info("SummonedSkeleton here");
     }
 
     protected void registerGoals() {
@@ -33,21 +34,44 @@ public class SummonedSkeleton extends Skeleton implements ControlledEntity {
 //        this.goalSelector.addGoal(3, new FleeSunGoal(this, 1.0D));
         this.followControllerGoal = new FollowControllerGoal(this, 1.0D);
         this.goalSelector.addGoal(5, followControllerGoal);
-        this.goalSelector.addGoal(3, new AvoidEntityGoal<>(this, Wolf.class, 6.0F, 1.0D, 1.2D));
+//        this.goalSelector.addGoal(3, new AvoidEntityGoal<>(this, Wolf.class, 6.0F, 1.0D, 1.2D));
         this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1.0D));
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 8.0F));
         this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));
-        this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, LivingEntity.class, true,
+
+        // TODO add assigned target goal
+        this.targetSelector.addGoal(3, new HurtByTargetGoal(this));
+        this.controllerHurtByTargetGoal = new ControllerHurtByTargetGoal(this);
+        this.targetSelector.addGoal(5, controllerHurtByTargetGoal);
+        // Attack other players
+        this.targetSelector.addGoal(7, new NearestAttackableTargetGoal<>(
+                this,
+                Player.class,
+                true,
+                (le -> !this.getController().equals(le))));
+        // Attack mobs controlled by other players
+        this.targetSelector.addGoal(9, new NearestAttackableTargetGoal<>(
+                this,
+                LivingEntity.class,
+                true,
                 (le -> {
                     if (le instanceof ControlledEntity ce) {
                         return !this.getController().equals(ce.getController());
                     }
-                    // TODO implement interface so that players will be targeted
-                    return false; // !this.getController().equals(le);
+                    return false;
                 })));
-        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolem.class, true));
-        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Turtle.class, 10, true, false, Turtle.BABY_ON_LAND_SELECTOR));
+
+//        this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
+//        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, LivingEntity.class, true,
+//                (le -> {
+//                    if (le instanceof ControlledEntity ce) {
+//                        return !this.getController().equals(ce.getController());
+//                    }
+//                    // TODO implement interface so that players will be targeted
+//                    return false; // !this.getController().equals(le);
+//                })));
+//        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolem.class, true));
+//        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Turtle.class, 10, true, false, Turtle.BABY_ON_LAND_SELECTOR));
     }
 
     protected boolean isSunBurnTick() {
@@ -55,8 +79,9 @@ public class SummonedSkeleton extends Skeleton implements ControlledEntity {
     }
 
     @Override
-    public void setController(LivingEntity livingEntity) {
-        followControllerGoal.setController(livingEntity);
+    public void setController(LivingEntity controller) {
+        this.followControllerGoal.setController(controller);
+        this.controllerHurtByTargetGoal.setController(controller);
     }
 
     @Override

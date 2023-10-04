@@ -1,5 +1,7 @@
 package com.example.wizards.client;
 
+import com.example.wizards.Spell;
+import com.example.wizards.Spells;
 import com.mojang.logging.LogUtils;
 import org.slf4j.Logger;
 
@@ -9,6 +11,11 @@ public class ClientSpellList {
 
     private static int index = 0;
     public static int[] spells = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+
+    public static Spell[] spells2 = {
+            Spells.SUMMON_ZOMBIE,
+            Spells.SUMMON_SKELETON
+    };
 
     public static void inc() {
         ++index;
@@ -48,6 +55,31 @@ public class ClientSpellList {
                 return "Skeleton Archer";
             default:
                 return "None";
+        }
+    }
+
+    public static String getKey(int spellNum) {
+        switch (spellNum) {
+            case 1:
+                return null;
+            case 2:
+                return null;
+            case 3:
+                return "summonzombie";
+            case 4:
+                return "summonskeleton";
+            case 5:
+                return "summonspider";
+            case 6:
+                return "summonpolarbear";
+            case 7:
+                return "summonphantom";
+            case 8:
+                return "summonslime";
+            case 9:
+                return "summonskeletonarcher";
+            default:
+                return null;
         }
     }
 }

@@ -66,6 +66,7 @@ public class SummonedZombie extends Zombie implements ControlledEntity {
         return false;
     }
 
+    @Override
     public void setController(LivingEntity controller) {
         this.followControllerGoal.setController(controller);
         this.controllerHurtByTargetGoal.setController(controller);

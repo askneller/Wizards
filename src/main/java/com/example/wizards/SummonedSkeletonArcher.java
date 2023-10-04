@@ -49,8 +49,8 @@ public class SummonedSkeletonArcher extends SummonedSkeleton {
 
     private static final Logger logger = LogUtils.getLogger();
 
-    public SummonedSkeletonArcher(EntityType<? extends Skeleton> p_33570_, Level p_33571_) {
-        super(p_33570_, p_33571_);
+    public SummonedSkeletonArcher(EntityType<? extends Skeleton> entityType, Level level) {
+        super(entityType, level);
     }
 
     protected void registerGoals() {
@@ -61,7 +61,7 @@ public class SummonedSkeletonArcher extends SummonedSkeleton {
         }
 
         populateDefaultEquipmentSlots(this.random, this.level().getCurrentDifficultyAt(this.blockPosition()));
-        logger.info("Goals {}", this.goalSelector);
+//        logger.info("Goals {}", this.goalSelector);
     }
 
     protected boolean isSunBurnTick() {
@@ -69,7 +69,7 @@ public class SummonedSkeletonArcher extends SummonedSkeleton {
     }
 
     protected void populateDefaultEquipmentSlots(RandomSource randomSource, DifficultyInstance instance) {
-        logger.info("populateDefaultEquipmentSlots, diff {}", instance);
+//        logger.info("populateDefaultEquipmentSlots, diff {}", instance);
         super.populateDefaultEquipmentSlots(randomSource, instance);
         this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.BOW));
     }
@@ -88,7 +88,7 @@ public class SummonedSkeletonArcher extends SummonedSkeleton {
 
                 this.bowGoal.setMinAttackInterval(i);
                 this.goalSelector.addGoal(4, this.bowGoal);
-                logger.info("Added");
+//                logger.info("Added");
             } else {
                 this.goalSelector.addGoal(4, this.meleeGoal);
             }
