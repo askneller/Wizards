@@ -10,6 +10,14 @@ import net.minecraftforge.client.gui.overlay.IGuiOverlay;
 import java.util.Map;
 import java.util.StringJoiner;
 
+import static com.example.wizards.ManaColor.BLACK;
+import static com.example.wizards.ManaColor.BLUE;
+import static com.example.wizards.ManaColor.COLORLESS;
+import static com.example.wizards.ManaColor.GREEN;
+import static com.example.wizards.ManaColor.RED;
+import static com.example.wizards.ManaColor.WHITE;
+import static com.example.wizards.client.ClientSideHelper.setRenderColor;
+
 public class ManaOverlay {
 
     private static String message = "Hello world";
@@ -24,7 +32,7 @@ public class ManaOverlay {
         int x = screenWidth / 2;
         int y = screenHeight;
         int startX = x + 100;
-        int startY = y - 30;
+        int startY = y - 37;
 
         if (fadeStartTimer > 0) {
             fadeStartTimer--;
@@ -35,9 +43,36 @@ public class ManaOverlay {
 
         float alpha = (float) fadeCountdown / COUNTDOWN_MAX;
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
-        String str = "Mana: " + getManaString(ClientManaPool.getPlayerPool()) + getAltDown();
-        guiGraphics.drawString(Minecraft.getInstance().font, str, startX, startY, 14737632);
+        ManaPool pool = ClientManaPool.getPlayerPool();
+
+        // Mana colors
+        setRenderColor(COLORLESS);
+        String manaForColor = getManaForColor(pool, COLORLESS);
+        guiGraphics.drawString(Minecraft.getInstance().font, manaForColor, startX, startY, 14737632);
+
+        setRenderColor(WHITE);
+        manaForColor = getManaForColor(pool, WHITE);
+        guiGraphics.drawString(Minecraft.getInstance().font, manaForColor, startX + 15, startY, 14737632);
+
+        setRenderColor(GREEN);
+        manaForColor = getManaForColor(pool, GREEN);
+        guiGraphics.drawString(Minecraft.getInstance().font, manaForColor, startX + 30, startY, 14737632);
+
+        setRenderColor(RED);
+        manaForColor = getManaForColor(pool, RED);
+        guiGraphics.drawString(Minecraft.getInstance().font, manaForColor, startX + 45, startY, 14737632);
+
+        setRenderColor(BLACK);
+        manaForColor = getManaForColor(pool, BLACK);
+        guiGraphics.drawString(Minecraft.getInstance().font, manaForColor, startX + 60, startY, 14737632);
+
+        setRenderColor(BLUE);
+        manaForColor = getManaForColor(pool, BLUE);
+        guiGraphics.drawString(Minecraft.getInstance().font, manaForColor, startX + 75, startY, 14737632);
+
+        // Left Alt
+        setRenderColor(WHITE);
+        guiGraphics.drawString(Minecraft.getInstance().font, getAltDown(), startX + 100, startY, 14737632);
     });
 
     private static String getManaString(ManaPool pool) {
@@ -50,9 +85,15 @@ public class ManaOverlay {
         return joiner.toString();
     }
 
+    private static String getManaForColor(ManaPool pool, ManaColor color) {
+        Map<ManaColor, Integer> colorIntegerMap = pool.getTotalMap();
+        Integer integer = colorIntegerMap.get(color);
+        return integer != null ? integer.toString() : "0";
+    }
+
     private static String getAltDown() {
         if (ClientSideHelper.isLeftAltDown()) {
-            return "     Alt Down";
+            return "LAlt";
         }
         return "";
     }

@@ -1,5 +1,7 @@
 package com.example.wizards.client;
 
+import com.example.wizards.ManaColor;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -117,6 +119,10 @@ public class ClientSideHelper {
                     0.5,
                     0.0);
         }
+    }
+
+    public static void setRenderColor(ManaColor color) {
+        RenderSystem.setShaderColor(color.R(), color.G(), color.B(), 1.0f);
     }
 
     /*

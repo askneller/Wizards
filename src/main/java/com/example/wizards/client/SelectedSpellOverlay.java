@@ -4,6 +4,8 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.Entity;
 import net.minecraftforge.client.gui.overlay.IGuiOverlay;
 import org.slf4j.Logger;
@@ -16,12 +18,18 @@ public class SelectedSpellOverlay {
         int x = screenWidth / 2;
         int y = screenHeight;
         int startX = x + 100;
-        int startY = y - 15;
+        int startY = y - 24;
 
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
-        String str = "Spell: " + ClientSpellList.getSelectedName() + "  [" + getSelected() + "]";
-        guiGraphics.drawString(Minecraft.getInstance().font, str, startX, startY, 14737632);
+        MutableComponent component = Component.literal(ClientSpellList.getSelectedName());
+        Component selectedCostString = ClientSpellList.getSelectedCostString();
+        component.append(" ");
+        component.append(selectedCostString);
+        guiGraphics.drawString(Minecraft.getInstance().font, component, startX, startY, 14737632);
+
+        String str = "[" + getSelected() + "]";
+        guiGraphics.drawString(Minecraft.getInstance().font, str, startX, startY + 13, 14737632);
     });
 
     private static String getSelected() {

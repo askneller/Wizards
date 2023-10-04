@@ -71,7 +71,7 @@ public class ForgeClientEvents {
             BlockPos finalPos = ClientSideHelper.getBlockHitLocation();
             player.getCapability(MANA_POOL).ifPresent(pool -> {
 
-                int spellNumber = ClientSpellList.getSelected();
+                int spellNumber = ClientSpellList.getSelectedNumber();
                 if (finalPos == null && spellNumber > 2) {
                     player.sendSystemMessage(Component.literal("Cannot cast spell: No target position").withStyle(ChatFormatting.RED));
                 } else {
