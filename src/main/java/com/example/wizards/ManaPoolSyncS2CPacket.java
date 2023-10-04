@@ -15,7 +15,7 @@ public class ManaPoolSyncS2CPacket {
 
     public ManaPoolSyncS2CPacket(ManaPool pool) {
         this.pool = pool;
-//        logger.info("ManaPoolSyncS2CPacket pool construct. {}", this.pool);
+        logger.info("ManaPoolSyncS2CPacket pool construct. {}", this.pool);
     }
 
     public ManaPoolSyncS2CPacket(FriendlyByteBuf buf) {
@@ -43,10 +43,12 @@ public class ManaPoolSyncS2CPacket {
 //    }
 
     public boolean handle(NetworkEvent.Context context) {
+        logger.info("In handle");
         context.enqueueWork(() -> {
             // HERE WE ARE ON THE CLIENT
+            logger.info("Setting client mana pool {}", pool);
             ClientManaPool.set(pool);
-//            logger.info("Set client mana pool {}", pool);
+            logger.info("Done");
         });
         return true;
     }

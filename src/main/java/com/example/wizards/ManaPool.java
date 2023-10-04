@@ -1,6 +1,7 @@
 package com.example.wizards;
 
 import com.mojang.logging.LogUtils;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @AutoRegisterCapability
@@ -24,6 +26,16 @@ public class ManaPool {
 
     public void addSource(ManaSource source) {
         this.sources.add(source);
+    }
+
+    public boolean removeSource(BlockPos pos) {
+        Optional<ManaSource> atPos = findAtPos(pos);
+        boolean removed = false;
+        if (atPos.isPresent()) {
+            sources.remove(atPos.get());
+            removed = true;
+        }
+        return removed;
     }
 
     public boolean isEmpty() {
@@ -106,6 +118,12 @@ public class ManaPool {
             }
             return false;
         }
+    }
+
+    private Optional<ManaSource> findAtPos(BlockPos pos) {
+        return sources.stream()
+                .filter(source -> source.getEntity() != null && source.getEntity().getBlockPos().equals(pos))
+                .findFirst();
     }
 
     public void saveNBTDate(CompoundTag nbt) {

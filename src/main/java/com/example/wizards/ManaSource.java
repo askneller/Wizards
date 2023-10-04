@@ -56,6 +56,10 @@ public class ManaSource {
         return available;
     }
 
+    public ManaTotemBlockEntity getEntity() {
+        return entity;
+    }
+
     public int spend() {
         if (isAvailable()) {
             this.available = false;
@@ -99,6 +103,7 @@ public class ManaSource {
                 ", amount=" + amount +
                 ", color=" + color +
                 ", available=" + available +
+                ", entity=" + entity +
                 '}';
     }
 }

@@ -47,7 +47,7 @@ public class ManaTotemBlockEntity extends BlockEntity {
 //            color = getColorForBiome(getBiomeStr(biome));
 //            logger.info("Color {}", color);
 //        }
-//        logger.info("Created state and pos: {}, {}", blockPos, blockState);
+        logger.info("Created pos and state: {}, {}", blockPos, blockState);
     }
 
     public ManaTotemBlockEntity(BlockPos blockPos, BlockState blockState, LivingEntity placedBy) {
@@ -98,7 +98,7 @@ public class ManaTotemBlockEntity extends BlockEntity {
         return color;
     }
 
-    protected LivingEntity getPlacedBy() {
+    public LivingEntity getPlacedBy() {
         return placedBy;
     }
 
@@ -206,10 +206,11 @@ public class ManaTotemBlockEntity extends BlockEntity {
     public String toString() {
         return "ManaTotemBlockEntity{" +
                 "id=" + id +
-                ", placedBy=" + placedBy +
+                ", placedBy=" + (placedBy != null) +
                 ", countdown=" + countdown +
                 ", available=" + available +
                 ", color=" + color +
+                ", worldPosition=" + worldPosition +
                 '}';
     }
 }

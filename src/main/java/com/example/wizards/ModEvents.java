@@ -1,16 +1,21 @@
 package com.example.wizards;
 
 import com.mojang.logging.LogUtils;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
+import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
@@ -24,8 +29,7 @@ public class ModEvents {
     private static final Logger logger = LogUtils.getLogger();
 
     @SubscribeEvent
-    public static void onServerStarting(ServerStartingEvent event)
-    {
+    public static void onServerStarting(ServerStartingEvent event) {
         // Do something when the server starts
         logger.info("HELLO from server starting");
     }
@@ -92,4 +96,35 @@ public class ModEvents {
         }
     }
 
+    @SubscribeEvent
+    public static void onBreakBlock(BlockEvent.BreakEvent event) {
+        if (event.getState().getBlock() instanceof ManaTotemBlock) {
+            logger.info("ManaTotemBlock BreakEvent at {}", event.getPos());
+
+            // TODO turn into an event
+            Player player = event.getPlayer();
+            Level level = player.level();
+            if (!level.isClientSide) {
+                level.getServer().getPlayerList().getPlayers().forEach(p -> {
+                    p.getCapability(MANA_POOL).ifPresent(pool -> {
+                        boolean removed = pool.removeSource(event.getPos());
+                        if (removed) {
+                            logger.info("Source found and removed from player {}", p);
+                            if (player instanceof ServerPlayer serverPlayer) {
+                                PacketHandler.sendToPlayer(serverPlayer, pool);
+                                logger.info("Updated pool: {}", pool);
+                            }
+                            sendDestroyMessage(p, event.getPlayer());
+                        }
+                    });
+                });
+            }
+        }
+    }
+
+    private static void sendDestroyMessage(Player owner, Player destroyer) {
+        MutableComponent message = Component.literal(destroyer.getName().getString()).withStyle(ChatFormatting.RED);
+        message.append(Component.literal(" destroyed your mana totem").withStyle(ChatFormatting.WHITE));
+        owner.sendSystemMessage(message);
+    }
 }

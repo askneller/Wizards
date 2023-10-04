@@ -65,7 +65,9 @@ public class ManaTotemBlock extends BaseEntityBlock {
 //        }
 //        logger.info("\n\nnewBlockEntity STACK TRACE");
 //        Util.printStackTrace(25);
-        return new ManaTotemBlockEntity(blockPos, blockState, null);
+        ManaTotemBlockEntity blockEntity = new ManaTotemBlockEntity(blockPos, blockState, null);
+//        entity = blockEntity;
+        return blockEntity;
     }
 
     @Override
@@ -102,10 +104,15 @@ public class ManaTotemBlock extends BaseEntityBlock {
 //        this.placedBy = entity;
     }
 
+    public ManaTotemBlockEntity getEntity() {
+        return entity;
+    }
+
     @Override
     public String toString() {
         return "ManaTotemBlock{" +
-                "placedBy=" + placedBy +
+//                "placedBy=" + placedBy +
+                ", entity=" + entity +
                 '}';
     }
 
