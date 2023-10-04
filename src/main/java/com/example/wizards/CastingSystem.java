@@ -78,53 +78,6 @@ public class CastingSystem {
                 }
             }
 
-//            else
-//            if (event.getSpell() == 3) {
-//                SummonedZombie zombie = new SummonedZombie(EntityType.ZOMBIE, player.level());
-//                zombie.setPos(spawnPos);
-//                logger.info("SummonedZombie {}", zombie);
-//                player.level().addFreshEntity(zombie);
-//                zombie.setController(player);
-//                spellCast = "Summon Zombie";
-//            } else if (event.getSpell() == 4) {
-//                SummonedSkeleton monster = new SummonedSkeleton(EntityType.SKELETON, player.level());
-//                monster.setPos(spawnPos);
-//                logger.info("SummonedSkeleton {}", monster);
-//                player.level().addFreshEntity(monster);
-//                monster.setController(player);
-//                spellCast = "Summon Skeleton";
-//            } else if (event.getSpell() == 5) {
-//                SummonedSpider monster = new SummonedSpider(EntityType.SPIDER, player.level());
-//                monster.setPos(spawnPos);
-//                logger.info("SummonedSpider {}", monster);
-//                player.level().addFreshEntity(monster);
-//                spellCast = "Summon Spider";
-//            } else if (event.getSpell() == 6) {
-//                SummonedPolarBear monster = new SummonedPolarBear(EntityType.POLAR_BEAR, player.level());
-//                monster.setPos(spawnPos);
-//                logger.info("SummonedPolarBear {}", monster);
-//                player.level().addFreshEntity(monster);
-//                spellCast = "Summon Polar Bear";
-//            } else if (event.getSpell() == 7) {
-//                SummonedPhantom monster = new SummonedPhantom(EntityType.PHANTOM, player.level());
-//                monster.setPos(spawnPos);
-//                logger.info("SummonedPhantom {}", monster);
-//                player.level().addFreshEntity(monster);
-//                spellCast = "Summon Phantom";
-//            } else if (event.getSpell() == 8) {
-//                SummonedSlime monster = new SummonedSlime(EntityType.SLIME, player.level());
-//                monster.setPos(spawnPos);
-//                logger.info("SummonedSlime {}", monster);
-//                player.level().addFreshEntity(monster);
-//                spellCast = "Summon Slime";
-//            } else if (event.getSpell() == 9) {
-//                SummonedSkeletonArcher monster = new SummonedSkeletonArcher(EntityType.SKELETON, player.level());
-//                monster.setPos(spawnPos);
-//                logger.info("SummonedSkeletonArcher {}", monster);
-//                player.level().addFreshEntity(monster);
-//                spellCast = "Summon Skeleton Archer";
-//            }
-
             if (player instanceof ServerPlayer serverPlayer) {
                 // TODO change the BlockPos to Vec3 spawnPos above
                 // Spawn particles at summon position
