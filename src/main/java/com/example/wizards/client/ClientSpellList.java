@@ -19,7 +19,7 @@ public class ClientSpellList {
     private static final Logger logger = LogUtils.getLogger();
 
     private static int index = 0;
-    public static int[] spells = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+    public static int[] spells = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
 
     public static void inc() {
         ++index;
@@ -57,6 +57,8 @@ public class ClientSpellList {
                 return "Slime";
             case 9:
                 return "Skeleton Archer";
+            case 10:
+                return "Cone of Arrows";
             default:
                 return "None";
         }

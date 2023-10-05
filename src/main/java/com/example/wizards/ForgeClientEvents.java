@@ -17,6 +17,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.slf4j.Logger;
 
+import java.util.Optional;
+
 import static com.example.wizards.ManaPoolProvider.MANA_POOL;
 import static com.example.wizards.Wizards.MOD_ID;
 
@@ -72,7 +74,8 @@ public class ForgeClientEvents {
             player.getCapability(MANA_POOL).ifPresent(pool -> {
 
                 int spellNumber = ClientSpellList.getSelectedNumber();
-                if (finalPos == null && spellNumber > 2) {
+                Optional<Spell> namedSpell = ClientSpellList.getSelected();
+                if (finalPos == null && namedSpell.isPresent()) {
                     player.sendSystemMessage(Component.literal("Cannot cast spell: No target position").withStyle(ChatFormatting.RED));
                 } else {
                     if (finalPos == null) {

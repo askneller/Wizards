@@ -9,6 +9,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Arrow;
 import net.minecraft.world.entity.projectile.LargeFireball;
 import net.minecraft.world.entity.projectile.SmallFireball;
 import net.minecraft.world.level.Level;
@@ -33,14 +34,14 @@ public class CastingSystem {
     @SubscribeEvent
     public static void onAttemptCast(AttemptCastEvent event) {
         Player player = event.getPlayer();
-        logger.info("Player {} trying to cast spell {}", player, event.getSpell());
+//        logger.info("Player {} trying to cast spell {}", player, event.getSpell());
 
         Optional<List<ManaColor>> cost = Spells.getSpellCostByName(event.getSpellName());
-        ConsumeManaEvent consumeManaEvent = new ConsumeManaEvent(player, cost.orElse(Arrays.asList(ManaColor.COLORLESS, ManaColor.RED)));
+        ConsumeManaEvent consumeManaEvent = new ConsumeManaEvent(player, cost.orElse(Arrays.asList(ManaColor.COLORLESS)));
         MinecraftForge.EVENT_BUS.post(consumeManaEvent);
 
-        logger.info("ConsumeManaEvent result: {}", consumeManaEvent.getResult());
-        logger.info("BlockPos {}", event.getBlockPos());
+//        logger.info("ConsumeManaEvent result: {}", consumeManaEvent.getResult());
+//        logger.info("BlockPos {}", event.getBlockPos());
 
         String spellCast = null;
         if (consumeManaEvent.hasResult() && consumeManaEvent.getResult() == Event.Result.DENY) {
@@ -58,7 +59,7 @@ public class CastingSystem {
             smallfireball.setPos(smallfireball.getX(), player.getY(0.5D) + 0.5D, smallfireball.getZ());
             player.level().addFreshEntity(smallfireball);
             spellCast = "Small Fireball";
-        }  else if (event.getSpell() == 2) {
+        } else if (event.getSpell() == 2) {
             Vec3 lookAngle = player.getLookAngle();
             LargeFireball fireball =
                     new LargeFireball(player.level(), player, lookAngle.x, lookAngle.y, lookAngle.z,
@@ -66,6 +67,18 @@ public class CastingSystem {
             fireball.setPos(fireball.getX(), player.getY(0.5D) + 0.5D, fireball.getZ());
             player.level().addFreshEntity(fireball);
             spellCast = "Large Fireball";
+        } else if (event.getSpell() == 10) {
+            Vec3 viewVector = player.getViewVector(1.0f);
+            logger.info("View vec {}", viewVector);
+            for (int i = 0; i < 10; i++) {
+                Vec3 offset = viewVector.offsetRandom(player.level().random, 0.2f);
+                logger.info("offset vec {}", offset);
+                Arrow arrow =
+                        new Arrow(player.level(), player); // set position to player
+                arrow.shoot(offset.x, offset.y, offset.z, 2.5f, 1.0f);
+                player.level().addFreshEntity(arrow);
+            }
+            spellCast = "Cone of Arrows";
         } else if (event.getBlockPos() != null && !event.getBlockPos().equals(BlockPos.ZERO)) {
             Vec3 spawnPos = new Vec3(
                     event.getBlockPos().getX() + 0.5,
