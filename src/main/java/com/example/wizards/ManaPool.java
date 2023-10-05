@@ -1,5 +1,6 @@
 package com.example.wizards;
 
+import com.example.wizards.client.ClientSpellList;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -9,10 +10,14 @@ import net.minecraftforge.common.capabilities.AutoRegisterCapability;
 import org.slf4j.Logger;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @AutoRegisterCapability
@@ -69,6 +74,15 @@ public class ManaPool {
                                 Integer::sum));
     }
 
+    public Map<ManaColor, Integer> getTotalMap(Set<Integer> excludedIds) {
+        return this.sources.stream()
+                .collect(
+                        Collectors.toMap(
+                                ManaSource::getColor,
+                                source -> source.isAvailable() && !excludedIds.contains(source.getId()) ? source.getAmount() : 0,
+                                Integer::sum));
+    }
+
     public Map<ManaColor, List<ManaSource>> getMap() {
         return this.sources.stream().collect(Collectors.groupingBy(ManaSource::getColor));
     }
@@ -118,6 +132,94 @@ public class ManaPool {
             }
             return false;
         }
+    }
+
+    public boolean consume(List<ManaColor> cost) {
+        logger.info("Trying to consume {}", cost);
+        Map<ManaColor, List<ManaSource>> sourceMap = getMap();
+
+        // TODO may be able to implement using stream.takeWhile
+        Set<Integer> sourceIds = new HashSet<>();
+        int unMatchedColorless = 0;
+        for (ManaColor color : cost) {
+            List<ManaSource> colorSources = sourceMap.get(color);
+            if (colorSources == null) {
+                // No mana of that color
+                if (color == ManaColor.COLORLESS) {
+                    unMatchedColorless++;
+                } else {
+                    return false;
+                }
+            } else {
+                ManaSource source = colorSources.stream()
+                        .filter(s -> s.isAvailable() && !sourceIds.contains(s.getId()))
+                        .findFirst()
+                        .orElse(null);
+                // A null source means we have no more of that color left
+                if (source == null) {
+                    if (color == ManaColor.COLORLESS) {
+                        unMatchedColorless++;
+                    } else {
+                        return false;
+                    }
+                } else {
+                    sourceIds.add(source.getId());
+                }
+            }
+
+        }
+//        logger.info("sourceIds {}", sourceIds);
+//        logger.info("unMatchedColorless {}", unMatchedColorless);
+        // If sourceIds.size == cost.size then we have an exact match, including colorless
+        if (sourceIds.size() == cost.size()) {
+//            logger.info("sourceIds {}", sourceIds);
+            List<ManaSource> sourcesToUse = sources.stream()
+                    .filter(s -> sourceIds.contains(s.getId()))
+                    .toList();
+            logger.info("sourcesToUse {}", sourcesToUse);
+            // consume
+            sourcesToUse.forEach(ManaSource::spend);
+            return true;
+        } else {
+            // Match remaining colorless
+            List<ManaSource> remaining = sources.stream()
+                    .filter(s -> s.isAvailable() && !sourceIds.contains(s.getId()))
+                    .toList();
+            if (remaining.size() < unMatchedColorless) {
+                logger.info("Not enough remaining mana ({}) to match colorless", remaining.size());
+                return false;
+            }
+
+            Map<ManaColor, List<ManaSource>> remainingByColorMap = remaining.stream()
+                    .collect(Collectors.groupingBy(ManaSource::getColor));
+//            logger.info("remainingByColorMap {}", remainingByColorMap);
+
+            // Sort by most abundant color to least
+            List<Map.Entry<ManaColor, List<ManaSource>>> colorsByAbundance = new ArrayList<>(remainingByColorMap.entrySet());
+            colorsByAbundance.sort(Comparator.comparing(manaColorListEntry -> manaColorListEntry.getValue().size()));
+            Collections.reverse(colorsByAbundance);
+//            logger.info("Remaining colors by abundance {}", colorsByAbundance);
+
+            List<ManaSource> usableSources = colorsByAbundance.stream()
+                    .flatMap(manaColorListEntry -> manaColorListEntry.getValue().stream())
+                    .toList();
+//            logger.info("usableSources {}", usableSources);
+
+            // Grab as many as we need
+            sourceIds.addAll(usableSources.stream()
+                    .limit(unMatchedColorless)
+                    .map(ManaSource::getId)
+                    .toList());
+
+            List<ManaSource> sourcesToUse = sources.stream()
+                    .filter(s -> sourceIds.contains(s.getId()))
+                    .toList();
+            logger.info("sourcesToUse {}", sourcesToUse);
+            // consume
+            sourcesToUse.forEach(ManaSource::spend);
+            return true;
+        }
+
     }
 
     private Optional<ManaSource> findAtPos(BlockPos pos) {

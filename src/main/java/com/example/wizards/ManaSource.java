@@ -96,14 +96,24 @@ public class ManaSource {
         available = nbt.getBoolean("mana_source_available");
     }
 
+//    @Override
+//    public String toString() {
+//        return "ManaSource{" +
+//                "id=" + id +
+//                ", amount=" + amount +
+//                ", color=" + color +
+//                ", available=" + available +
+//                ", entity=" + entity +
+//                '}';
+//    }
+
+
     @Override
     public String toString() {
         return "ManaSource{" +
                 "id=" + id +
-                ", amount=" + amount +
                 ", color=" + color +
                 ", available=" + available +
-                ", entity=" + entity +
                 '}';
     }
 }

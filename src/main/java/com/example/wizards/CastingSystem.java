@@ -20,6 +20,8 @@ import org.slf4j.Logger;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import static com.example.wizards.ManaPoolProvider.MANA_POOL;
@@ -32,8 +34,9 @@ public class CastingSystem {
     public static void onAttemptCast(AttemptCastEvent event) {
         Player player = event.getPlayer();
         logger.info("Player {} trying to cast spell {}", player, event.getSpell());
-        int manaAmount = event.getSpell() == 1 ? 1 : 2;
-        ConsumeManaEvent consumeManaEvent = new ConsumeManaEvent(manaAmount, ManaColor.COLORLESS, player);
+
+        Optional<List<ManaColor>> cost = Spells.getSpellCostByName(event.getSpellName());
+        ConsumeManaEvent consumeManaEvent = new ConsumeManaEvent(player, cost.orElse(Arrays.asList(ManaColor.COLORLESS, ManaColor.RED)));
         MinecraftForge.EVENT_BUS.post(consumeManaEvent);
 
         logger.info("ConsumeManaEvent result: {}", consumeManaEvent.getResult());

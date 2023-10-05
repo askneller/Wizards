@@ -20,6 +20,7 @@ public class SummonedSlime extends Slime {
         super(p_33588_, p_33589_);
     }
 
+    // TODO prevent controlled slimes from harming the player if they run into them
     protected void registerGoals() {
         this.goalSelector.addGoal(1, new SummonedSlime.SlimeFloatGoal(this));
         this.goalSelector.addGoal(2, new SummonedSlime.SlimeAttackGoal(this));

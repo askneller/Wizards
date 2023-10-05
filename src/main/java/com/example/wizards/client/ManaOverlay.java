@@ -75,15 +75,15 @@ public class ManaOverlay {
         guiGraphics.drawString(Minecraft.getInstance().font, getAltDown(), startX + 100, startY, 14737632);
     });
 
-    private static String getManaString(ManaPool pool) {
-        Map<ManaColor, Integer> colorIntegerMap = pool.getTotalMap();
-        StringJoiner joiner = new StringJoiner(", ");
-        for (Map.Entry<ManaColor, Integer> entry : colorIntegerMap.entrySet()){
-            String str = entry.getKey().getChar() + " " + entry.getValue();
-            joiner.add(str);
-        }
-        return joiner.toString();
-    }
+//    private static String getManaString(ManaPool pool) {
+//        Map<ManaColor, Integer> colorIntegerMap = pool.getTotalMap();
+//        StringJoiner joiner = new StringJoiner(", ");
+//        for (Map.Entry<ManaColor, Integer> entry : colorIntegerMap.entrySet()){
+//            String str = entry.getKey().getChar() + " " + entry.getValue();
+//            joiner.add(str);
+//        }
+//        return joiner.toString();
+//    }
 
     private static String getManaForColor(ManaPool pool, ManaColor color) {
         Map<ManaColor, Integer> colorIntegerMap = pool.getTotalMap();
