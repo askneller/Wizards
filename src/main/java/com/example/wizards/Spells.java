@@ -9,13 +9,13 @@ import java.util.Optional;
 
 public class Spells {
 
-    public static final Spell SUMMON_ZOMBIE = new Spell("Zombie", SummonedZombie.class, EntityType.ZOMBIE, ManaColor.BLACK);
-    public static final Spell SUMMON_SKELETON = new Spell("Skeleton", SummonedSkeleton.class, EntityType.SKELETON, ManaColor.BLACK);
-    public static final Spell SUMMON_SPIDER = new Spell("Spider", SummonedSpider.class, EntityType.SPIDER, ManaColor.RED);
-    public static final Spell SUMMON_POLAR_BEAR = new Spell("Polar Bear", SummonedPolarBear.class, EntityType.POLAR_BEAR, ManaColor.COLORLESS, ManaColor.BLUE, ManaColor.BLUE);
+    public static final Spell SUMMON_ZOMBIE = new Spell("Zombie", SummonedZombie.class, EntityType.ZOMBIE, ManaColor.COLORLESS);
+    public static final Spell SUMMON_SKELETON = new Spell("Skeleton", SummonedSkeleton.class, EntityType.SKELETON, ManaColor.COLORLESS);
+    public static final Spell SUMMON_SPIDER = new Spell("Spider", SummonedSpider.class, EntityType.SPIDER, ManaColor.COLORLESS);
+    public static final Spell SUMMON_POLAR_BEAR = new Spell("Polar Bear", SummonedPolarBear.class, EntityType.POLAR_BEAR, ManaColor.COLORLESS, ManaColor.COLORLESS);
     public static final Spell SUMMON_PHANTOM = new Spell("Phantom", SummonedPhantom.class, EntityType.PHANTOM, ManaColor.COLORLESS, ManaColor.COLORLESS);
-    public static final Spell SUMMON_SLIME = new Spell("Slime", SummonedSlime.class, EntityType.SLIME, ManaColor.COLORLESS, ManaColor.GREEN);
-    public static final Spell SUMMON_SKELETON_ARCHER = new Spell("Skeleton Archer", SummonedSkeletonArcher.class, EntityType.SKELETON, ManaColor.COLORLESS, ManaColor.COLORLESS, ManaColor.BLACK);
+    public static final Spell SUMMON_SLIME = new Spell("Slime", SummonedSlime.class, EntityType.SLIME, ManaColor.COLORLESS, ManaColor.COLORLESS);
+    public static final Spell SUMMON_SKELETON_ARCHER = new Spell("Skeleton Archer", SummonedSkeletonArcher.class, EntityType.SKELETON, ManaColor.COLORLESS, ManaColor.COLORLESS);
 
     private static final Map<String, Spell> spellsByName = new HashMap<>();
 

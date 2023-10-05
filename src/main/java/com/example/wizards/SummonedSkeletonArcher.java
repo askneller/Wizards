@@ -45,7 +45,6 @@ public class SummonedSkeletonArcher extends SummonedSkeleton {
         }
 
         populateDefaultEquipmentSlots(this.random, this.level().getCurrentDifficultyAt(this.blockPosition()));
-//        logger.info("Goals {}", this.goalSelector);
     }
 
     protected boolean isSunBurnTick() {
@@ -53,14 +52,13 @@ public class SummonedSkeletonArcher extends SummonedSkeleton {
     }
 
     protected void populateDefaultEquipmentSlots(RandomSource randomSource, DifficultyInstance instance) {
-//        logger.info("populateDefaultEquipmentSlots, diff {}", instance);
         super.populateDefaultEquipmentSlots(randomSource, instance);
         this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.BOW));
     }
 
     @Override
     public void reassessWeaponGoal() {
-        if (this.level() != null && !this.level().isClientSide) {
+        if (!this.level().isClientSide) {
             this.goalSelector.removeGoal(this.meleeGoal);
             this.goalSelector.removeGoal(this.bowGoal);
             ItemStack itemstack = this.getItemInHand(ProjectileUtil.getWeaponHoldingHand(this, item -> item instanceof net.minecraft.world.item.BowItem));

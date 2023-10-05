@@ -25,6 +25,7 @@ public class SummonedSkeleton extends Skeleton implements ControlledEntity {
     }
 
     protected void registerGoals() {
+        // Attack goals (bow and melee) added in AbstractSkeleton.reassessWeaponGoal
         this.followControllerGoal = new FollowControllerGoal(this, 1.0D);
         this.goalSelector.addGoal(5, followControllerGoal);
         this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1.0D));
