@@ -97,27 +97,26 @@ public class ClientSideHelper {
         // TODO move this somewhere else
         ClientLevel level = Minecraft.getInstance().level;
         ClientSideHelper.createSummonParticles(level, blockPos);
-//        makeAreaOfEffectCloud(level, blockPos.getCenter(), Minecraft.getInstance().player, ItemStack.EMPTY, Potions.EMPTY);
     }
 
     public static void createSummonParticles(Level level, BlockPos blockPos) {
         RandomSource randomsource = level.getRandom();
 
-        // TODO change color or particles (something purple-y)
-        // TODO try to find Zombie death particle spawn code
-        // TODO find Witch potion explode code, has different colored particles
-        for (int i = 0; i < 20; i++) {
+        // For more particle stuff see net.minecraft.world.entity.AreaEffectCloud.tick
+        for (int i = 0; i < 60; i++) {
             double rx = (randomsource.nextDouble() * 1.5 - 0.75);
+            double ry = (randomsource.nextDouble() * 1.5 - 0.75);
             double rz = (randomsource.nextDouble() * 1.5 - 0.75);
-            level.addParticle(ParticleTypes.EFFECT, false,
-                    // position
+
+            level.addAlwaysVisibleParticle(ParticleTypes.ENTITY_EFFECT,
+                    true,
                     blockPos.getX() + 0.5 + rx,
-                    blockPos.getY() + 1.0,
+                    blockPos.getY() + 1.5 + ry,
                     blockPos.getZ() + 0.5 + rz,
-                    // impulse
-                    0.0,
-                    0.5,
-                    0.0);
+                    // color
+                    (204 / 255.0),
+                    (80 / 255.0),
+                    (202 / 255.0));
         }
     }
 
