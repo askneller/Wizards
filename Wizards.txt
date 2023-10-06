@@ -35,7 +35,7 @@ Visuals
 - Consolidate client GUIs into one
 - Outline around selected creature / target
 Coding / Other
-- List of player's controlled entities
+- List of player's controlled entities <PARTIAL - CastingSystem.playerControlled>
 - ManaSource as interface on ManaTotemBlockEntity
 - Make all summoned creatures extend common ancestor
 - Spell castable predicates that check position, surrounding blocks etc.

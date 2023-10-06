@@ -21,7 +21,7 @@ public class Spells {
     public static final Spell SUMMON_SKELETON_ARCHER = new Spell("Skeleton Archer", SummonedSkeletonArcher.class, EntityType.SKELETON, ManaColor.COLORLESS, ManaColor.COLORLESS);
     public static final Spell SMALL_FIREBALL = new Spell.Builder("Fireball (S)").withProjectile(SmallFireball.class, EntityType.SMALL_FIREBALL).withCost(ManaColor.COLORLESS).build();
     public static final Spell LARGE_FIREBALL = new Spell.Builder("Fireball (L)").withProjectile(LargeFireball.class, EntityType.FIREBALL).withPower(2.0f).withCost(ManaColor.COLORLESS, ManaColor.COLORLESS).build();
-    public static final Spell CODE_OF_ARROWS = new Spell.Builder("Cone of Arrows").withProjectile(Arrow.class, EntityType.ARROW).withQuantity(10).withPower(2.5f).withSpread(0.2f).withCost(ManaColor.COLORLESS, ManaColor.COLORLESS).build();
+    public static final Spell CODE_OF_ARROWS = new Spell.Builder("Cone of Arrows").withProjectile(Arrow.class, EntityType.ARROW).withQuantity(10).withPower(3.0f).withSpread(0.2f).withCost(ManaColor.COLORLESS, ManaColor.COLORLESS).build();
 
     private static final Map<String, Spell> spellsByName = new HashMap<>();
 

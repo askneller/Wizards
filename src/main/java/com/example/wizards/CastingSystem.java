@@ -24,6 +24,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -119,9 +120,10 @@ public class CastingSystem {
 
     private static Object spawnProjectileEntity(Spell spell, Level level, Player player) {
         Vec3 lookAngle = player.getLookAngle();
+        Object o = null;
         for (int i = 0; i < spell.getQuantity(); i++) {
 
-            Object o = createProjectileObject(spell, level, player, lookAngle);
+            o = createProjectileObject(spell, level, player, lookAngle);
 
             if (o == null) {
                 logger.error("Failed to create projectile of class {}", spell.getProjectileClass());
@@ -137,9 +139,8 @@ public class CastingSystem {
                 projectile.shoot(offset.x, offset.y, offset.z, spell.getPower(), 1.0f);
                 level.addFreshEntity(projectile);
             }
-            return o;
         }
-        return null;
+        return o;
     }
 
     private static Object createProjectileObject(Spell spell, Level level, Player player, Vec3 lookAngle) {
@@ -202,16 +203,20 @@ public class CastingSystem {
         }
 
         if (entity instanceof LivingEntity living) {
-            List<LivingEntity> livingEntities = playerControlled.get(player.getStringUUID());
-            if (livingEntities != null) {
-                for (LivingEntity controlled : livingEntities) {
+            List<LivingEntity> livingEntities = playerControlled.computeIfAbsent(player.getStringUUID(), k -> new ArrayList<>());
+            logger.info("Setting target for {} entities", livingEntities.size());
+            Iterator<LivingEntity> iterator = livingEntities.iterator();
+            while (iterator.hasNext()) {
+                LivingEntity controlled = iterator.next();
+                if (controlled.isRemoved()) {
+                    logger.info("Removing: {}", controlled);
+                    iterator.remove();
+                } else {
                     if (controlled instanceof ControlledEntity ce) {
                         logger.info("Assigning target to {}", controlled);
                         ce.assignTarget(living);
                     }
                 }
-            } else {
-                logger.error("Player controlled entities is null for {}", player);
             }
         }
     }
