@@ -6,6 +6,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -20,8 +21,11 @@ import org.slf4j.Logger;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import static com.example.wizards.ManaPoolProvider.MANA_POOL;
@@ -29,6 +33,9 @@ import static com.example.wizards.ManaPoolProvider.MANA_POOL;
 public class CastingSystem {
 
     private static final Logger logger = LogUtils.getLogger();
+
+    // TODO move to a ControlledEntitySystem
+    private static final Map<String, List<LivingEntity>> playerControlled = new HashMap<>();
 
     @SubscribeEvent
     public static void onAttemptCast(AttemptCastEvent event) {
@@ -99,6 +106,7 @@ public class CastingSystem {
                 if (le instanceof ControlledEntity ce) {
                     logger.info("ce is controlled");
                     ce.setController(controller);
+                    addPlayerControlledEntity(controller, le);
                 }
             }
             return o;
@@ -154,6 +162,11 @@ public class CastingSystem {
         return null;
     }
 
+    private static void addPlayerControlledEntity(Player player, LivingEntity entity) {
+        List<LivingEntity> livingEntities = playerControlled.computeIfAbsent(player.getStringUUID(), k -> new ArrayList<>());
+        livingEntities.add(entity);
+    }
+
     @SubscribeEvent
     public static void onManaRegenerate(ManaRegenerateEvent event) {
         LivingEntity owner = event.getOwner();
@@ -174,5 +187,44 @@ public class CastingSystem {
                 }
             }
         }
+    }
+
+    // TODO move to a ControlledEntitySystem
+    @SubscribeEvent
+    public static void onPlayerSelectedEntity(PlayerSelectedEntityEvent event) {
+        ServerPlayer player = event.getPlayer();
+        Entity entity = player.level().getEntity(event.getSelectedEntityId());
+        logger.info("Player: {}", player);
+        logger.info("Selected {}: {}", event.getSelectedEntityId(), entity);
+
+        if (!isAttackableTarget(player, entity)) {
+            return;
+        }
+
+        if (entity instanceof LivingEntity living) {
+            List<LivingEntity> livingEntities = playerControlled.get(player.getStringUUID());
+            if (livingEntities != null) {
+                for (LivingEntity controlled : livingEntities) {
+                    if (controlled instanceof ControlledEntity ce) {
+                        logger.info("Assigning target to {}", controlled);
+                        ce.assignTarget(living);
+                    }
+                }
+            } else {
+                logger.error("Player controlled entities is null for {}", player);
+            }
+        }
+    }
+
+    private static boolean isAttackableTarget(ServerPlayer player, Entity entity) {
+        if (entity instanceof LivingEntity living) {
+            if (living instanceof ControlledEntity controlled) {
+                if (controlled.getController().equals(player)) {
+                    logger.warn("You cannot assign your controlled creature as a target");
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }

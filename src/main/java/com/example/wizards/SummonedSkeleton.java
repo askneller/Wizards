@@ -18,6 +18,7 @@ public class SummonedSkeleton extends Skeleton implements ControlledEntity {
     private static final Logger logger = LogUtils.getLogger();
 
     private FollowControllerGoal followControllerGoal;
+    private AssignedTargetGoal assignedTargetGoal;
     private ControllerHurtByTargetGoal controllerHurtByTargetGoal;
 
     public SummonedSkeleton(EntityType<? extends Skeleton> p_33570_, Level p_33571_) {
@@ -32,7 +33,8 @@ public class SummonedSkeleton extends Skeleton implements ControlledEntity {
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 8.0F));
         this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));
 
-        // TODO add assigned target goal
+        this.assignedTargetGoal = new AssignedTargetGoal(this);
+        this.targetSelector.addGoal(1, this.assignedTargetGoal);
         this.targetSelector.addGoal(3, new HurtByTargetGoal(this));
         this.controllerHurtByTargetGoal = new ControllerHurtByTargetGoal(this);
         this.targetSelector.addGoal(5, controllerHurtByTargetGoal);
@@ -67,6 +69,11 @@ public class SummonedSkeleton extends Skeleton implements ControlledEntity {
 
     @Override
     public LivingEntity getController() {
-        return followControllerGoal.getController();
+        return this.followControllerGoal.getController();
+    }
+
+    @Override
+    public void assignTarget(LivingEntity livingEntity) {
+        this.assignedTargetGoal.assignTarget(livingEntity);
     }
 }

@@ -45,6 +45,9 @@ public class PacketHandler {
         register(CastResultS2CPacket.class, CastResultS2CPacket::toBytes, CastResultS2CPacket::new,
                 CastResultS2CPacket::handle, NetworkDirection.PLAY_TO_CLIENT);
 
+        register(EntitySelectedC2SPacket.class, EntitySelectedC2SPacket::toBytes, EntitySelectedC2SPacket::new,
+                EntitySelectedC2SPacket::handle, NetworkDirection.PLAY_TO_SERVER);
+
     }
 
     private static <T> void register(Class<T> cls,
@@ -84,5 +87,9 @@ public class PacketHandler {
 
     public static void sendToServer(Player player, int spellId, BlockPos blockPos) {
         INSTANCE.sendToServer(new AttemptCastC2SPacket(spellId, player.getId(), blockPos));
+    }
+
+    public static void sendToServer(int entityId) {
+        INSTANCE.sendToServer(new EntitySelectedC2SPacket(entityId));
     }
 }

@@ -12,7 +12,7 @@ import java.util.EnumSet;
 public class FollowControllerGoal extends Goal {
 
     private static final Logger logger = LogUtils.getLogger();
-    private static final double DISTANCE = 8.0;
+    private static final double DISTANCE = 5.0;
     private static final double DISTANCE_SQ = DISTANCE * DISTANCE;
     private static final double MAX_DISTANCE = 20.0;
     private static final double MAX_DISTANCE_SQ = MAX_DISTANCE * MAX_DISTANCE;

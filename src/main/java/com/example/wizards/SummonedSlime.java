@@ -72,6 +72,11 @@ public class SummonedSlime extends Slime implements ControlledEntity {
         return followControllerGoal.getController();
     }
 
+    @Override
+    public void assignTarget(LivingEntity livingEntity) {
+
+    }
+
     static class SlimeFloatGoal extends Goal {
         private final Slime slime;
 

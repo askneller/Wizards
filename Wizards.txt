@@ -18,13 +18,26 @@ first pass
 
 
 TODO
+Gameplay Systems
+- <DONE> Assignable targets for summoned creatures
+- Non-instant casting times
+- Other spell types like Enchantment, Instant (e.g. Counterspell)
+- Standard power / defense system for all creatures
+- Individually assignable targets for summoned creatures
+  [Future]
+- Abilities from MtG like Trample, Flying, Vigilance etc.
+- Permanents with activatable effects
+- Variable costs / pump-able spells (e.g. for extra power)
+- Draw mana separate from casting
+Visuals
 - Casting visual indicator (more particles), and progress bar
 - Mana totems invisible to non-owner
-- Remove mana sources on destroy totem
-- Summoned creature behaviour (lots done)
+- Consolidate client GUIs into one
+- Outline around selected creature / target
+Coding / Other
+- List of player's controlled entities
 - ManaSource as interface on ManaTotemBlockEntity
+- Make all summoned creatures extend common ancestor
+- Spell castable predicates that check position, surrounding blocks etc.
 - Separate out spell effect system
 - Spells as json files
-- Spell castable predicates that check position, surrounding blocks etc.
-- Extend summon creature range limit beyond ui block outline limit
-- Consolidate client GUIs into one

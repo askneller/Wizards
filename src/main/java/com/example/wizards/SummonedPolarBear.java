@@ -16,6 +16,7 @@ import net.minecraft.world.level.Level;
 public class SummonedPolarBear extends PolarBear implements ControlledEntity {
 
     private FollowControllerGoal followControllerGoal;
+    private AssignedTargetGoal assignedTargetGoal;
     private ControllerHurtByTargetGoal controllerHurtByTargetGoal;
 
     public SummonedPolarBear(EntityType<? extends PolarBear> p_29519_, Level p_29520_) {
@@ -31,9 +32,11 @@ public class SummonedPolarBear extends PolarBear implements ControlledEntity {
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
 
-        this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
+        this.assignedTargetGoal = new AssignedTargetGoal(this);
+        this.targetSelector.addGoal(1, this.assignedTargetGoal);
+        this.targetSelector.addGoal(3, new HurtByTargetGoal(this));
         this.controllerHurtByTargetGoal = new ControllerHurtByTargetGoal(this);
-        this.targetSelector.addGoal(3, controllerHurtByTargetGoal);
+        this.targetSelector.addGoal(5, controllerHurtByTargetGoal);
         // Attack other players
         this.targetSelector.addGoal(7, new NearestAttackableTargetGoal<>(
                 this,
@@ -55,14 +58,19 @@ public class SummonedPolarBear extends PolarBear implements ControlledEntity {
     }
 
     @Override
-    public void setController(LivingEntity livingEntity) {
-        this.followControllerGoal.setController(livingEntity);
-        this.controllerHurtByTargetGoal.setController(livingEntity);
+    public void setController(LivingEntity controller) {
+        this.followControllerGoal.setController(controller);
+        this.controllerHurtByTargetGoal.setController(controller);
     }
 
     @Override
     public LivingEntity getController() {
         return this.followControllerGoal.getController();
+    }
+
+    @Override
+    public void assignTarget(LivingEntity livingEntity) {
+        this.assignedTargetGoal.assignTarget(livingEntity);
     }
 
     class PolarBearMeleeAttackGoal extends MeleeAttackGoal {

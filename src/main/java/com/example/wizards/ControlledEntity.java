@@ -7,4 +7,6 @@ public interface ControlledEntity {
     void setController(LivingEntity livingEntity);
 
     LivingEntity getController();
+
+    void assignTarget(LivingEntity livingEntity);
 }

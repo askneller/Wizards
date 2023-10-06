@@ -35,6 +35,9 @@ public class ForgeClientEvents {
                 if (cursorEntityHit != null) {
                     Entity hit = cursorEntityHit.getEntity();
                     ClientSideHelper.setSelectedEntity(hit);
+                    // Assign target
+                    // TODO add separate key-press to initiate attack command
+                    PacketHandler.sendToServer(hit.getId());
                 } else {
                     ClientSideHelper.setSelectedEntity(null);
                 }

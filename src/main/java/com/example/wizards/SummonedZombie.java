@@ -17,6 +17,7 @@ public class SummonedZombie extends Zombie implements ControlledEntity {
     private static final Logger logger = LogUtils.getLogger();
 
     private FollowControllerGoal followControllerGoal;
+    private AssignedTargetGoal assignedTargetGoal;
     private ControllerHurtByTargetGoal controllerHurtByTargetGoal;
 
     public SummonedZombie(EntityType<? extends Zombie> p_34271_, Level p_34272_) {
@@ -30,7 +31,8 @@ public class SummonedZombie extends Zombie implements ControlledEntity {
         this.goalSelector.addGoal(4, followControllerGoal);
         this.goalSelector.addGoal(7, new WaterAvoidingRandomStrollGoal(this, 1.0D));
 
-        // TODO add assigned target goal
+        this.assignedTargetGoal = new AssignedTargetGoal(this);
+        this.targetSelector.addGoal(1, this.assignedTargetGoal);
         this.targetSelector.addGoal(3, new HurtByTargetGoal(this));
         this.controllerHurtByTargetGoal = new ControllerHurtByTargetGoal(this);
         this.targetSelector.addGoal(5, controllerHurtByTargetGoal);
@@ -75,5 +77,10 @@ public class SummonedZombie extends Zombie implements ControlledEntity {
     @Override
     public LivingEntity getController() {
         return this.followControllerGoal.getController();
+    }
+
+    @Override
+    public void assignTarget(LivingEntity livingEntity) {
+        this.assignedTargetGoal.assignTarget(livingEntity);
     }
 }

@@ -44,6 +44,7 @@ public class AttemptCastC2SPacket {
             // ON THE SERVER?
             ServerPlayer sender = context.getSender();
             AttemptCastEvent event = new AttemptCastEvent(spell, sender, blockPos);
+            // TODO will not work on network players, move to client-side packet creation
             event.setSpellName(ClientSpellList.getKey(spell));
             MinecraftForge.EVENT_BUS.post(event);
         });

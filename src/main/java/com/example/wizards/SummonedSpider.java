@@ -21,6 +21,7 @@ public class SummonedSpider extends Spider implements ControlledEntity {
     private static final Logger logger = LogUtils.getLogger();
 
     private FollowControllerGoal followControllerGoal;
+    private AssignedTargetGoal assignedTargetGoal;
     private ControllerHurtByTargetGoal controllerHurtByTargetGoal;
 
     public SummonedSpider(EntityType<? extends Spider> p_33786_, Level p_33787_) {
@@ -38,6 +39,8 @@ public class SummonedSpider extends Spider implements ControlledEntity {
         this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 8.0F));
         this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
 
+        this.assignedTargetGoal = new AssignedTargetGoal(this);
+        this.targetSelector.addGoal(1, this.assignedTargetGoal);
         this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
         this.controllerHurtByTargetGoal = new ControllerHurtByTargetGoal(this);
         this.targetSelector.addGoal(3, controllerHurtByTargetGoal);
@@ -61,14 +64,19 @@ public class SummonedSpider extends Spider implements ControlledEntity {
     }
 
     @Override
-    public void setController(LivingEntity livingEntity) {
-        this.followControllerGoal.setController(livingEntity);
-        this.controllerHurtByTargetGoal.setController(livingEntity);
+    public void setController(LivingEntity controller) {
+        this.followControllerGoal.setController(controller);
+        this.controllerHurtByTargetGoal.setController(controller);
     }
 
     @Override
     public LivingEntity getController() {
-        return followControllerGoal.getController();
+        return this.followControllerGoal.getController();
+    }
+
+    @Override
+    public void assignTarget(LivingEntity livingEntity) {
+        this.assignedTargetGoal.assignTarget(livingEntity);
     }
 
     static class SpiderAttackGoal extends MeleeAttackGoal {
