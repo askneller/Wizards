@@ -75,7 +75,7 @@ public class ForgeClientEvents {
 
                 int spellNumber = ClientSpellList.getSelectedNumber();
                 Optional<Spell> namedSpell = ClientSpellList.getSelected();
-                if (finalPos == null && namedSpell.isPresent()) {
+                if (finalPos == null && namedSpell.isPresent() && namedSpell.get().getCreatureClass() != null) {
                     player.sendSystemMessage(Component.literal("Cannot cast spell: No target position").withStyle(ChatFormatting.RED));
                 } else {
                     if (finalPos == null) {

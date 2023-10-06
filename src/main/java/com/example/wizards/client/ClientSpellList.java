@@ -66,6 +66,10 @@ public class ClientSpellList {
 
     public static String getKey(int spellNum) {
         switch (spellNum) {
+            case 1:
+                return "smallfireball";
+            case 2:
+                return "largefireball";
             case 3:
                 return "summonzombie";
             case 4:
@@ -80,6 +84,8 @@ public class ClientSpellList {
                 return "summonslime";
             case 9:
                 return "summonskeletonarcher";
+            case 10:
+                return "codeofarrows";
             default:
                 return null;
         }
