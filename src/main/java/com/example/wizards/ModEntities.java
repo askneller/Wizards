@@ -37,31 +37,31 @@ public class ModEntities {
         public static void setupEntities(RegisterEvent event) {
             if (event.getRegistryKey().equals(ForgeRegistries.Keys.ENTITY_TYPES)) {
                 logger.info("Setting up mod entities");
-                SUMMONED_ZOMBIE = build(event.getForgeRegistry(), "summonedzombie",
+                SUMMONED_ZOMBIE = build(event.getForgeRegistry(), SummonedZombie.key,
                         EntityType.Builder.<Zombie>of(SummonedZombie::new, MobCategory.CREATURE) // MobCategory.MONSTER)
                                 .sized(0.6F, 1.95F)
                                 .clientTrackingRange(8)
                 );
 
-                SUMMONED_SKELETON = build(event.getForgeRegistry(), "summonedskeleton",
+                SUMMONED_SKELETON = build(event.getForgeRegistry(), SummonedSkeleton.key,
                         EntityType.Builder.<Skeleton>of(SummonedSkeleton::new, MobCategory.CREATURE) // MobCategory.MONSTER)
                                 .sized(0.6F, 1.99F)
                                 .clientTrackingRange(8)
                 );
 
-                SUMMONED_SKELETON_ARCHER = build(event.getForgeRegistry(), "summonedskeletonarcher",
+                SUMMONED_SKELETON_ARCHER = build(event.getForgeRegistry(), SummonedSkeletonArcher.key,
                         EntityType.Builder.<Skeleton>of(SummonedSkeletonArcher::new, MobCategory.CREATURE) // MobCategory.MONSTER)
                                 .sized(0.6F, 1.99F)
                                 .clientTrackingRange(8)
                 );
 
-                SUMMONED_SPIDER = build(event.getForgeRegistry(), "summonedspider",
+                SUMMONED_SPIDER = build(event.getForgeRegistry(), SummonedSpider.key,
                         EntityType.Builder.<Spider>of(SummonedSpider::new, MobCategory.CREATURE) // MobCategory.MONSTER)
                                 .sized(1.4F, 0.9F)
                                 .clientTrackingRange(8)
                 );
 
-                SUMMONED_POLAR_BEAR = build(event.getForgeRegistry(), "summonedpolarbear",
+                SUMMONED_POLAR_BEAR = build(event.getForgeRegistry(), SummonedPolarBear.key,
                         EntityType.Builder.<PolarBear>of(SummonedPolarBear::new, MobCategory.CREATURE) // MobCategory.MONSTER)
                                 .immuneTo(Blocks.POWDER_SNOW)
                                 .sized(1.4F, 1.4F)

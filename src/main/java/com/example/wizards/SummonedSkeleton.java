@@ -18,6 +18,8 @@ public class SummonedSkeleton extends Skeleton implements ControlledEntity {
 
     private static final Logger logger = LogUtils.getLogger();
 
+    public static final String key = "summonedskeleton";
+
     private FollowControllerGoal followControllerGoal;
     private AssignedTargetGoal assignedTargetGoal;
     private ControllerHurtByTargetGoal controllerHurtByTargetGoal;

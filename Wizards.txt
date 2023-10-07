@@ -20,6 +20,7 @@ first pass
 TODO
 Gameplay Systems
 - <DONE> Assignable targets for summoned creatures
+- <DONE> Summoned creatures associated to controller on re-load
 - Non-instant casting times
 - Other spell types like Enchantment, Instant (e.g. Counterspell)
 - Standard power / defense system for all creatures

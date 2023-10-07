@@ -32,13 +32,13 @@ public class Spells {
     private static final Map<String, Spell> spellsByName = new HashMap<>();
 
     static {
-        spellsByName.put("summonzombie", SUMMON_ZOMBIE);
-        spellsByName.put("summonskeleton", SUMMON_SKELETON);
-        spellsByName.put("summonspider", SUMMON_SPIDER);
-        spellsByName.put("summonpolarbear", SUMMON_POLAR_BEAR);
+        spellsByName.put(SummonedZombie.key, SUMMON_ZOMBIE);
+        spellsByName.put(SummonedSkeleton.key, SUMMON_SKELETON);
+        spellsByName.put(SummonedSpider.key, SUMMON_SPIDER);
+        spellsByName.put(SummonedPolarBear.key, SUMMON_POLAR_BEAR);
         spellsByName.put("summonphantom", SUMMON_PHANTOM);
         spellsByName.put("summonslime", SUMMON_SLIME);
-        spellsByName.put("summonskeletonarcher", SUMMON_SKELETON_ARCHER);
+        spellsByName.put(SummonedSkeletonArcher.key, SUMMON_SKELETON_ARCHER);
         spellsByName.put("smallfireball", SMALL_FIREBALL);
         spellsByName.put("largefireball", LARGE_FIREBALL);
         spellsByName.put("codeofarrows", CODE_OF_ARROWS);

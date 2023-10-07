@@ -16,6 +16,8 @@ import net.minecraft.world.level.Level;
 
 public class SummonedPolarBear extends PolarBear implements ControlledEntity {
 
+    public static final String key = "summonedpolarbear";
+
     private FollowControllerGoal followControllerGoal;
     private AssignedTargetGoal assignedTargetGoal;
     private ControllerHurtByTargetGoal controllerHurtByTargetGoal;

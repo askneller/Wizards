@@ -18,6 +18,8 @@ public class SummonedZombie extends Zombie implements ControlledEntity {
     private static final Logger logger = LogUtils.getLogger();
 //    private static final EntityDataAccessor<String> DATA_CONTROLLER_UUID = SynchedEntityData.defineId(SummonedZombie.class, EntityDataSerializers.STRING);
 
+    public static final String key = "summonedzombie";
+
     private FollowControllerGoal followControllerGoal;
     private AssignedTargetGoal assignedTargetGoal;
     private ControllerHurtByTargetGoal controllerHurtByTargetGoal;
@@ -25,7 +27,7 @@ public class SummonedZombie extends Zombie implements ControlledEntity {
 
     public SummonedZombie(EntityType<? extends Zombie> p_34271_, Level p_34272_) {
         super(p_34271_, p_34272_);
-        logger.info("Summoned Zombie");
+//        logger.info("Summoned Zombie");
     }
 
     protected void addBehaviourGoals() {

@@ -17,6 +17,8 @@ import org.slf4j.Logger;
 
 public class SummonedSkeletonArcher extends SummonedSkeleton {
 
+    public static final String key = "summonedskeletonarcher";
+
     private RangedBowAttackGoal<SummonedSkeletonArcher> bowGoal = new RangedBowAttackGoal<>(this, 1.0D, 20, 15.0F);
 
     private final MeleeAttackGoal meleeGoal = new MeleeAttackGoal(this, 1.2D, false) {

@@ -21,6 +21,8 @@ public class SummonedSpider extends Spider implements ControlledEntity {
 
     private static final Logger logger = LogUtils.getLogger();
 
+    public static final String key = "summonedspider";
+
     private FollowControllerGoal followControllerGoal;
     private AssignedTargetGoal assignedTargetGoal;
     private ControllerHurtByTargetGoal controllerHurtByTargetGoal;

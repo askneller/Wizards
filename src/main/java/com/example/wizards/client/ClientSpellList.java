@@ -3,6 +3,11 @@ package com.example.wizards.client;
 import com.example.wizards.ManaColor;
 import com.example.wizards.Spell;
 import com.example.wizards.Spells;
+import com.example.wizards.SummonedPolarBear;
+import com.example.wizards.SummonedSkeleton;
+import com.example.wizards.SummonedSkeletonArcher;
+import com.example.wizards.SummonedSpider;
+import com.example.wizards.SummonedZombie;
 import com.mojang.logging.LogUtils;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -38,30 +43,8 @@ public class ClientSpellList {
     }
 
     public static String getSelectedName() {
-        switch (spells[index]) {
-            case 1:
-                return "Fireball (S)";
-            case 2:
-                return "Fireball (L)";
-            case 3:
-                return "Zombie";
-            case 4:
-                return "Skeleton";
-            case 5:
-                return "Spider";
-            case 6:
-                return "Polar Bear";
-            case 7:
-                return "Phantom";
-            case 8:
-                return "Slime";
-            case 9:
-                return "Skeleton Archer";
-            case 10:
-                return "Cone of Arrows";
-            default:
-                return "None";
-        }
+        Optional<Spell> selected = getSelected();
+        return selected.map(Spell::getName).orElse("None");
     }
 
     public static String getKey(int spellNum) {
@@ -71,19 +54,19 @@ public class ClientSpellList {
             case 2:
                 return "largefireball";
             case 3:
-                return "summonzombie";
+                return SummonedZombie.key;
             case 4:
-                return "summonskeleton";
+                return SummonedSkeleton.key;
             case 5:
-                return "summonspider";
+                return SummonedSpider.key;
             case 6:
-                return "summonpolarbear";
+                return SummonedPolarBear.key;
             case 7:
                 return "summonphantom";
             case 8:
                 return "summonslime";
             case 9:
-                return "summonskeletonarcher";
+                return SummonedSkeletonArcher.key;
             case 10:
                 return "codeofarrows";
             default:
