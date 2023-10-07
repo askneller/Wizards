@@ -8,5 +8,9 @@ public interface ControlledEntity {
 
     LivingEntity getController();
 
+    String getControllerUuid();
+
+    void setControllerUuid(String uuid);
+
     void assignTarget(LivingEntity livingEntity);
 }

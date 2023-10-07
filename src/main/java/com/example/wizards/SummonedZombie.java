@@ -1,6 +1,7 @@
 package com.example.wizards;
 
 import com.mojang.logging.LogUtils;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
@@ -15,14 +16,16 @@ import org.slf4j.Logger;
 public class SummonedZombie extends Zombie implements ControlledEntity {
 
     private static final Logger logger = LogUtils.getLogger();
+//    private static final EntityDataAccessor<String> DATA_CONTROLLER_UUID = SynchedEntityData.defineId(SummonedZombie.class, EntityDataSerializers.STRING);
 
     private FollowControllerGoal followControllerGoal;
     private AssignedTargetGoal assignedTargetGoal;
     private ControllerHurtByTargetGoal controllerHurtByTargetGoal;
+    private String controllerUuid;
 
     public SummonedZombie(EntityType<? extends Zombie> p_34271_, Level p_34272_) {
         super(p_34271_, p_34272_);
-//        logger.info("Summoned Zombie");
+        logger.info("Summoned Zombie");
     }
 
     protected void addBehaviourGoals() {
@@ -41,7 +44,7 @@ public class SummonedZombie extends Zombie implements ControlledEntity {
                 this,
                 Player.class,
                 true,
-                (le -> !this.getController().equals(le))));
+                (le -> this.getController() != null && !le.equals(this.getController()))));
         // Attack mobs controlled by other players
         this.targetSelector.addGoal(9, new NearestAttackableTargetGoal<>(
                 this,
@@ -49,10 +52,26 @@ public class SummonedZombie extends Zombie implements ControlledEntity {
                 true,
                 (le -> {
                     if (le instanceof ControlledEntity ce) {
-                        return !this.getController().equals(ce.getController());
+                        return this.getController() != null && ce.getController() != null &&
+                                !this.getController().equals(ce.getController());
                     }
                     return false;
                 })));
+    }
+
+    public void addAdditionalSaveData(CompoundTag tag) {
+        super.addAdditionalSaveData(tag);
+        tag.putString("ControllerUuid", getControllerUuid());
+    }
+
+    public void readAdditionalSaveData(CompoundTag tag) {
+        super.readAdditionalSaveData(tag);
+        this.controllerUuid = tag.getString("ControllerUuid");
+    }
+
+    public void tick() {
+        super.tick();
+        SummonedCreatureUtil.trySetController(this, this.level());
     }
 
     @Override
@@ -77,6 +96,17 @@ public class SummonedZombie extends Zombie implements ControlledEntity {
     @Override
     public LivingEntity getController() {
         return this.followControllerGoal.getController();
+    }
+
+    @Override
+    public String getControllerUuid() {
+        LivingEntity controller = getController();
+        return controller != null ? controller.getStringUUID() : this.controllerUuid;
+    }
+
+    @Override
+    public void setControllerUuid(String uuid) {
+        this.controllerUuid = uuid;
     }
 
     @Override

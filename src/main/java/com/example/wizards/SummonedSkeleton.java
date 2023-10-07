@@ -1,6 +1,7 @@
 package com.example.wizards;
 
 import com.mojang.logging.LogUtils;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
@@ -20,6 +21,7 @@ public class SummonedSkeleton extends Skeleton implements ControlledEntity {
     private FollowControllerGoal followControllerGoal;
     private AssignedTargetGoal assignedTargetGoal;
     private ControllerHurtByTargetGoal controllerHurtByTargetGoal;
+    private String controllerUuid;
 
     public SummonedSkeleton(EntityType<? extends Skeleton> p_33570_, Level p_33571_) {
         super(p_33570_, p_33571_);
@@ -43,7 +45,7 @@ public class SummonedSkeleton extends Skeleton implements ControlledEntity {
                 this,
                 Player.class,
                 true,
-                (le -> !this.getController().equals(le))));
+                (le -> this.getController() != null && !le.equals(this.getController()))));
         // Attack mobs controlled by other players
         this.targetSelector.addGoal(9, new NearestAttackableTargetGoal<>(
                 this,
@@ -51,10 +53,26 @@ public class SummonedSkeleton extends Skeleton implements ControlledEntity {
                 true,
                 (le -> {
                     if (le instanceof ControlledEntity ce) {
-                        return !this.getController().equals(ce.getController());
+                        return this.getController() != null && ce.getController() != null &&
+                                !this.getController().equals(ce.getController());
                     }
                     return false;
                 })));
+    }
+
+    public void addAdditionalSaveData(CompoundTag tag) {
+        super.addAdditionalSaveData(tag);
+        tag.putString("ControllerUuid", getControllerUuid());
+    }
+
+    public void readAdditionalSaveData(CompoundTag tag) {
+        super.readAdditionalSaveData(tag);
+        this.controllerUuid = tag.getString("ControllerUuid");
+    }
+
+    public void tick() {
+        super.tick();
+        SummonedCreatureUtil.trySetController(this, this.level());
     }
 
     protected boolean isSunBurnTick() {
@@ -70,6 +88,17 @@ public class SummonedSkeleton extends Skeleton implements ControlledEntity {
     @Override
     public LivingEntity getController() {
         return this.followControllerGoal.getController();
+    }
+
+    @Override
+    public String getControllerUuid() {
+        LivingEntity controller = getController();
+        return controller != null ? controller.getStringUUID() : this.controllerUuid;
+    }
+
+    @Override
+    public void setControllerUuid(String uuid) {
+        this.controllerUuid = uuid;
     }
 
     @Override

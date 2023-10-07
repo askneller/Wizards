@@ -163,7 +163,7 @@ public class CastingSystem {
         return null;
     }
 
-    private static void addPlayerControlledEntity(Player player, LivingEntity entity) {
+    public static void addPlayerControlledEntity(Player player, LivingEntity entity) {
         List<LivingEntity> livingEntities = playerControlled.computeIfAbsent(player.getStringUUID(), k -> new ArrayList<>());
         livingEntities.add(entity);
     }
