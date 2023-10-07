@@ -5,10 +5,12 @@ import com.example.wizards.ManaPool;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.world.entity.Entity;
 import net.minecraftforge.client.gui.overlay.IGuiOverlay;
 
 import java.util.Map;
-import java.util.StringJoiner;
 
 import static com.example.wizards.ManaColor.BLACK;
 import static com.example.wizards.ManaColor.BLUE;
@@ -73,17 +75,23 @@ public class ManaOverlay {
         // Left Alt
         setRenderColor(WHITE);
         guiGraphics.drawString(Minecraft.getInstance().font, getAltDown(), startX + 100, startY, 14737632);
-    });
 
-//    private static String getManaString(ManaPool pool) {
-//        Map<ManaColor, Integer> colorIntegerMap = pool.getTotalMap();
-//        StringJoiner joiner = new StringJoiner(", ");
-//        for (Map.Entry<ManaColor, Integer> entry : colorIntegerMap.entrySet()){
-//            String str = entry.getKey().getChar() + " " + entry.getValue();
-//            joiner.add(str);
-//        }
-//        return joiner.toString();
-//    }
+        int startX2 = x + 100;
+        int startY2 = y - 24;
+
+        // Selected spell
+        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
+        MutableComponent component = Component.literal(ClientSpellList.getSelectedName());
+        Component selectedCostString = ClientSpellList.getSelectedCostString();
+        component.append(" ");
+        component.append(selectedCostString);
+        guiGraphics.drawString(Minecraft.getInstance().font, component, startX2, startY2, 14737632);
+
+        // Selected entity
+        String str = "[" + getSelected() + "]";
+        guiGraphics.drawString(Minecraft.getInstance().font, str, startX2, startY2 + 13, 14737632);
+    });
 
     private static String getManaForColor(ManaPool pool, ManaColor color) {
         Map<ManaColor, Integer> colorIntegerMap = pool.getTotalMap();
@@ -96,6 +104,15 @@ public class ManaOverlay {
             return "LAlt";
         }
         return "";
+    }
+
+    private static String getSelected() {
+        Entity selected = ClientSideHelper.getSelectedEntity();
+        if (selected == null) {
+            return "";
+        }
+//        print();
+        return selected.getName().getString() + " (" + selected.getId() + ")";
     }
 
     private static String getPercentageString() {

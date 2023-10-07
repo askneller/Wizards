@@ -25,7 +25,7 @@ Gameplay Systems
 - Other spell types like Enchantment, Instant (e.g. Counterspell)
 - Standard power / defense system for all creatures
 - Individually assignable targets for summoned creatures
-  [Future]
+  [Future | MtG-like]
 - Abilities from MtG like Trample, Flying, Vigilance etc.
 - Permanents with activatable effects
 - Variable costs / pump-able spells (e.g. for extra power)
@@ -33,7 +33,7 @@ Gameplay Systems
 Visuals
 - Casting visual indicator (more particles), and progress bar
 - Mana totems invisible to non-owner
-- Consolidate client GUIs into one
+- <DONE> Consolidate client GUIs into one
 - Outline around selected creature / target
 Coding / Other
 - List of player's controlled entities <PARTIAL - CastingSystem.playerControlled>
