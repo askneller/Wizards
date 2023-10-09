@@ -3,12 +3,12 @@ package com.example.wizards.client;
 import com.example.wizards.ManaColor;
 import com.example.wizards.Spell;
 import com.example.wizards.Spells;
+import com.example.wizards.SummonedCreatureSlime;
 import com.example.wizards.SummonedCreatureZombie;
 import com.example.wizards.SummonedPolarBear;
 import com.example.wizards.SummonedSkeleton;
-import com.example.wizards.SummonedSkeletonArcher;
+//import com.example.wizards.SummonedSkeletonArcher;
 import com.example.wizards.SummonedSpider;
-//import com.example.wizards.SummonedZombie;
 import com.mojang.logging.LogUtils;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -25,7 +25,7 @@ public class ClientSpellList {
     private static final Logger logger = LogUtils.getLogger();
 
     private static int index = 0;
-    public static int[] spells = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10/*, 11*/};
+    public static int[] spells = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
 
     public static void inc() {
         ++index;
@@ -65,13 +65,11 @@ public class ClientSpellList {
             case 7:
                 return "summonphantom";
             case 8:
-                return "summonslime";
-            case 9:
-                return SummonedSkeletonArcher.key;
+                return SummonedCreatureSlime.key;
+//            case 9:
+//                return SummonedSkeletonArcher.key;
             case 10:
                 return "codeofarrows";
-//            case 11:
-//                return "summoncreature";
             default:
                 return null;
         }

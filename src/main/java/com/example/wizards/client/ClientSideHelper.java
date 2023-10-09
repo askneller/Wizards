@@ -7,17 +7,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
-//import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.RandomSource;
-//import net.minecraft.world.effect.MobEffectInstance;
-//import net.minecraft.world.entity.AreaEffectCloud;
 import net.minecraft.world.entity.Entity;
-//import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
-//import net.minecraft.world.item.ItemStack;
-//import net.minecraft.world.item.alchemy.Potion;
-//import net.minecraft.world.item.alchemy.PotionUtils;
-//import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
@@ -123,39 +115,5 @@ public class ClientSideHelper {
     public static void setRenderColor(ManaColor color) {
         RenderSystem.setShaderColor(color.R(), color.G(), color.B(), 1.0f);
     }
-
-    /*
-    // Make cloud of particles (like a potion explosion) as the summon creature particles effect
-    public static void makeAreaOfEffectCloud(Level level,
-                                             Vec3 position,
-                                             LivingEntity entity,
-                                             ItemStack itemStack,
-                                             Potion potion) {
-        AreaEffectCloud areaeffectcloud = new AreaEffectCloud(level, position.x, position.y, position.z);
-//        Entity entity = this.getOwner();
-        if (entity instanceof LivingEntity) {
-            areaeffectcloud.setOwner((LivingEntity)entity);
-        }
-
-        areaeffectcloud.setRadius(3.0F);
-        areaeffectcloud.setRadiusOnUse(-0.5F);
-        areaeffectcloud.setWaitTime(10);
-        areaeffectcloud.setRadiusPerTick(-areaeffectcloud.getRadius() / (float)areaeffectcloud.getDuration());
-        areaeffectcloud.setPotion(potion);
-
-        for(MobEffectInstance mobeffectinstance : PotionUtils.getCustomEffects(itemStack)) {
-            areaeffectcloud.addEffect(new MobEffectInstance(mobeffectinstance));
-        }
-
-//        CompoundTag compoundtag = itemStack.getTag();
-//        if (compoundtag != null && compoundtag.contains("CustomPotionColor", 99)) {
-//            areaeffectcloud.setFixedColor(compoundtag.getInt("CustomPotionColor"));
-            areaeffectcloud.setFixedColor(3694022);
-//        }
-
-        logger.info("Cloud at {}: {}", position, areaeffectcloud);
-        level.addFreshEntity(areaeffectcloud);
-    }
-    */
 
 }

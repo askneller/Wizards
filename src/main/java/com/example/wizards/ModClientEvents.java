@@ -1,12 +1,13 @@
 package com.example.wizards;
 
 import com.example.wizards.client.ManaOverlay;
+import com.example.wizards.client.renderer.entity.SkeletonRenderer;
 import com.example.wizards.client.renderer.entity.SummonedSlimeRenderer;
 import com.example.wizards.client.renderer.entity.SummonedZombieRenderer;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.PolarBearRenderer;
-import net.minecraft.client.renderer.entity.SkeletonRenderer;
+//import net.minecraft.client.renderer.entity.SkeletonRenderer;
 import net.minecraft.client.renderer.entity.SpiderRenderer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
@@ -19,9 +20,8 @@ import org.slf4j.Logger;
 import static com.example.wizards.ModEntities.SUMMONED_SLIME;
 import static com.example.wizards.ModEntities.SUMMONED_POLAR_BEAR;
 import static com.example.wizards.ModEntities.SUMMONED_SKELETON;
-import static com.example.wizards.ModEntities.SUMMONED_SKELETON_ARCHER;
+//import static com.example.wizards.ModEntities.SUMMONED_SKELETON_ARCHER;
 import static com.example.wizards.ModEntities.SUMMONED_SPIDER;
-//import static com.example.wizards.ModEntities.SUMMONED_ZOMBIE;
 import static com.example.wizards.ModEntities.SUMMONED_ZOMBIE2;
 import static com.example.wizards.Wizards.MOD_ID;
 
@@ -41,10 +41,9 @@ public class ModClientEvents {
     @SubscribeEvent
     public static void registerRenderers(final EntityRenderersEvent.RegisterRenderers event) {
         logger.info("Registering renderers");
-//        event.registerEntityRenderer(SUMMONED_ZOMBIE, ZombieRenderer::new);
         event.registerEntityRenderer(SUMMONED_ZOMBIE2, SummonedZombieRenderer::new);
         event.registerEntityRenderer(SUMMONED_SKELETON, SkeletonRenderer::new);
-        event.registerEntityRenderer(SUMMONED_SKELETON_ARCHER, SkeletonRenderer::new);
+//        event.registerEntityRenderer(SUMMONED_SKELETON_ARCHER, SkeletonRenderer::new);
         event.registerEntityRenderer(SUMMONED_SPIDER, SpiderRenderer::new);
         event.registerEntityRenderer(SUMMONED_POLAR_BEAR, PolarBearRenderer::new);
         event.registerEntityRenderer(SUMMONED_SLIME, SummonedSlimeRenderer::new);

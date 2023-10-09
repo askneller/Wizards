@@ -3,8 +3,6 @@ package com.example.wizards;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
-import net.minecraft.world.entity.ai.goal.ZombieAttackGoal;
-import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.level.Level;
 
 public class SummonedCreatureZombie extends SummonedCreature {
@@ -20,6 +18,7 @@ public class SummonedCreatureZombie extends SummonedCreature {
         this.goalSelector.addGoal(2, new SummonedCreatureZombie.ZombieAttackGoal(this, 1.0D, false));
     }
 
+    // ====================================================================================== //
     public class ZombieAttackGoal extends MeleeAttackGoal {
         private final SummonedCreatureZombie zombie;
         private int raiseArmTicks;

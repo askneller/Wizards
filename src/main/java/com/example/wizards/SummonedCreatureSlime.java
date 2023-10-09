@@ -1,7 +1,6 @@
 package com.example.wizards;
 
 import com.google.common.annotations.VisibleForTesting;
-import com.mojang.logging.LogUtils;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -24,7 +23,6 @@ import net.minecraft.world.entity.ai.util.LandRandomPos;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import org.slf4j.Logger;
 
 import javax.annotation.Nullable;
 import java.util.EnumSet;
@@ -156,10 +154,8 @@ public class SummonedCreatureSlime extends SummonedCreature {
     protected float getAttackDamage() {
         return (float)this.getAttributeValue(Attributes.ATTACK_DAMAGE);
     }
-    //===========================================================================
 
-
-    // Slime specific below
+    // ====================================================================================== //
     static class SlimeMoveControl extends MoveControl {
         private float yRot;
         private int jumpDelay;
@@ -242,11 +238,7 @@ public class SummonedCreatureSlime extends SummonedCreature {
         return /*this.isTiny() ? SoundEvents.SLIME_JUMP_SMALL :*/ SoundEvents.SLIME_JUMP;
     }
 
-
-
-
-
-
+    // ====================================================================================== //
     static class SlimeAttackGoal extends Goal {
         private final SummonedCreature slime;
         private int growTiredTimer;
@@ -299,10 +291,7 @@ public class SummonedCreatureSlime extends SummonedCreature {
         }
     }
 
-
-
-
-
+    // ====================================================================================== //
     static class CreatureSlimeRandomDirectionGoal extends Goal {
         private final SummonedCreature slime;
         private float chosenDegrees;
@@ -355,10 +344,7 @@ public class SummonedCreatureSlime extends SummonedCreature {
 
     }
 
-
-
-
-
+    // ====================================================================================== //
     public class CreatureWaterAvoidingRandomStrollGoal extends RandomStrollGoal {
         public static final float PROBABILITY = 0.001F;
         protected final float probability;
@@ -418,7 +404,6 @@ public class SummonedCreatureSlime extends SummonedCreature {
 
 
     }
-
 
 //    static class SlimeFloatGoal extends Goal {
 //        private final SummonedCreature slime;

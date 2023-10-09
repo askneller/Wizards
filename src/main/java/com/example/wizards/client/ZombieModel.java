@@ -1,11 +1,7 @@
 package com.example.wizards.client;
 
-//import net.minecraft.client.model.AbstractZombieModel;
-import com.example.wizards.SummonedCreature;
 import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.monster.Zombie;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 

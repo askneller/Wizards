@@ -1,16 +1,12 @@
 package com.example.wizards.client.renderer.entity;
 
-import com.example.wizards.SummonedCreature;
-//import net.minecraft.client.model.ZombieModel;
 import com.example.wizards.SummonedCreatureZombie;
 import com.example.wizards.client.ZombieModel;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.HumanoidMobRenderer;
 import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.monster.Zombie;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
