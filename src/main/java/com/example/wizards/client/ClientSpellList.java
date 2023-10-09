@@ -7,7 +7,7 @@ import com.example.wizards.SummonedCreatureSlime;
 import com.example.wizards.SummonedCreatureZombie;
 import com.example.wizards.SummonedPolarBear;
 import com.example.wizards.SummonedSkeleton;
-//import com.example.wizards.SummonedSkeletonArcher;
+import com.example.wizards.SummonedSkeletonArcher;
 import com.example.wizards.SummonedSpider;
 import com.mojang.logging.LogUtils;
 import net.minecraft.network.chat.Component;
@@ -66,8 +66,8 @@ public class ClientSpellList {
                 return "summonphantom";
             case 8:
                 return SummonedCreatureSlime.key;
-//            case 9:
-//                return SummonedSkeletonArcher.key;
+            case 9:
+                return SummonedSkeletonArcher.key;
             case 10:
                 return "codeofarrows";
             default:

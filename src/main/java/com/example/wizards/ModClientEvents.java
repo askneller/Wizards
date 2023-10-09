@@ -7,7 +7,6 @@ import com.example.wizards.client.renderer.entity.SummonedZombieRenderer;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.PolarBearRenderer;
-//import net.minecraft.client.renderer.entity.SkeletonRenderer;
 import net.minecraft.client.renderer.entity.SpiderRenderer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
@@ -17,12 +16,12 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import org.slf4j.Logger;
 
+import static com.example.wizards.ModEntities.SUMMONED_SKELETON_ARCHER;
 import static com.example.wizards.ModEntities.SUMMONED_SLIME;
 import static com.example.wizards.ModEntities.SUMMONED_POLAR_BEAR;
 import static com.example.wizards.ModEntities.SUMMONED_SKELETON;
-//import static com.example.wizards.ModEntities.SUMMONED_SKELETON_ARCHER;
 import static com.example.wizards.ModEntities.SUMMONED_SPIDER;
-import static com.example.wizards.ModEntities.SUMMONED_ZOMBIE2;
+import static com.example.wizards.ModEntities.SUMMONED_ZOMBIE;
 import static com.example.wizards.Wizards.MOD_ID;
 
 @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
@@ -41,9 +40,9 @@ public class ModClientEvents {
     @SubscribeEvent
     public static void registerRenderers(final EntityRenderersEvent.RegisterRenderers event) {
         logger.info("Registering renderers");
-        event.registerEntityRenderer(SUMMONED_ZOMBIE2, SummonedZombieRenderer::new);
+        event.registerEntityRenderer(SUMMONED_ZOMBIE, SummonedZombieRenderer::new);
         event.registerEntityRenderer(SUMMONED_SKELETON, SkeletonRenderer::new);
-//        event.registerEntityRenderer(SUMMONED_SKELETON_ARCHER, SkeletonRenderer::new);
+        event.registerEntityRenderer(SUMMONED_SKELETON_ARCHER, SkeletonRenderer::new);
         event.registerEntityRenderer(SUMMONED_SPIDER, SpiderRenderer::new);
         event.registerEntityRenderer(SUMMONED_POLAR_BEAR, PolarBearRenderer::new);
         event.registerEntityRenderer(SUMMONED_SLIME, SummonedSlimeRenderer::new);
