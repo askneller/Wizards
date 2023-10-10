@@ -1,6 +1,9 @@
 package com.example.wizards;
 
+import com.example.wizards.client.BaseHumanModel;
 import com.example.wizards.client.ManaOverlay;
+import com.example.wizards.client.ModModelLayers;
+import com.example.wizards.client.renderer.entity.BaseHumanRenderer;
 import com.example.wizards.client.renderer.entity.SkeletonRenderer;
 import com.example.wizards.client.renderer.entity.SummonedSlimeRenderer;
 import com.example.wizards.client.renderer.entity.SummonedZombieRenderer;
@@ -16,6 +19,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import org.slf4j.Logger;
 
+import static com.example.wizards.ModEntities.HUMAN;
 import static com.example.wizards.ModEntities.SUMMONED_SKELETON_ARCHER;
 import static com.example.wizards.ModEntities.SUMMONED_SLIME;
 import static com.example.wizards.ModEntities.SUMMONED_POLAR_BEAR;
@@ -46,6 +50,12 @@ public class ModClientEvents {
         event.registerEntityRenderer(SUMMONED_SPIDER, SpiderRenderer::new);
         event.registerEntityRenderer(SUMMONED_POLAR_BEAR, PolarBearRenderer::new);
         event.registerEntityRenderer(SUMMONED_SLIME, SummonedSlimeRenderer::new);
+        event.registerEntityRenderer(HUMAN, BaseHumanRenderer::new);
+    }
+
+    @SubscribeEvent
+    public static void registerLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
+        event.registerLayerDefinition(ModModelLayers.BASE_HUMAN_LAYER, BaseHumanModel::createBodyLayer);
     }
 
     @SubscribeEvent

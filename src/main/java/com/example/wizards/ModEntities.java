@@ -28,6 +28,7 @@ public class ModEntities {
     public static EntityType<? extends Spider> SUMMONED_SPIDER;
     public static EntityType<? extends PolarBear> SUMMONED_POLAR_BEAR;
     public static EntityType<? extends SummonedCreatureSlime> SUMMONED_SLIME;
+    public static EntityType<? extends BaseHuman> HUMAN;
 
     @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
     public static class ModEntityEvents {
@@ -73,6 +74,12 @@ public class ModEntities {
                                 .clientTrackingRange(10)
                 );
 
+                HUMAN = build(event.getForgeRegistry(), "human",
+                        EntityType.Builder.<BaseHuman>of(BaseHuman::new, MobCategory.CREATURE) // MobCategory.MONSTER)
+                                .sized(1.4F, 0.9F)
+                                .clientTrackingRange(10)
+                );
+
             }
         }
 
@@ -98,6 +105,7 @@ public class ModEntities {
             event.put(SUMMONED_SPIDER, SummonedSpider.createAttributes().build());
             event.put(SUMMONED_POLAR_BEAR, SummonedPolarBear.createAttributes().build());
             event.put(SUMMONED_SLIME, SummonedCreatureSlime.createAttributes().build());
+            event.put(HUMAN, BaseHuman.createAttributes().build());
         }
 
     }
