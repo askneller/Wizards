@@ -29,6 +29,8 @@ public class ModEntities {
     public static EntityType<? extends PolarBear> SUMMONED_POLAR_BEAR;
     public static EntityType<? extends SummonedCreatureSlime> SUMMONED_SLIME;
     public static EntityType<? extends BaseHuman> HUMAN;
+    public static EntityType<? extends LargerHumanoid> LARGER_HUMANOID;
+    public static EntityType<? extends LargeHumanoid> LARGE_HUMANOID;
 
     @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
     public static class ModEntityEvents {
@@ -80,6 +82,18 @@ public class ModEntities {
                                 .clientTrackingRange(10)
                 );
 
+                LARGER_HUMANOID = build(event.getForgeRegistry(), "larger_humanoid",
+                        EntityType.Builder.<LargerHumanoid>of(LargerHumanoid::new, MobCategory.CREATURE) // MobCategory.MONSTER)
+                                .sized(0.7F, 2.1F)
+                                .clientTrackingRange(10)
+                );
+
+                LARGE_HUMANOID = build(event.getForgeRegistry(), "large_humanoid",
+                        EntityType.Builder.<LargeHumanoid>of(LargeHumanoid::new, MobCategory.CREATURE) // MobCategory.MONSTER)
+                                .sized(0.6F, 1.95F)
+                                .clientTrackingRange(10)
+                );
+
             }
         }
 
@@ -106,6 +120,8 @@ public class ModEntities {
             event.put(SUMMONED_POLAR_BEAR, SummonedPolarBear.createAttributes().build());
             event.put(SUMMONED_SLIME, SummonedCreatureSlime.createAttributes().build());
             event.put(HUMAN, BaseHuman.createAttributes().build());
+            event.put(LARGER_HUMANOID, LargerHumanoid.createAttributes().build());
+            event.put(LARGE_HUMANOID, LargeHumanoid.createAttributes().build());
         }
 
     }
