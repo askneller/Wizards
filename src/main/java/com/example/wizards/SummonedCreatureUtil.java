@@ -38,7 +38,7 @@ public class SummonedCreatureUtil {
     }
 
     private static LivingEntity findController(String uuid, BlockPos blockPos, Level level) {
-        logger.info("findController {}", uuid);
+//        logger.info("findController {}", uuid);
         Vec3 vec = new Vec3(blockPos.getX(), blockPos.getY(), blockPos.getZ());
         List<Entity> entities =
                 level.getEntities(null, AABB.ofSize(vec, CHECK_DISTANCE, CHECK_DISTANCE, CHECK_DISTANCE));
@@ -46,7 +46,7 @@ public class SummonedCreatureUtil {
                 .filter(e -> e.getStringUUID().equals(uuid))
                 .findFirst()
                 .orElse(null);
-        logger.info("entity1 {}", entity1);
+//        logger.info("entity1 {}", entity1);
         if (entity1 instanceof LivingEntity living) {
             return living;
         }
