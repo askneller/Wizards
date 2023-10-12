@@ -78,7 +78,7 @@ public class ModEntities {
 
                 HUMAN = build(event.getForgeRegistry(), "human",
                         EntityType.Builder.<BaseHuman>of(BaseHuman::new, MobCategory.CREATURE) // MobCategory.MONSTER)
-                                .sized(1.4F, 0.9F)
+                                .sized(0.6F, 1.9F)
                                 .clientTrackingRange(10)
                 );
 
