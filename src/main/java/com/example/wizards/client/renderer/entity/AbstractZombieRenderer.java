@@ -1,6 +1,6 @@
 package com.example.wizards.client.renderer.entity;
 
-import com.example.wizards.SummonedCreatureZombie;
+import com.example.wizards.SummonedZombie;
 import com.example.wizards.client.ZombieModel;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.HumanoidMobRenderer;
@@ -19,7 +19,7 @@ public abstract class AbstractZombieRenderer<T extends Mob, M extends ZombieMode
       this.addLayer(new HumanoidArmorLayer<>(this, p_173912_, p_173913_, p_173910_.getModelManager()));
    }
 
-   public ResourceLocation getTextureLocation(SummonedCreatureZombie p_113771_) {
+   public ResourceLocation getTextureLocation(SummonedZombie p_113771_) {
       return ZOMBIE_LOCATION;
    }
 

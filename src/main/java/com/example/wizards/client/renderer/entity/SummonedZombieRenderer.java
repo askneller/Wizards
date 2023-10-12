@@ -1,6 +1,6 @@
 package com.example.wizards.client.renderer.entity;
 
-import com.example.wizards.SummonedCreatureZombie;
+import com.example.wizards.SummonedZombie;
 import com.example.wizards.client.ZombieModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
@@ -9,7 +9,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class SummonedZombieRenderer extends AbstractZombieRenderer<SummonedCreatureZombie, ZombieModel<SummonedCreatureZombie>> {
+public class SummonedZombieRenderer extends AbstractZombieRenderer<SummonedZombie, ZombieModel<SummonedZombie>> {
 
    public SummonedZombieRenderer(EntityRendererProvider.Context p_174456_) {
       this(p_174456_, ModelLayers.ZOMBIE, ModelLayers.ZOMBIE_INNER_ARMOR, ModelLayers.ZOMBIE_OUTER_ARMOR);

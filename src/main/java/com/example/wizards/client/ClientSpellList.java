@@ -1,10 +1,11 @@
 package com.example.wizards.client;
 
 import com.example.wizards.ManaColor;
+import com.example.wizards.Orc;
 import com.example.wizards.Spell;
 import com.example.wizards.Spells;
-import com.example.wizards.SummonedCreatureSlime;
-import com.example.wizards.SummonedCreatureZombie;
+import com.example.wizards.SummonedSlime;
+import com.example.wizards.SummonedZombie;
 import com.example.wizards.SummonedPolarBear;
 import com.example.wizards.SummonedSkeleton;
 import com.example.wizards.SummonedSkeletonArcher;
@@ -25,7 +26,7 @@ public class ClientSpellList {
     private static final Logger logger = LogUtils.getLogger();
 
     private static int index = 0;
-    public static int[] spells = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    public static int[] spells = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
 
     public static void inc() {
         ++index;
@@ -55,21 +56,23 @@ public class ClientSpellList {
             case 2:
                 return "largefireball";
             case 3:
-                return SummonedCreatureZombie.key;
+                return SummonedZombie.spell_name;
             case 4:
-                return SummonedSkeleton.key;
+                return SummonedSkeleton.spell_name;
             case 5:
-                return SummonedSpider.key;
+                return SummonedSpider.spell_name;
             case 6:
-                return SummonedPolarBear.key;
+                return SummonedPolarBear.spell_name;
             case 7:
                 return "summonphantom";
             case 8:
-                return SummonedCreatureSlime.key;
+                return SummonedSlime.spell_name;
             case 9:
-                return SummonedSkeletonArcher.key;
+                return SummonedSkeletonArcher.spell_name;
             case 10:
                 return "codeofarrows";
+            case 11:
+                return Orc.spell_name;
             default:
                 return null;
         }

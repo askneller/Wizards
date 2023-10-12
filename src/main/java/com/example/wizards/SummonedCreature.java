@@ -79,7 +79,9 @@ public abstract class SummonedCreature extends PathfinderMob implements Controll
     @Override
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
-        tag.putString("ControllerUuid", getControllerUuid());
+        if (getControllerUuid() != null) {
+            tag.putString("ControllerUuid", getControllerUuid());
+        }
     }
 
     @Override
@@ -96,8 +98,12 @@ public abstract class SummonedCreature extends PathfinderMob implements Controll
 
     @Override
     public void setController(LivingEntity controller) {
-        this.followControllerGoal.setController(controller);
-        this.controllerHurtByTargetGoal.setController(controller);
+        if (this.followControllerGoal != null ) {
+            this.followControllerGoal.setController(controller);
+        }
+        if (this.controllerHurtByTargetGoal != null) {
+            this.controllerHurtByTargetGoal.setController(controller);
+        }
     }
 
     @Override
@@ -118,7 +124,9 @@ public abstract class SummonedCreature extends PathfinderMob implements Controll
 
     @Override
     public void assignTarget(LivingEntity livingEntity) {
-        this.assignedTargetGoal.assignTarget(livingEntity);
+        if (this.assignedTargetGoal != null) {
+            this.assignedTargetGoal.assignTarget(livingEntity);
+        }
     }
 
 }

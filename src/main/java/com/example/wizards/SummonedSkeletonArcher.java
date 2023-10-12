@@ -15,7 +15,7 @@ import net.minecraft.world.level.Level;
 
 public class SummonedSkeletonArcher extends SummonedSkeleton {
 
-    public static final String key = "summonedskeletonarcher";
+    public static final String spell_name = "summon_skeleton_archer";
 
     public SummonedSkeletonArcher(EntityType<? extends SummonedSkeleton> entityType, Level level) {
         super(entityType, level);

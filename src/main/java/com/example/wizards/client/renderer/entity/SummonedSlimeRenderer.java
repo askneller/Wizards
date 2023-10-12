@@ -1,6 +1,6 @@
 package com.example.wizards.client.renderer.entity;
 
-import com.example.wizards.SummonedCreatureSlime;
+import com.example.wizards.SummonedSlime;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.SlimeModel;
 import net.minecraft.client.model.geom.ModelLayers;
@@ -14,7 +14,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class SummonedSlimeRenderer extends MobRenderer<SummonedCreatureSlime, SlimeModel<SummonedCreatureSlime>> {
+public class SummonedSlimeRenderer extends MobRenderer<SummonedSlime, SlimeModel<SummonedSlime>> {
    private static final ResourceLocation SLIME_LOCATION = new ResourceLocation("textures/entity/slime/slime.png");
 
    public SummonedSlimeRenderer(EntityRendererProvider.Context p_174391_) {
@@ -22,12 +22,12 @@ public class SummonedSlimeRenderer extends MobRenderer<SummonedCreatureSlime, Sl
       this.addLayer(new SlimeOuterLayer<>(this, p_174391_.getModelSet()));
    }
 
-   public void render(SummonedCreatureSlime p_115976_, float p_115977_, float p_115978_, PoseStack p_115979_, MultiBufferSource p_115980_, int p_115981_) {
+   public void render(SummonedSlime p_115976_, float p_115977_, float p_115978_, PoseStack p_115979_, MultiBufferSource p_115980_, int p_115981_) {
       this.shadowRadius = 0.25F * (float)p_115976_.getSize();
       super.render(p_115976_, p_115977_, p_115978_, p_115979_, p_115980_, p_115981_);
    }
 
-   protected void scale(SummonedCreatureSlime p_115983_, PoseStack p_115984_, float p_115985_) {
+   protected void scale(SummonedSlime p_115983_, PoseStack p_115984_, float p_115985_) {
       float f = 0.999F;
       p_115984_.scale(0.999F, 0.999F, 0.999F);
       p_115984_.translate(0.0F, 0.001F, 0.0F);
@@ -37,7 +37,7 @@ public class SummonedSlimeRenderer extends MobRenderer<SummonedCreatureSlime, Sl
       p_115984_.scale(f3 * f1, 1.0F / f3 * f1, f3 * f1);
    }
 
-   public ResourceLocation getTextureLocation(SummonedCreatureSlime p_115974_) {
+   public ResourceLocation getTextureLocation(SummonedSlime p_115974_) {
       return SLIME_LOCATION;
    }
 }

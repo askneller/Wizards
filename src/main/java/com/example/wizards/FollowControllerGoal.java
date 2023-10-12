@@ -49,12 +49,10 @@ public class FollowControllerGoal extends Goal {
 
     public void start() {
         this.timeToRecalcPath = 0;
-        logger.info("Start follow");
     }
 
     public void stop() {
         this.parent = null;
-        logger.info("Stop follow");
     }
 
     public void tick() {

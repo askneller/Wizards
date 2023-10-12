@@ -27,19 +27,19 @@ import net.minecraft.world.phys.Vec3;
 import javax.annotation.Nullable;
 import java.util.EnumSet;
 
-public class SummonedCreatureSlime extends SummonedCreature {
+public class SummonedSlime extends SummonedCreature {
 
-    private static final EntityDataAccessor<Integer> ID_SIZE = SynchedEntityData.defineId(SummonedCreatureSlime.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> ID_SIZE = SynchedEntityData.defineId(SummonedSlime.class, EntityDataSerializers.INT);
 
-    public static final String key = "summonslime";
+    public static final String spell_name = "summon_slime";
 
     public float squish;
     public float oSquish;
 
-    public SummonedCreatureSlime(EntityType<? extends PathfinderMob> entityType, Level level) {
+    public SummonedSlime(EntityType<? extends PathfinderMob> entityType, Level level) {
         super(entityType, level);
 
-        this.moveControl = new SummonedCreatureSlime.SlimeMoveControl(this);
+        this.moveControl = new SummonedSlime.SlimeMoveControl(this);
 
 
         EntityDimensions dimensions = getDimensions(Pose.STANDING);
@@ -60,8 +60,8 @@ public class SummonedCreatureSlime extends SummonedCreature {
 
     @Override
     protected void registerLookAndAttackGoals() {
-        this.goalSelector.addGoal(2, new SummonedCreatureSlime.SlimeAttackGoal(this));
-        this.goalSelector.addGoal(3, new SummonedCreatureSlime.CreatureSlimeRandomDirectionGoal(this));
+        this.goalSelector.addGoal(2, new SummonedSlime.SlimeAttackGoal(this));
+        this.goalSelector.addGoal(3, new SummonedSlime.CreatureSlimeRandomDirectionGoal(this));
     }
 
     // Slime specific
@@ -159,10 +159,10 @@ public class SummonedCreatureSlime extends SummonedCreature {
     static class SlimeMoveControl extends MoveControl {
         private float yRot;
         private int jumpDelay;
-        private final SummonedCreatureSlime slime;
+        private final SummonedSlime slime;
         private boolean isAggressive;
 
-        public SlimeMoveControl(SummonedCreatureSlime p_33668_) {
+        public SlimeMoveControl(SummonedSlime p_33668_) {
             super(p_33668_);
             this.slime = p_33668_;
             this.yRot = 180.0F * p_33668_.getYRot() / (float)Math.PI;
@@ -284,7 +284,7 @@ public class SummonedCreatureSlime extends SummonedCreature {
             }
 
             MoveControl movecontrol = this.slime.getMoveControl();
-            if (movecontrol instanceof SummonedCreatureSlime.SlimeMoveControl slime$slimemovecontrol) {
+            if (movecontrol instanceof SummonedSlime.SlimeMoveControl slime$slimemovecontrol) {
                 slime$slimemovecontrol.setDirection(this.slime.getYRot(), true);
             }
 
@@ -305,7 +305,7 @@ public class SummonedCreatureSlime extends SummonedCreature {
         public boolean canUse() {
             return /*this.slime.getTarget() == null &&*/ this.slime.getController() != null &&
                     (this.slime.onGround() || this.slime.isInWater() || this.slime.isInLava() || this.slime.hasEffect(MobEffects.LEVITATION)) &&
-                    this.slime.getMoveControl() instanceof SummonedCreatureSlime.SlimeMoveControl;
+                    this.slime.getMoveControl() instanceof SummonedSlime.SlimeMoveControl;
         }
 
         public boolean canContinueToUse() {
@@ -320,7 +320,7 @@ public class SummonedCreatureSlime extends SummonedCreature {
             }
 
             MoveControl movecontrol = this.slime.getMoveControl();
-            if (movecontrol instanceof SummonedCreatureSlime.SlimeMoveControl slime$slimemovecontrol) {
+            if (movecontrol instanceof SummonedSlime.SlimeMoveControl slime$slimemovecontrol) {
                 slime$slimemovecontrol.setDirection(this.slime.getYRot(), false);
             }
 

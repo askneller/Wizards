@@ -22,12 +22,12 @@ public class ModEntities {
 
     private static final Logger logger = LogUtils.getLogger();
 
-    public static EntityType<? extends SummonedCreatureZombie> SUMMONED_ZOMBIE;
+    public static EntityType<? extends SummonedZombie> SUMMONED_ZOMBIE;
     public static EntityType<? extends SummonedSkeleton> SUMMONED_SKELETON;
     public static EntityType<? extends SummonedSkeleton> SUMMONED_SKELETON_ARCHER;
     public static EntityType<? extends Spider> SUMMONED_SPIDER;
     public static EntityType<? extends PolarBear> SUMMONED_POLAR_BEAR;
-    public static EntityType<? extends SummonedCreatureSlime> SUMMONED_SLIME;
+    public static EntityType<? extends SummonedSlime> SUMMONED_SLIME;
     public static EntityType<? extends BaseHuman> HUMAN;
     public static EntityType<? extends LargerHumanoid> LARGER_HUMANOID;
     public static EntityType<? extends LargeHumanoid> LARGE_HUMANOID;
@@ -40,39 +40,39 @@ public class ModEntities {
         public static void setupEntities(RegisterEvent event) {
             if (event.getRegistryKey().equals(ForgeRegistries.Keys.ENTITY_TYPES)) {
                 logger.info("Setting up mod entities");
-                SUMMONED_ZOMBIE = build(event.getForgeRegistry(), SummonedCreatureZombie.key,
-                        EntityType.Builder.<SummonedCreatureZombie>of(SummonedCreatureZombie::new, MobCategory.CREATURE) // MobCategory.MONSTER)
+                SUMMONED_ZOMBIE = build(event.getForgeRegistry(), SummonedZombie.spell_name,
+                        EntityType.Builder.<SummonedZombie>of(SummonedZombie::new, MobCategory.CREATURE) // MobCategory.MONSTER)
                                 .sized(0.6F, 1.95F)
                                 .clientTrackingRange(8)
                 );
 
-                SUMMONED_SKELETON = build(event.getForgeRegistry(), SummonedSkeleton.key,
+                SUMMONED_SKELETON = build(event.getForgeRegistry(), SummonedSkeleton.spell_name,
                         EntityType.Builder.<SummonedSkeleton>of(SummonedSkeleton::new, MobCategory.CREATURE) // MobCategory.MONSTER)
                                 .sized(0.6F, 1.99F)
                                 .clientTrackingRange(8)
                 );
 
-                SUMMONED_SKELETON_ARCHER = build(event.getForgeRegistry(), SummonedSkeletonArcher.key,
+                SUMMONED_SKELETON_ARCHER = build(event.getForgeRegistry(), SummonedSkeletonArcher.spell_name,
                         EntityType.Builder.<SummonedSkeleton>of(SummonedSkeletonArcher::new, MobCategory.CREATURE) // MobCategory.MONSTER)
                                 .sized(0.6F, 1.99F)
                                 .clientTrackingRange(8)
                 );
 
-                SUMMONED_SPIDER = build(event.getForgeRegistry(), SummonedSpider.key,
+                SUMMONED_SPIDER = build(event.getForgeRegistry(), SummonedSpider.spell_name,
                         EntityType.Builder.<Spider>of(SummonedSpider::new, MobCategory.CREATURE) // MobCategory.MONSTER)
                                 .sized(1.4F, 0.9F)
                                 .clientTrackingRange(8)
                 );
 
-                SUMMONED_POLAR_BEAR = build(event.getForgeRegistry(), SummonedPolarBear.key,
+                SUMMONED_POLAR_BEAR = build(event.getForgeRegistry(), SummonedPolarBear.spell_name,
                         EntityType.Builder.<PolarBear>of(SummonedPolarBear::new, MobCategory.CREATURE) // MobCategory.MONSTER)
                                 .immuneTo(Blocks.POWDER_SNOW)
                                 .sized(1.4F, 1.4F)
                                 .clientTrackingRange(10)
                 );
 
-                SUMMONED_SLIME = build(event.getForgeRegistry(), SummonedCreatureSlime.key,
-                        EntityType.Builder.<SummonedCreatureSlime>of(SummonedCreatureSlime::new, MobCategory.CREATURE) // MobCategory.MONSTER)
+                SUMMONED_SLIME = build(event.getForgeRegistry(), SummonedSlime.spell_name,
+                        EntityType.Builder.<SummonedSlime>of(SummonedSlime::new, MobCategory.CREATURE) // MobCategory.MONSTER)
                                 .sized(2.0F, 2.0F)
                                 .clientTrackingRange(10)
                 );
@@ -95,7 +95,7 @@ public class ModEntities {
                                 .clientTrackingRange(10)
                 );
 
-                ORC = build(event.getForgeRegistry(), "orc",
+                ORC = build(event.getForgeRegistry(), Orc.spell_name,
                         EntityType.Builder.<Orc>of(Orc::new, MobCategory.CREATURE) // MobCategory.MONSTER)
                                 .sized(0.6F, 1.95F)
                                 .clientTrackingRange(10)
@@ -120,12 +120,12 @@ public class ModEntities {
         @SubscribeEvent
         public static void createEntityAttribute(final EntityAttributeCreationEvent event) {
             logger.info("Creating default attributes");
-            event.put(SUMMONED_ZOMBIE, SummonedCreatureZombie.createAttributes().build());
+            event.put(SUMMONED_ZOMBIE, SummonedZombie.createAttributes().build());
             event.put(SUMMONED_SKELETON, SummonedSkeleton.createAttributes().build());
             event.put(SUMMONED_SKELETON_ARCHER, SummonedSkeletonArcher.createAttributes().build());
             event.put(SUMMONED_SPIDER, SummonedSpider.createAttributes().build());
             event.put(SUMMONED_POLAR_BEAR, SummonedPolarBear.createAttributes().build());
-            event.put(SUMMONED_SLIME, SummonedCreatureSlime.createAttributes().build());
+            event.put(SUMMONED_SLIME, SummonedSlime.createAttributes().build());
             event.put(HUMAN, BaseHuman.createAttributes().build());
             event.put(LARGER_HUMANOID, LargerHumanoid.createAttributes().build());
             event.put(LARGE_HUMANOID, LargeHumanoid.createAttributes().build());

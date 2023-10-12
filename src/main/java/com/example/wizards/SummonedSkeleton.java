@@ -14,6 +14,8 @@ import net.minecraft.world.level.Level;
 
 public class SummonedSkeleton extends SummonedCreature implements RangedAttackMob {
 
+    public static final String spell_name = "summon_skeleton";
+
     protected RangedBowAttackGoal<SummonedSkeleton> bowGoal = new RangedBowAttackGoal<>(this, 1.0D, 20, 15.0F);
     protected final MeleeAttackGoal meleeGoal = new MeleeAttackGoal(this, 1.2D, false) {
         public void stop() {
@@ -26,8 +28,6 @@ public class SummonedSkeleton extends SummonedCreature implements RangedAttackMo
             SummonedSkeleton.this.setAggressive(true);
         }
     };
-
-    public static final String key = "summonedskeleton";
 
     public SummonedSkeleton(EntityType<? extends PathfinderMob> entityType, Level level) {
         super(entityType, level);

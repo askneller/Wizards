@@ -24,8 +24,8 @@ public class SummonedCreatureUtil {
                 if (controlled.getControllerUuid() != null) {
                     LivingEntity controller = findController(controlled.getControllerUuid(), living.blockPosition(), level);
                     if (controller != null) {
-                        logger.info("Found! {}", controller);
-                        logger.info("this {}", controlled);
+//                        logger.info("Found! {}", controller);
+//                        logger.info("this {}", controlled);
                         controlled.setController(controller);
                         if (controller instanceof Player player) {
                             CastingSystem.addPlayerControlledEntity(player, living);
