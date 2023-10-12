@@ -2,6 +2,10 @@ package com.example.wizards;
 
 import com.mojang.logging.LogUtils;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
@@ -13,12 +17,22 @@ import org.slf4j.Logger;
 
 public abstract class SummonedCreature extends PathfinderMob implements ControlledEntity {
 
+
+    protected static final EntityDataAccessor<Boolean> ATTACKING = SynchedEntityData.defineId(SummonedCreature.class, EntityDataSerializers.BOOLEAN);
+
     protected static final Logger logger = LogUtils.getLogger();
 
+    // Ai
     protected FollowControllerGoal followControllerGoal;
     protected AssignedTargetGoal assignedTargetGoal;
     protected ControllerHurtByTargetGoal controllerHurtByTargetGoal;
     protected String controllerUuid;
+
+    // Animation
+    public final AnimationState idleAnimationState = new AnimationState();
+    protected int idleAnimationTimeout;
+    public final AnimationState attackAnimationState = new AnimationState();
+    protected int attackAnimationTimeout;
 
     public SummonedCreature(EntityType<? extends PathfinderMob> entityType, Level level) {
         super(entityType, level);
@@ -49,6 +63,20 @@ public abstract class SummonedCreature extends PathfinderMob implements Controll
     }
 
     @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(ATTACKING, false);
+    }
+
+    public void setAttacking(boolean attacking) {
+        this.entityData.set(ATTACKING, attacking);
+    }
+
+    public boolean isAttacking() {
+        return this.entityData.get(ATTACKING);
+    }
+
+    @Override
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         tag.putString("ControllerUuid", getControllerUuid());
@@ -74,7 +102,7 @@ public abstract class SummonedCreature extends PathfinderMob implements Controll
 
     @Override
     public LivingEntity getController() {
-        return this.followControllerGoal.getController();
+        return this.followControllerGoal != null ? this.followControllerGoal.getController() : null;
     }
 
     @Override
