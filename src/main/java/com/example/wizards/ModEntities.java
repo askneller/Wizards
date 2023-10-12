@@ -31,6 +31,7 @@ public class ModEntities {
     public static EntityType<? extends BaseHuman> HUMAN;
     public static EntityType<? extends LargerHumanoid> LARGER_HUMANOID;
     public static EntityType<? extends LargeHumanoid> LARGE_HUMANOID;
+    public static EntityType<? extends Orc> ORC;
 
     @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
     public static class ModEntityEvents {
@@ -94,6 +95,12 @@ public class ModEntities {
                                 .clientTrackingRange(10)
                 );
 
+                ORC = build(event.getForgeRegistry(), "orc",
+                        EntityType.Builder.<Orc>of(Orc::new, MobCategory.CREATURE) // MobCategory.MONSTER)
+                                .sized(0.6F, 1.95F)
+                                .clientTrackingRange(10)
+                );
+
             }
         }
 
@@ -122,6 +129,7 @@ public class ModEntities {
             event.put(HUMAN, BaseHuman.createAttributes().build());
             event.put(LARGER_HUMANOID, LargerHumanoid.createAttributes().build());
             event.put(LARGE_HUMANOID, LargeHumanoid.createAttributes().build());
+            event.put(ORC, Orc.createAttributes().build());
         }
 
     }

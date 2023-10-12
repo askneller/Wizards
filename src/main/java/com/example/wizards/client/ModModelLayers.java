@@ -16,4 +16,7 @@ public class ModModelLayers {
     public static final ModelLayerLocation LARGE_HUMANOID_LAYER = new ModelLayerLocation(
             new ResourceLocation(MOD_ID, "large_humanoid_layer"), "main");
 
+    public static final ModelLayerLocation ORC_LAYER = new ModelLayerLocation(
+            new ResourceLocation(MOD_ID, "orc_layer"), "main");
+
 }

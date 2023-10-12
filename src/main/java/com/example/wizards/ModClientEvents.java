@@ -8,6 +8,7 @@ import com.example.wizards.client.ModModelLayers;
 import com.example.wizards.client.renderer.entity.BaseHumanRenderer;
 import com.example.wizards.client.renderer.entity.LargerHumanoidRenderer;
 import com.example.wizards.client.renderer.entity.LargeHumanoidRenderer;
+import com.example.wizards.client.renderer.entity.OrcRenderer;
 import com.example.wizards.client.renderer.entity.SkeletonRenderer;
 import com.example.wizards.client.renderer.entity.SummonedSlimeRenderer;
 import com.example.wizards.client.renderer.entity.SummonedZombieRenderer;
@@ -26,6 +27,7 @@ import org.slf4j.Logger;
 import static com.example.wizards.ModEntities.LARGER_HUMANOID;
 import static com.example.wizards.ModEntities.HUMAN;
 import static com.example.wizards.ModEntities.LARGE_HUMANOID;
+import static com.example.wizards.ModEntities.ORC;
 import static com.example.wizards.ModEntities.SUMMONED_SKELETON_ARCHER;
 import static com.example.wizards.ModEntities.SUMMONED_SLIME;
 import static com.example.wizards.ModEntities.SUMMONED_POLAR_BEAR;
@@ -59,6 +61,7 @@ public class ModClientEvents {
         event.registerEntityRenderer(HUMAN, BaseHumanRenderer::new);
         event.registerEntityRenderer(LARGER_HUMANOID, LargerHumanoidRenderer::new);
         event.registerEntityRenderer(LARGE_HUMANOID, LargeHumanoidRenderer::new);
+        event.registerEntityRenderer(ORC, OrcRenderer::new);
     }
 
     @SubscribeEvent
@@ -66,6 +69,7 @@ public class ModClientEvents {
         event.registerLayerDefinition(ModModelLayers.BASE_HUMAN_LAYER, BaseHumanModel::createBodyLayer);
         event.registerLayerDefinition(ModModelLayers.LARGER_HUMANOID_LAYER, LargerHumanoidModel::createBodyLayer);
         event.registerLayerDefinition(ModModelLayers.LARGE_HUMANOID_LAYER, LargeHumanoidModel::createBodyLayer);
+        event.registerLayerDefinition(ModModelLayers.ORC_LAYER, LargeHumanoidModel::createBodyLayer);
     }
 
     @SubscribeEvent

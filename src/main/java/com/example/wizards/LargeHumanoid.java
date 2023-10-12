@@ -45,7 +45,7 @@ public class LargeHumanoid extends SummonedCreature {
         }
     }
 
-    private void setupAnimationStates() {
+    protected void setupAnimationStates() {
         if (this.idleAnimationTimeout <= 0) {
             this.idleAnimationTimeout = this.random.nextInt(40) + 80;
             this.idleAnimationState.start(this.tickCount);
@@ -91,18 +91,18 @@ public class LargeHumanoid extends SummonedCreature {
 
     public class AttackGoal extends MeleeAttackGoal {
 
-        private final LargeHumanoid entity;
+        protected final LargeHumanoid entity;
 
         // total 30 ticks, 1.5 seconds
         public static final int TIME_TO_ATTACK = 23;
         public static final int TIME_AFTER_ATTACK = 7;
 
         // Ticks from start of animation to "attack" part
-        private int attackDelay = TIME_TO_ATTACK;
+        protected int attackDelay = TIME_TO_ATTACK;
 
         // Ticks from "attack" part to end of animation
-        private int ticksUntilNextAttack = TIME_AFTER_ATTACK;
-        private boolean shouldCountTillNextAttack = false;
+        protected int ticksUntilNextAttack = TIME_AFTER_ATTACK;
+        protected boolean shouldCountTillNextAttack = false;
 
         public AttackGoal(PathfinderMob p_25552_, double p_25553_, boolean p_25554_) {
             super(p_25552_, p_25553_, p_25554_);
@@ -189,7 +189,7 @@ public class LargeHumanoid extends SummonedCreature {
             }
         }
 
-        private boolean isEnemyWithinAttackDistance(LivingEntity pEnemy, double pDistToEnemySqr) {
+        protected boolean isEnemyWithinAttackDistance(LivingEntity pEnemy, double pDistToEnemySqr) {
 //            logger.info("isEnemyWithinAttackDistance pDistToEnemySqr {}", pDistToEnemySqr);
             return pDistToEnemySqr <= this.getAttackReachSqr(pEnemy);
         }
