@@ -11,7 +11,7 @@ import static com.example.wizards.Wizards.MOD_ID;
 public class LargeHumanoidRenderer extends MobRenderer<LargeHumanoid, LargeHumanoidModel<LargeHumanoid>> {
 
     public LargeHumanoidRenderer(EntityRendererProvider.Context context) {
-        super(context, new LargeHumanoidModel<>(context.bakeLayer(ModModelLayers.LARGE_HUMANOID_LAYER)), 2f);
+        super(context, new LargeHumanoidModel<>(context.bakeLayer(ModModelLayers.LARGE_HUMANOID_LAYER)), 0.7f);
     }
 
     @Override

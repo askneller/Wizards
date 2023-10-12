@@ -11,7 +11,7 @@ import static com.example.wizards.Wizards.MOD_ID;
 public class BaseHumanRenderer extends MobRenderer<BaseHuman, BaseHumanModel<BaseHuman>> {
 
     public BaseHumanRenderer(EntityRendererProvider.Context context) {
-        super(context, new BaseHumanModel<>(context.bakeLayer(ModModelLayers.BASE_HUMAN_LAYER)), 2f);
+        super(context, new BaseHumanModel<>(context.bakeLayer(ModModelLayers.BASE_HUMAN_LAYER)), 0.7f);
     }
 
     @Override
