@@ -1,6 +1,6 @@
 package com.example.wizards.client;
 
-import com.example.wizards.ManaPool;
+import com.example.wizards.magic.ManaPool;
 import com.mojang.logging.LogUtils;
 import org.slf4j.Logger;
 

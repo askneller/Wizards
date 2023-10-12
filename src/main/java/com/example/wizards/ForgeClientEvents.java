@@ -2,6 +2,8 @@ package com.example.wizards;
 
 import com.example.wizards.client.ClientSpellList;
 import com.example.wizards.client.ClientSideHelper;
+import com.example.wizards.magic.Spell;
+import com.example.wizards.network.PacketHandler;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.logging.LogUtils;
 import net.minecraft.ChatFormatting;
@@ -19,7 +21,7 @@ import org.slf4j.Logger;
 
 import java.util.Optional;
 
-import static com.example.wizards.ManaPoolProvider.MANA_POOL;
+import static com.example.wizards.magic.ManaPoolProvider.MANA_POOL;
 import static com.example.wizards.Wizards.MOD_ID;
 
 @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)

@@ -1,6 +1,6 @@
 package com.example.wizards.client.renderer.entity;
 
-import com.example.wizards.SummonedZombie;
+import com.example.wizards.entity.SummonedZombie;
 import com.example.wizards.client.ZombieModel;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.HumanoidMobRenderer;

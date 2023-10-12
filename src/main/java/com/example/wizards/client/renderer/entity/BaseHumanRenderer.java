@@ -1,6 +1,6 @@
 package com.example.wizards.client.renderer.entity;
 
-import com.example.wizards.BaseHuman;
+import com.example.wizards.entity.BaseHuman;
 import com.example.wizards.client.BaseHumanModel;
 import com.example.wizards.client.ModModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;

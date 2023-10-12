@@ -4,7 +4,7 @@ package com.example.wizards.client;
 // Paste this class into your mod and generate all required imports
 
 
-import com.example.wizards.LargeHumanoid;
+import com.example.wizards.entity.LargeHumanoid;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.HierarchicalModel;

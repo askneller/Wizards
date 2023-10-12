@@ -1,7 +1,7 @@
 package com.example.wizards.client;
 
-import com.example.wizards.ManaColor;
-import com.example.wizards.ManaPool;
+import com.example.wizards.magic.ManaColor;
+import com.example.wizards.magic.ManaPool;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
@@ -12,12 +12,12 @@ import net.minecraftforge.client.gui.overlay.IGuiOverlay;
 
 import java.util.Map;
 
-import static com.example.wizards.ManaColor.BLACK;
-import static com.example.wizards.ManaColor.BLUE;
-import static com.example.wizards.ManaColor.COLORLESS;
-import static com.example.wizards.ManaColor.GREEN;
-import static com.example.wizards.ManaColor.RED;
-import static com.example.wizards.ManaColor.WHITE;
+import static com.example.wizards.magic.ManaColor.BLACK;
+import static com.example.wizards.magic.ManaColor.BLUE;
+import static com.example.wizards.magic.ManaColor.COLORLESS;
+import static com.example.wizards.magic.ManaColor.GREEN;
+import static com.example.wizards.magic.ManaColor.RED;
+import static com.example.wizards.magic.ManaColor.WHITE;
 import static com.example.wizards.client.ClientSideHelper.setRenderColor;
 
 public class ManaOverlay {

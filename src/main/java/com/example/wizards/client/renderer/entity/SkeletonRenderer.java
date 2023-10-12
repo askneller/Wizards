@@ -1,15 +1,12 @@
 package com.example.wizards.client.renderer.entity;
 
-import com.example.wizards.SummonedSkeleton;
-//import net.minecraft.client.model.SkeletonModel;
+import com.example.wizards.entity.SummonedSkeleton;
 import com.example.wizards.client.SkeletonModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-//import net.minecraft.client.renderer.entity.HumanoidMobRenderer;
 import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.monster.AbstractSkeleton;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 

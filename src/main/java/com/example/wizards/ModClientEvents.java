@@ -24,16 +24,16 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import org.slf4j.Logger;
 
-import static com.example.wizards.ModEntities.LARGER_HUMANOID;
-import static com.example.wizards.ModEntities.HUMAN;
-import static com.example.wizards.ModEntities.LARGE_HUMANOID;
-import static com.example.wizards.ModEntities.ORC;
-import static com.example.wizards.ModEntities.SUMMONED_SKELETON_ARCHER;
-import static com.example.wizards.ModEntities.SUMMONED_SLIME;
-import static com.example.wizards.ModEntities.SUMMONED_POLAR_BEAR;
-import static com.example.wizards.ModEntities.SUMMONED_SKELETON;
-import static com.example.wizards.ModEntities.SUMMONED_SPIDER;
-import static com.example.wizards.ModEntities.SUMMONED_ZOMBIE;
+import static com.example.wizards.entity.ModEntities.LARGER_HUMANOID;
+import static com.example.wizards.entity.ModEntities.HUMAN;
+import static com.example.wizards.entity.ModEntities.LARGE_HUMANOID;
+import static com.example.wizards.entity.ModEntities.ORC;
+import static com.example.wizards.entity.ModEntities.SUMMONED_SKELETON_ARCHER;
+import static com.example.wizards.entity.ModEntities.SUMMONED_SLIME;
+import static com.example.wizards.entity.ModEntities.SUMMONED_POLAR_BEAR;
+import static com.example.wizards.entity.ModEntities.SUMMONED_SKELETON;
+import static com.example.wizards.entity.ModEntities.SUMMONED_SPIDER;
+import static com.example.wizards.entity.ModEntities.SUMMONED_ZOMBIE;
 import static com.example.wizards.Wizards.MOD_ID;
 
 @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)

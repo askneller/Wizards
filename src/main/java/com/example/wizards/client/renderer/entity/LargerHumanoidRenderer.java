@@ -1,6 +1,6 @@
 package com.example.wizards.client.renderer.entity;
 
-import com.example.wizards.LargerHumanoid;
+import com.example.wizards.entity.LargerHumanoid;
 import com.example.wizards.client.LargerHumanoidModel;
 import com.example.wizards.client.ModModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;

@@ -1,5 +1,9 @@
 package com.example.wizards;
 
+import com.example.wizards.block.ManaTotemBlock;
+import com.example.wizards.block.ModBlocksAndItems;
+import com.example.wizards.magic.ManaPoolProvider;
+import com.example.wizards.network.PacketHandler;
 import com.mojang.logging.LogUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -21,7 +25,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 import org.slf4j.Logger;
 
-import static com.example.wizards.ManaPoolProvider.MANA_POOL;
+import static com.example.wizards.magic.ManaPoolProvider.MANA_POOL;
 import static com.example.wizards.Wizards.MOD_ID;
 
 public class ModEvents {

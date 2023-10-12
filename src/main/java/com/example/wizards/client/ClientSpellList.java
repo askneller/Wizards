@@ -1,15 +1,15 @@
 package com.example.wizards.client;
 
-import com.example.wizards.ManaColor;
-import com.example.wizards.Orc;
-import com.example.wizards.Spell;
-import com.example.wizards.Spells;
-import com.example.wizards.SummonedSlime;
-import com.example.wizards.SummonedZombie;
-import com.example.wizards.SummonedPolarBear;
-import com.example.wizards.SummonedSkeleton;
-import com.example.wizards.SummonedSkeletonArcher;
-import com.example.wizards.SummonedSpider;
+import com.example.wizards.magic.ManaColor;
+import com.example.wizards.entity.Orc;
+import com.example.wizards.magic.Spell;
+import com.example.wizards.magic.Spells;
+import com.example.wizards.entity.SummonedSlime;
+import com.example.wizards.entity.SummonedZombie;
+import com.example.wizards.entity.SummonedPolarBear;
+import com.example.wizards.entity.SummonedSkeleton;
+import com.example.wizards.entity.SummonedSkeletonArcher;
+import com.example.wizards.entity.SummonedSpider;
 import com.mojang.logging.LogUtils;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
