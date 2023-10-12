@@ -16,7 +16,6 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.Entity;
 
 public class LargeHumanoidModel<T extends LargeHumanoid> extends HierarchicalModel<T> {
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
@@ -36,17 +35,17 @@ public class LargeHumanoidModel<T extends LargeHumanoid> extends HierarchicalMod
 
 		PartDefinition root = partdefinition.addOrReplaceChild("root", CubeListBuilder.create(), PartPose.offset(0.0F, 24.0F, 0.0F));
 
-		PartDefinition body = root.addOrReplaceChild("body", CubeListBuilder.create().texOffs(0, 18).addBox(-5.0F, -28.0F, -3.0F, 10.0F, 14.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+		PartDefinition body = root.addOrReplaceChild("body", CubeListBuilder.create().texOffs(0, 18).addBox(-5.0F, -13.0F, -3.0F, 10.0F, 14.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -15.0F, 0.0F));
 
-		PartDefinition head = body.addOrReplaceChild("head", CubeListBuilder.create().texOffs(0, 0).addBox(-4.5F, -9.0F, -5.0F, 9.0F, 9.0F, 9.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -28.0F, 0.0F));
+		PartDefinition head = body.addOrReplaceChild("head", CubeListBuilder.create().texOffs(0, 0).addBox(-4.5F, -9.0F, -5.0F, 9.0F, 9.0F, 9.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -13.0F, 0.0F));
 
-		PartDefinition left_arm = body.addOrReplaceChild("left_arm", CubeListBuilder.create().texOffs(40, 37).addBox(-1.0F, 0.0F, -2.0F, 5.0F, 14.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offset(6.0F, -28.0F, -1.0F));
+		PartDefinition left_arm = body.addOrReplaceChild("left_arm", CubeListBuilder.create().texOffs(40, 37).addBox(-1.0F, -1.0F, -2.0F, 5.0F, 14.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offset(6.0F, -12.0F, -1.0F));
 
-		PartDefinition right_arm = body.addOrReplaceChild("right_arm", CubeListBuilder.create().texOffs(20, 37).addBox(-4.0F, 0.0F, -2.0F, 5.0F, 14.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offset(-6.0F, -28.0F, -1.0F));
+		PartDefinition right_arm = body.addOrReplaceChild("right_arm", CubeListBuilder.create().texOffs(20, 37).addBox(-4.0F, -1.0F, -2.0F, 5.0F, 14.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offset(-6.0F, -12.0F, -1.0F));
 
-		PartDefinition left_leg = body.addOrReplaceChild("left_leg", CubeListBuilder.create().texOffs(0, 37).addBox(-3.0F, 0.0F, -2.0F, 5.0F, 14.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offset(3.0F, -14.0F, -1.0F));
+		PartDefinition left_leg = root.addOrReplaceChild("left_leg", CubeListBuilder.create().texOffs(0, 37).addBox(-3.0F, 0.0F, -2.0F, 5.0F, 14.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offset(3.0F, -14.0F, -1.0F));
 
-		PartDefinition right_leg = body.addOrReplaceChild("right_leg", CubeListBuilder.create().texOffs(30, 18).addBox(-2.0F, 0.0F, -2.0F, 5.0F, 14.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offset(-3.0F, -14.0F, -1.0F));
+		PartDefinition right_leg = root.addOrReplaceChild("right_leg", CubeListBuilder.create().texOffs(30, 18).addBox(-2.0F, 0.0F, -2.0F, 5.0F, 14.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offset(-3.0F, -14.0F, -1.0F));
 
 		return LayerDefinition.create(meshdefinition, 64, 64);
 	}
@@ -59,7 +58,7 @@ public class LargeHumanoidModel<T extends LargeHumanoid> extends HierarchicalMod
 
 		this.animateWalk(LargeHumanoidAnimations.WALK, limbSwing, limbSwingAmount, 2f, 2.5f);
 		this.animate(entity.idleAnimationState, LargeHumanoidAnimations.ARM_SWING_IDLE, ageInTicks, 1.0f);
-		this.animate(entity.attackAnimationState, LargeHumanoidAnimations.RIGHT_ARM_ATTACK, ageInTicks, 1.0f);
+		this.animate(entity.attackAnimationState, LargeHumanoidAnimations.DOUBLE_ARM_ATTACK, ageInTicks, 1.0f);
 	}
 
 	private void applyHeadRotation(float netHeadYaw, float headPitch, float ageInTicks) {

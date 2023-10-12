@@ -37,7 +37,7 @@ public class LargeHumanoid extends SummonedCreature {
 
     @Override
     public void tick() {
-        if (!this.level().isClientSide) logger.info("=========================\nEntity tick: T/C {}", tickCount);
+//        if (!this.level().isClientSide) logger.info("=========================\nEntity tick: T/C {}", tickCount);
         super.tick();
 
         if (this.level().isClientSide()) {
@@ -54,18 +54,18 @@ public class LargeHumanoid extends SummonedCreature {
         }
 
         if (this.isAttacking() && attackAnimationTimeout <= 0) {
-            logger.info("Entity: timeout done, starting animation");
+//            logger.info("Entity: timeout done, starting animation");
             attackAnimationState.start(this.tickCount);
-            attackAnimationTimeout = 20; // Length in ticks of your animation
-            logger.info("Entity: attackAnimationState {}", attackAnimationState.getAccumulatedTime());
-            logger.info("Entity: attackAnimationTimeout reset {}", attackAnimationTimeout);
+            attackAnimationTimeout = AttackGoal.TIME_TO_ATTACK + AttackGoal.TIME_AFTER_ATTACK; // Length in ticks of your animation
+//            logger.info("Entity: attackAnimationState {}", attackAnimationState.getAccumulatedTime());
+//            logger.info("Entity: attackAnimationTimeout reset {}", attackAnimationTimeout);
         } else {
             --this.attackAnimationTimeout;
-            logger.info("Entity: countdown animation {}", this.attackAnimationTimeout);
+//            logger.info("Entity: countdown animation {}", this.attackAnimationTimeout);
         }
 
         if (!this.isAttacking()) {
-            if (attackAnimationState.isStarted()) logger.info("Stopping anim");
+//            if (attackAnimationState.isStarted()) logger.info("Stopping anim");
             attackAnimationState.stop();
         }
     }
@@ -85,7 +85,7 @@ public class LargeHumanoid extends SummonedCreature {
 
     @Override
     public boolean doHurtTarget(Entity p_21372_) {
-        logger.info("Entity: Doing hurt ({})", this.attackAnimationState.getAccumulatedTime());
+//        logger.info("Entity: Doing hurt ({})", this.attackAnimationState.getAccumulatedTime());
         return super.doHurtTarget(p_21372_);
     }
 
@@ -93,8 +93,9 @@ public class LargeHumanoid extends SummonedCreature {
 
         private final LargeHumanoid entity;
 
-        private final int TIME_TO_ATTACK = 11;
-        private final int TIME_AFTER_ATTACK = 9;
+        // total 30 ticks, 1.5 seconds
+        public static final int TIME_TO_ATTACK = 23;
+        public static final int TIME_AFTER_ATTACK = 7;
 
         // Ticks from start of animation to "attack" part
         private int attackDelay = TIME_TO_ATTACK;
@@ -111,13 +112,13 @@ public class LargeHumanoid extends SummonedCreature {
 
         @Override
         public void tick() {
-            logger.info("Goal: tick pre super {}", ticksUntilNextAttack);
+//            logger.info("Goal: tick pre super {}", ticksUntilNextAttack);
             super.tick();
-            logger.info("Goal: tick post super {}", ticksUntilNextAttack);
+//            logger.info("Goal: tick post super {}", ticksUntilNextAttack);
 //            if (shouldCountTillNextAttack) {
 //                this.ticksUntilNextAttack = Math.max(this.ticksUntilNextAttack - 1, 0);
 //            }
-            logger.info("Goal: tick end {}", ticksUntilNextAttack);
+//            logger.info("Goal: tick end {}", ticksUntilNextAttack);
             // timing discrepancy is because (i think): in the server tick that the animation is started there is no decrement of the countdown:
             //        if (this.isAttacking() && attackAnimationTimeout <= 0) {
             //            attackAnimationState.start(this.tickCount);
@@ -156,20 +157,20 @@ public class LargeHumanoid extends SummonedCreature {
         // when ticksUntilNextAttack reaches zero, performs attack, resets ticksUntilNextAttack
         @Override
         protected void checkAndPerformAttack(LivingEntity pEnemy, double pDistToEnemySqr) {
-            logger.info("Goal: CaP {}", ticksUntilNextAttack);
+//            logger.info("Goal: CaP {}", ticksUntilNextAttack);
             if (isEnemyWithinAttackDistance(pEnemy, pDistToEnemySqr)) {
                 shouldCountTillNextAttack = true;
 //                logger.info("Goal: T/C {}", this.entity.tickCount);
-                logger.info("Goal: within distance, {}", ticksUntilNextAttack);
+//                logger.info("Goal: within distance, {}", ticksUntilNextAttack);
 
                 if(isTimeToStartAttackAnimation()) {
-                    logger.info("Goal: setAttacking(true): {}", ticksUntilNextAttack);
+//                    logger.info("Goal: setAttacking(true): {}", ticksUntilNextAttack);
                     entity.setAttacking(true);
                 }
 
                 if(isTimeToAttack()) {
-                    logger.info("Goal: time to attack: {} (p t/o {}, anim {})",
-                            ticksUntilNextAttack, entity.attackAnimationTimeout, entity.attackAnimationState.getAccumulatedTime());
+//                    logger.info("Goal: time to attack: {} (p t/o {}, anim {})",
+//                            ticksUntilNextAttack, entity.attackAnimationTimeout, entity.attackAnimationState.getAccumulatedTime());
                     this.mob.getLookControl().setLookAt(pEnemy.getX(), pEnemy.getEyeY(), pEnemy.getZ());
                     performAttack(pEnemy);
                 } else {
@@ -182,9 +183,9 @@ public class LargeHumanoid extends SummonedCreature {
                 resetAttackCooldown();
                 shouldCountTillNextAttack = false;
                 entity.setAttacking(false);
-                logger.info("Goal: entity.attackAnimationTimeout was {}", entity.attackAnimationTimeout);
+//                logger.info("Goal: entity.attackAnimationTimeout was {}", entity.attackAnimationTimeout);
                 entity.attackAnimationTimeout = 0;
-                logger.info("Goal: entity.attackAnimationTimeout {}", entity.attackAnimationTimeout);
+//                logger.info("Goal: entity.attackAnimationTimeout {}", entity.attackAnimationTimeout);
             }
         }
 
@@ -205,7 +206,7 @@ public class LargeHumanoid extends SummonedCreature {
             // then 40 ticks to end of animation. So from "attack" animation part to "attack" part is 80 ticks
             // i.e. attackDelay * 2
             this.ticksUntilNextAttack = this.adjustedTickDelay(TIME_TO_ATTACK + TIME_AFTER_ATTACK);
-            logger.info("Goal: reset ticksUntilNextAttack {}", ticksUntilNextAttack);
+//            logger.info("Goal: reset ticksUntilNextAttack {}", ticksUntilNextAttack);
         }
 
         protected boolean isTimeToAttack() {
@@ -222,7 +223,7 @@ public class LargeHumanoid extends SummonedCreature {
 
 
         protected void performAttack(LivingEntity pEnemy) {
-            logger.info("Goal: perform attack {}, parent {}", ticksUntilNextAttack, entity.attackAnimationTimeout);
+//            logger.info("Goal: perform attack {}, parent {}", ticksUntilNextAttack, entity.attackAnimationTimeout);
             this.resetAttackCooldown();
             this.mob.swing(InteractionHand.MAIN_HAND);
             this.mob.doHurtTarget(pEnemy);

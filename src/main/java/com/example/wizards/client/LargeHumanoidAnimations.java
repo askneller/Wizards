@@ -57,7 +57,6 @@ public class LargeHumanoidAnimations {
                                     AnimationChannel.Interpolations.LINEAR),
                             new Keyframe(3f, KeyframeAnimations.degreeVec(5f, 0f, 0f),
                                     AnimationChannel.Interpolations.LINEAR))).build();
-
     public static final AnimationDefinition RIGHT_ARM_ATTACK = AnimationDefinition.Builder.withLength(1f).looping()
             .addAnimation("right_arm",
                     new AnimationChannel(AnimationChannel.Targets.ROTATION,
@@ -68,5 +67,42 @@ public class LargeHumanoidAnimations {
                             new Keyframe(0.6766666f, KeyframeAnimations.degreeVec(15f, 0f, 0f),
                                     AnimationChannel.Interpolations.LINEAR),
                             new Keyframe(1f, KeyframeAnimations.degreeVec(-0.83f, 0f, 0f),
+                                    AnimationChannel.Interpolations.LINEAR))).build();
+    public static final AnimationDefinition DOUBLE_ARM_ATTACK = AnimationDefinition.Builder.withLength(1.5f).looping()
+            .addAnimation("right_arm",
+                    new AnimationChannel(AnimationChannel.Targets.ROTATION,
+                            new Keyframe(0f, KeyframeAnimations.degreeVec(0f, 0f, 0f),
+                                    AnimationChannel.Interpolations.LINEAR),
+                            new Keyframe(0.9167666f, KeyframeAnimations.degreeVec(-200f, 0f, 0f),
+                                    AnimationChannel.Interpolations.LINEAR),
+                            new Keyframe(1.0834333f, KeyframeAnimations.degreeVec(-200f, 0f, 0f),
+                                    AnimationChannel.Interpolations.LINEAR),
+                            new Keyframe(1.25f, KeyframeAnimations.degreeVec(15f, 0f, 0f),
+                                    AnimationChannel.Interpolations.LINEAR),
+                            new Keyframe(1.4583433f, KeyframeAnimations.degreeVec(0f, 0f, 0f),
+                                    AnimationChannel.Interpolations.LINEAR)))
+            .addAnimation("body",
+                    new AnimationChannel(AnimationChannel.Targets.ROTATION,
+                            new Keyframe(0f, KeyframeAnimations.degreeVec(0f, 0f, 0f),
+                                    AnimationChannel.Interpolations.LINEAR),
+                            new Keyframe(0.9167666f, KeyframeAnimations.degreeVec(-5f, 0f, 0f),
+                                    AnimationChannel.Interpolations.LINEAR),
+                            new Keyframe(1.0834333f, KeyframeAnimations.degreeVec(-5f, 0f, 0f),
+                                    AnimationChannel.Interpolations.LINEAR),
+                            new Keyframe(1.25f, KeyframeAnimations.degreeVec(12.5f, 0f, 0f),
+                                    AnimationChannel.Interpolations.LINEAR),
+                            new Keyframe(1.4583433f, KeyframeAnimations.degreeVec(0f, 0f, 0f),
+                                    AnimationChannel.Interpolations.LINEAR)))
+            .addAnimation("left_arm",
+                    new AnimationChannel(AnimationChannel.Targets.ROTATION,
+                            new Keyframe(0f, KeyframeAnimations.degreeVec(0f, 0f, 0f),
+                                    AnimationChannel.Interpolations.LINEAR),
+                            new Keyframe(0.9167666f, KeyframeAnimations.degreeVec(-200f, 0f, 0f),
+                                    AnimationChannel.Interpolations.LINEAR),
+                            new Keyframe(1.0834333f, KeyframeAnimations.degreeVec(-200f, 0f, 0f),
+                                    AnimationChannel.Interpolations.LINEAR),
+                            new Keyframe(1.25f, KeyframeAnimations.degreeVec(15f, 0f, 0f),
+                                    AnimationChannel.Interpolations.LINEAR),
+                            new Keyframe(1.4583433f, KeyframeAnimations.degreeVec(0f, 0f, 0f),
                                     AnimationChannel.Interpolations.LINEAR))).build();
 }
