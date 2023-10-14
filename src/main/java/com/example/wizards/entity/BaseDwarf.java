@@ -3,11 +3,9 @@ package com.example.wizards.entity;
 import com.example.wizards.entity.ai.AnimatedAttackGoal;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.PathfinderMob;
-import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
@@ -17,7 +15,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
-import org.apache.commons.lang3.builder.Diff;
 
 public class BaseDwarf extends SummonedCreature {
 
@@ -51,18 +48,6 @@ public class BaseDwarf extends SummonedCreature {
 
     protected void populateDefaultEquipmentSlots(RandomSource randomSource, DifficultyInstance instance) {
         this.setItemSlot(EquipmentSlot.OFFHAND, new ItemStack(Items.IRON_AXE));
-    }
-
-    @Override
-    protected void updateWalkAnimation(float partialTick) {
-        float f;
-        if (this.getPose() == Pose.STANDING) {
-            f = Math.min(partialTick * 6f, 1f);
-        } else {
-            f = 0;
-        }
-
-        this.walkAnimation.update(f, 0.2f);
     }
 
 }

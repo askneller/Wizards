@@ -13,6 +13,7 @@ import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Monster;
@@ -135,6 +136,18 @@ public abstract class SummonedCreature extends PathfinderMob implements Controll
         } else {
 //            logger.info("here !!!!");
         }
+    }
+
+    @Override
+    protected void updateWalkAnimation(float partialTick) {
+        float f;
+        if (this.getPose() == Pose.STANDING) {
+            f = Math.min(partialTick * 6f, 1f);
+        } else {
+            f = 0;
+        }
+
+        this.walkAnimation.update(f, 0.2f);
     }
 
     @Override
