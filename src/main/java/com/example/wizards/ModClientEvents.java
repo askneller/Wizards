@@ -1,10 +1,12 @@
 package com.example.wizards;
 
+import com.example.wizards.client.BaseDwarfModel;
 import com.example.wizards.client.BaseHumanModel;
 import com.example.wizards.client.LargerHumanoidModel;
 import com.example.wizards.client.LargeHumanoidModel;
 import com.example.wizards.client.ManaOverlay;
 import com.example.wizards.client.ModModelLayers;
+import com.example.wizards.client.renderer.entity.BaseDwarfRenderer;
 import com.example.wizards.client.renderer.entity.BaseHumanRenderer;
 import com.example.wizards.client.renderer.entity.LargerHumanoidRenderer;
 import com.example.wizards.client.renderer.entity.LargeHumanoidRenderer;
@@ -24,6 +26,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import org.slf4j.Logger;
 
+import static com.example.wizards.entity.ModEntities.BASE_DWARF;
 import static com.example.wizards.entity.ModEntities.LARGER_HUMANOID;
 import static com.example.wizards.entity.ModEntities.HUMAN;
 import static com.example.wizards.entity.ModEntities.LARGE_HUMANOID;
@@ -62,6 +65,7 @@ public class ModClientEvents {
         event.registerEntityRenderer(LARGER_HUMANOID, LargerHumanoidRenderer::new);
         event.registerEntityRenderer(LARGE_HUMANOID, LargeHumanoidRenderer::new);
         event.registerEntityRenderer(ORC, OrcRenderer::new);
+        event.registerEntityRenderer(BASE_DWARF, BaseDwarfRenderer::new);
     }
 
     @SubscribeEvent
@@ -70,6 +74,7 @@ public class ModClientEvents {
         event.registerLayerDefinition(ModModelLayers.LARGER_HUMANOID_LAYER, LargerHumanoidModel::createBodyLayer);
         event.registerLayerDefinition(ModModelLayers.LARGE_HUMANOID_LAYER, LargeHumanoidModel::createBodyLayer);
         event.registerLayerDefinition(ModModelLayers.ORC_LAYER, LargeHumanoidModel::createBodyLayer);
+        event.registerLayerDefinition(ModModelLayers.BASE_DWARF_LAYER, BaseDwarfModel::createBodyLayer);
     }
 
     @SubscribeEvent

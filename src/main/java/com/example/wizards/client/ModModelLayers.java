@@ -19,4 +19,7 @@ public class ModModelLayers {
     public static final ModelLayerLocation ORC_LAYER = new ModelLayerLocation(
             new ResourceLocation(MOD_ID, "orc_layer"), "main");
 
+    public static final ModelLayerLocation BASE_DWARF_LAYER = new ModelLayerLocation(
+            new ResourceLocation(MOD_ID, "base_dwarf_layer"), "main");
+
 }

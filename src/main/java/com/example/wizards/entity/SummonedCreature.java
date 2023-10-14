@@ -1,5 +1,6 @@
 package com.example.wizards.entity;
 
+import com.example.wizards.entity.ai.AnimatedAttackGoal;
 import com.example.wizards.entity.ai.AssignedTargetGoal;
 import com.example.wizards.entity.ai.ControllerHurtByTargetGoal;
 import com.example.wizards.entity.ai.FollowControllerGoal;
@@ -22,6 +23,7 @@ public abstract class SummonedCreature extends PathfinderMob implements Controll
 
 
     protected static final EntityDataAccessor<Boolean> ATTACKING = SynchedEntityData.defineId(SummonedCreature.class, EntityDataSerializers.BOOLEAN);
+    protected static final EntityDataAccessor<Integer> ATTACK_ANIMATION_DURATION = SynchedEntityData.defineId(SummonedCreature.class, EntityDataSerializers.INT);
 
     protected static final Logger logger = LogUtils.getLogger();
 
@@ -29,13 +31,14 @@ public abstract class SummonedCreature extends PathfinderMob implements Controll
     protected FollowControllerGoal followControllerGoal;
     protected AssignedTargetGoal assignedTargetGoal;
     protected ControllerHurtByTargetGoal controllerHurtByTargetGoal;
+    protected AnimatedAttackGoal<?> animatedAttackGoal;
     protected String controllerUuid;
 
     // Animation
     public final AnimationState idleAnimationState = new AnimationState();
     protected int idleAnimationTimeout;
     public final AnimationState attackAnimationState = new AnimationState();
-    protected int attackAnimationTimeout;
+    public int attackAnimationTimeout;
 
     public SummonedCreature(EntityType<? extends PathfinderMob> entityType, Level level) {
         super(entityType, level);
@@ -62,13 +65,19 @@ public abstract class SummonedCreature extends PathfinderMob implements Controll
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        return Monster.createMonsterAttributes().add(Attributes.FOLLOW_RANGE, 35.0D).add(Attributes.MOVEMENT_SPEED, (double)0.23F).add(Attributes.ATTACK_DAMAGE, 3.0D).add(Attributes.ARMOR, 2.0D).add(Attributes.SPAWN_REINFORCEMENTS_CHANCE);
+        return Monster.createMonsterAttributes()
+                .add(Attributes.FOLLOW_RANGE, 35.0D)
+                .add(Attributes.MOVEMENT_SPEED, (double)0.23F)
+                .add(Attributes.ATTACK_DAMAGE, 3.0D)
+                .add(Attributes.ARMOR, 2.0D)
+                .add(Attributes.SPAWN_REINFORCEMENTS_CHANCE);
     }
 
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(ATTACKING, false);
+        this.entityData.define(ATTACK_ANIMATION_DURATION, 0);
     }
 
     public void setAttacking(boolean attacking) {
@@ -77,6 +86,55 @@ public abstract class SummonedCreature extends PathfinderMob implements Controll
 
     public boolean isAttacking() {
         return this.entityData.get(ATTACKING);
+    }
+
+    public int getAttackAnimationDuration() {
+//        logger.info("getAttackAnimationDuration {}", this.entityData.get(ATTACK_ANIMATION_DURATION));
+        return this.entityData.get(ATTACK_ANIMATION_DURATION);
+    }
+
+    @Override
+    public void tick() {
+//        if (!this.level().isClientSide) {
+//            logger.info("=========================\nEntity tick: T/C {}\n{}", tickCount, animatedAttackGoal);
+//        }
+        super.tick();
+
+        SummonedCreatureUtil.trySetController(this, this.level());
+
+        if (this.level().isClientSide()) {
+            setupAnimationStates();
+        }
+    }
+
+    protected void setupAnimationStates() {
+        if (this.idleAnimationTimeout <= 0) {
+            this.idleAnimationTimeout = this.random.nextInt(40) + 80;
+            this.idleAnimationState.start(this.tickCount);
+        } else {
+            --this.idleAnimationTimeout;
+        }
+
+//        logger.info("goal {}", this.getAttackAnimationDuration());
+        if (this.getAttackAnimationDuration() != 0) {
+            if (this.isAttacking() && attackAnimationTimeout <= 0) {
+//            logger.info("Entity: timeout done, starting animation");
+                attackAnimationState.start(this.tickCount);
+                attackAnimationTimeout = this.getAttackAnimationDuration(); // Length in ticks of your animation
+//            logger.info("Entity: attackAnimationState {}", attackAnimationState.getAccumulatedTime());
+//            logger.info("Entity: attackAnimationTimeout reset {}", attackAnimationTimeout);
+            } else {
+                --this.attackAnimationTimeout;
+//            logger.info("Entity: countdown animation {}", this.attackAnimationTimeout);
+            }
+
+            if (!this.isAttacking()) {
+//            if (attackAnimationState.isStarted()) logger.info("Stopping anim");
+                attackAnimationState.stop();
+            }
+        } else {
+//            logger.info("here !!!!");
+        }
     }
 
     @Override
@@ -91,12 +149,6 @@ public abstract class SummonedCreature extends PathfinderMob implements Controll
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         this.controllerUuid = tag.getString("ControllerUuid");
-    }
-
-    @Override
-    public void tick() {
-        super.tick();
-        SummonedCreatureUtil.trySetController(this, this.level());
     }
 
     @Override

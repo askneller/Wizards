@@ -35,7 +35,7 @@ public class BaseHuman extends SummonedCreature {
         }
     }
 
-    private void setupAnimationStates() {
+    protected void setupAnimationStates() {
         if (this.idleAnimationTimeout <= 0) {
             this.idleAnimationTimeout = this.random.nextInt(40) + 80;
             this.idleAnimationState.start(this.tickCount);

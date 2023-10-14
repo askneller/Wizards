@@ -1,5 +1,6 @@
 package com.example.wizards.entity;
 
+import com.mojang.logging.LogUtils;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -14,8 +15,11 @@ import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.level.Level;
+import org.slf4j.Logger;
 
 public class LargeHumanoid extends SummonedCreature {
+
+    private static final Logger logger = LogUtils.getLogger();
 
     public LargeHumanoid(EntityType<? extends PathfinderMob> entityType, Level level) {
         super(entityType, level);
@@ -40,9 +44,10 @@ public class LargeHumanoid extends SummonedCreature {
 //        if (!this.level().isClientSide) logger.info("=========================\nEntity tick: T/C {}", tickCount);
         super.tick();
 
-        if (this.level().isClientSide()) {
-            setupAnimationStates();
-        }
+//        logger.info("End super.tick");
+//        if (this.level().isClientSide()) {
+//            setupAnimationStates();
+//        }
     }
 
     protected void setupAnimationStates() {
@@ -89,7 +94,7 @@ public class LargeHumanoid extends SummonedCreature {
         return super.doHurtTarget(p_21372_);
     }
 
-    public class AttackGoal extends MeleeAttackGoal {
+    public static class AttackGoal extends MeleeAttackGoal {
 
         protected final LargeHumanoid entity;
 
