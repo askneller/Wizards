@@ -1,5 +1,6 @@
 package com.example.wizards.client;
 
+import com.example.wizards.entity.DwarfAxeman;
 import com.example.wizards.magic.ManaColor;
 import com.example.wizards.entity.Orc;
 import com.example.wizards.magic.Spell;
@@ -26,7 +27,7 @@ public class ClientSpellList {
     private static final Logger logger = LogUtils.getLogger();
 
     private static int index = 0;
-    public static int[] spells = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
+    public static int[] spells = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
 
     public static void inc() {
         ++index;
@@ -73,6 +74,8 @@ public class ClientSpellList {
                 return "codeofarrows";
             case 11:
                 return Orc.spell_name;
+            case 12:
+                return DwarfAxeman.spell_name;
             default:
                 return null;
         }

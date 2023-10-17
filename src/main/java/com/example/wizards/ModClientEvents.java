@@ -27,6 +27,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import org.slf4j.Logger;
 
 import static com.example.wizards.entity.ModEntities.BASE_DWARF;
+import static com.example.wizards.entity.ModEntities.DWARF_AXEMAN;
 import static com.example.wizards.entity.ModEntities.LARGER_HUMANOID;
 import static com.example.wizards.entity.ModEntities.HUMAN;
 import static com.example.wizards.entity.ModEntities.LARGE_HUMANOID;
@@ -66,6 +67,7 @@ public class ModClientEvents {
         event.registerEntityRenderer(LARGE_HUMANOID, LargeHumanoidRenderer::new);
         event.registerEntityRenderer(ORC, OrcRenderer::new);
         event.registerEntityRenderer(BASE_DWARF, BaseDwarfRenderer::new);
+        event.registerEntityRenderer(DWARF_AXEMAN, BaseDwarfRenderer::new);
     }
 
     @SubscribeEvent

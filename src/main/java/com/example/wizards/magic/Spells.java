@@ -1,5 +1,6 @@
 package com.example.wizards.magic;
 
+import com.example.wizards.entity.DwarfAxeman;
 import com.example.wizards.entity.Orc;
 import com.example.wizards.entity.SummonedPhantom;
 import com.example.wizards.entity.SummonedPolarBear;
@@ -18,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import static com.example.wizards.entity.ModEntities.DWARF_AXEMAN;
 import static com.example.wizards.entity.ModEntities.ORC;
 import static com.example.wizards.entity.ModEntities.SUMMONED_SKELETON_ARCHER;
 import static com.example.wizards.entity.ModEntities.SUMMONED_SLIME;
@@ -39,6 +41,7 @@ public class Spells {
     public static final Spell LARGE_FIREBALL = new Spell.Builder("Fireball (L)").withProjectile(LargeFireball.class, EntityType.FIREBALL).withPower(2.0f).withCost(ManaColor.COLORLESS, ManaColor.COLORLESS).build();
     public static final Spell CODE_OF_ARROWS = new Spell.Builder("Cone of Arrows").withProjectile(Arrow.class, EntityType.ARROW).withQuantity(10).withPower(3.0f).withSpread(0.2f).withCost(ManaColor.COLORLESS, ManaColor.COLORLESS).build();
     public static final Spell SUMMON_ORC = new Spell.Builder("Orc").withCreature(Orc.class, ORC).withCost(ManaColor.COLORLESS).build();
+    public static final Spell SUMMON_DWARF_AXEMAN = new Spell.Builder("Dwarf Axeman").withCreature(DwarfAxeman.class, DWARF_AXEMAN).withCost(ManaColor.COLORLESS).build();
 
     private static final Map<String, Spell> spellsByName = new HashMap<>();
 
@@ -54,6 +57,7 @@ public class Spells {
         spellsByName.put("largefireball", LARGE_FIREBALL);
         spellsByName.put("codeofarrows", CODE_OF_ARROWS);
         spellsByName.put(Orc.spell_name, SUMMON_ORC);
+        spellsByName.put(DwarfAxeman.spell_name, SUMMON_DWARF_AXEMAN);
     }
 
     public static Optional<Spell> getSpellByName(String name) {

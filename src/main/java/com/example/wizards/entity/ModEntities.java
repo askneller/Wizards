@@ -33,6 +33,7 @@ public class ModEntities {
     public static EntityType<? extends LargeHumanoid> LARGE_HUMANOID;
     public static EntityType<? extends Orc> ORC;
     public static EntityType<? extends BaseDwarf> BASE_DWARF;
+    public static EntityType<? extends BaseDwarf> DWARF_AXEMAN;
 
     @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
     public static class ModEntityEvents {
@@ -104,7 +105,13 @@ public class ModEntities {
 
                 BASE_DWARF = build(event.getForgeRegistry(), "dwarf",
                         EntityType.Builder.<BaseDwarf>of(BaseDwarf::new, MobCategory.CREATURE) // MobCategory.MONSTER)
-                                .sized(0.6F, 1.4F)
+                                .sized(0.7F, 1.4F)
+                                .clientTrackingRange(10)
+                );
+
+                DWARF_AXEMAN = build(event.getForgeRegistry(), DwarfAxeman.spell_name,
+                        EntityType.Builder.<BaseDwarf>of(DwarfAxeman::new, MobCategory.CREATURE) // MobCategory.MONSTER)
+                                .sized(0.7F, 1.4F)
                                 .clientTrackingRange(10)
                 );
 
@@ -138,6 +145,7 @@ public class ModEntities {
             event.put(LARGE_HUMANOID, LargeHumanoid.createAttributes().build());
             event.put(ORC, Orc.createAttributes().build());
             event.put(BASE_DWARF, BaseDwarf.createAttributes().build());
+            event.put(DWARF_AXEMAN, DwarfAxeman.createAttributes().build());
         }
 
     }
