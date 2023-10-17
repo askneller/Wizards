@@ -72,7 +72,7 @@ public class SummonedSlime extends SummonedCreature {
         this.reapplyPosition();
         this.refreshDimensions();
         this.getAttribute(Attributes.MAX_HEALTH).setBaseValue((double)(i * i));
-        this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue((double)(0.2F + 0.1F * (float)i));
+        this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue((double)(0.5F + 0.1F * (float)i));
         this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue((double)i);
         if (p_33595_) {
             this.setHealth(this.getMaxHealth());
