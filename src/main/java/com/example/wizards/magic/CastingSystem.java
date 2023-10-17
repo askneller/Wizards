@@ -230,7 +230,7 @@ public class CastingSystem {
     private static boolean isAttackableTarget(ServerPlayer player, Entity entity) {
         if (entity instanceof LivingEntity living) {
             if (living instanceof ControlledEntity controlled) {
-                if (controlled.getController().equals(player)) {
+                if (player.equals(controlled.getController())) {
                     logger.warn("You cannot assign your controlled creature as a target");
                     return false;
                 }
