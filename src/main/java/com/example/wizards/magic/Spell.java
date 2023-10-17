@@ -17,7 +17,7 @@ public class Spell {
     // Projectile
     private Class<?> projectileClass;
     private int quantity = 1;
-    private float power = 0.0f;
+    private float force = 0.0f;
     private float spread = 0.0f;
 
     public Spell(String name) {
@@ -55,8 +55,8 @@ public class Spell {
         return quantity;
     }
 
-    public float getPower() {
-        return power;
+    public float getForce() {
+        return force;
     }
 
     public float getSpread() {
@@ -89,8 +89,8 @@ public class Spell {
             return this;
         }
 
-        public Builder withPower(float power) {
-            this.spell.power = power;
+        public Builder withForce(float power) {
+            this.spell.force = power;
             return this;
         }
 

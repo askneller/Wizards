@@ -142,7 +142,7 @@ public class CastingSystem {
             } else if (o instanceof Projectile projectile) {
                 Vec3 offset = lookAngle.offsetRandom(level.random, spell.getSpread());
                 projectile.setPos(player.getX(), player.getY(0.5D) + 0.5D, player.getZ());
-                projectile.shoot(offset.x, offset.y, offset.z, spell.getPower(), 1.0f);
+                projectile.shoot(offset.x, offset.y, offset.z, spell.getForce(), 1.0f);
                 level.addFreshEntity(projectile);
             }
         }
@@ -158,7 +158,7 @@ public class CastingSystem {
                 return constructor.newInstance(level, player, lookAngle.x, lookAngle.y, lookAngle.z);
             } else if (spell.getEntityType() == EntityType.FIREBALL) {
                 constructor = projectileClass.getConstructor(Level.class, LivingEntity.class, double.class, double.class, double.class, int.class);
-                return constructor.newInstance(level, player, lookAngle.x, lookAngle.y, lookAngle.z, (int) spell.getPower());
+                return constructor.newInstance(level, player, lookAngle.x, lookAngle.y, lookAngle.z, (int) spell.getForce());
             } else if (spell.getEntityType() == EntityType.ARROW) {
                 constructor = projectileClass.getConstructor(EntityType.class, Level.class);
                 return constructor.newInstance(spell.getEntityType(), level);
