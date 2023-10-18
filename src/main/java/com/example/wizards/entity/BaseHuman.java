@@ -15,6 +15,10 @@ public class BaseHuman extends SummonedCreature {
         super(entityType, level);
     }
 
+    public BaseHuman(EntityType<? extends PathfinderMob> entityType, Level level, int power, int toughness) {
+        super(entityType, level, power, toughness);
+    }
+
     protected void registerGoals() {
         this.goalSelector.addGoal(1, new FloatGoal(this));
 

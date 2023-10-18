@@ -1,5 +1,6 @@
 package com.example.wizards.entity;
 
+import com.mojang.logging.LogUtils;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -31,6 +32,12 @@ public class SummonedSkeleton extends SummonedCreature implements RangedAttackMo
 
     public SummonedSkeleton(EntityType<? extends PathfinderMob> entityType, Level level) {
         super(entityType, level);
+        logger = LogUtils.getLogger();
+    }
+
+    public SummonedSkeleton(EntityType<? extends PathfinderMob> entityType, Level level, int power, int toughness) {
+        super(entityType, level, power, toughness);
+        logger = LogUtils.getLogger();
 
         this.reassessWeaponGoal();
     }

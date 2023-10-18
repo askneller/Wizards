@@ -47,7 +47,9 @@ public class ClientSpellList {
 
     public static String getSelectedName() {
         Optional<Spell> selected = getSelected();
-        return selected.map(Spell::getName).orElse("None");
+        return selected
+                .map(s -> s.getName() + (s.getCreatureClass() != null ? " " + s.getPower() + "/" + s.getToughness() : ""))
+                .orElse("None");
     }
 
     public static String getKey(int spellNum) {

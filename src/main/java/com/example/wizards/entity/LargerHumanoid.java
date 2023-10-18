@@ -16,6 +16,10 @@ public class LargerHumanoid extends SummonedCreature {
         super(entityType, level);
     }
 
+    public LargerHumanoid(EntityType<? extends PathfinderMob> entityType, Level level, int power, int toughness) {
+        super(entityType, level, power, toughness);
+    }
+
     protected void registerGoals() {
 //        this.goalSelector.addGoal(1, new FloatGoal(this));
 

@@ -1,6 +1,7 @@
 package com.example.wizards.entity;
 
 import com.google.common.annotations.VisibleForTesting;
+import com.mojang.logging.LogUtils;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -38,6 +39,12 @@ public class SummonedSlime extends SummonedCreature {
 
     public SummonedSlime(EntityType<? extends PathfinderMob> entityType, Level level) {
         super(entityType, level);
+        logger = LogUtils.getLogger();
+    }
+
+    public SummonedSlime(EntityType<? extends PathfinderMob> entityType, Level level, int power, int toughness) {
+        super(entityType, level, power, toughness);
+        logger = LogUtils.getLogger();
 
         this.moveControl = new SummonedSlime.SlimeMoveControl(this);
 
@@ -71,9 +78,9 @@ public class SummonedSlime extends SummonedCreature {
         this.entityData.set(ID_SIZE, i);
         this.reapplyPosition();
         this.refreshDimensions();
-        this.getAttribute(Attributes.MAX_HEALTH).setBaseValue((double)(i * i));
+//        this.getAttribute(Attributes.MAX_HEALTH).setBaseValue((double)(i * i));
         this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue((double)(0.5F + 0.1F * (float)i));
-        this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue((double)i);
+//        this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue((double)i);
         if (p_33595_) {
             this.setHealth(this.getMaxHealth());
         }
@@ -152,7 +159,34 @@ public class SummonedSlime extends SummonedCreature {
     }
 
     protected float getAttackDamage() {
-        return (float)this.getAttributeValue(Attributes.ATTACK_DAMAGE);
+        float attributeValue = (float) this.getAttributeValue(Attributes.ATTACK_DAMAGE);
+        logger.info("getAttackDamage Damage {}", attributeValue);
+        return attributeValue;
+    }
+
+    protected int getJumpDelay() {
+        return this.random.nextInt(20) + 10;
+    }
+
+    protected boolean doPlayJumpSound() {
+        return true; //this.getSize() > 0;
+    }
+
+    protected void jumpFromGround() {
+//        logger.info("jumpFromGround");
+        Vec3 vec3 = this.getDeltaMovement();
+        this.setDeltaMovement(vec3.x, (double)this.getJumpPower(), vec3.z);
+//        logger.info("jump delta {}", this.getJumpPower());
+        this.hasImpulse = true;
+    }
+
+    float getSoundPitch() {
+        float f = /*this.isTiny() ? 1.4F :*/ 0.8F;
+        return ((this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F) * f;
+    }
+
+    protected SoundEvent getJumpSound() {
+        return /*this.isTiny() ? SoundEvents.SLIME_JUMP_SMALL :*/ SoundEvents.SLIME_JUMP;
     }
 
     // ====================================================================================== //
@@ -211,31 +245,6 @@ public class SummonedSlime extends SummonedCreature {
 
             }
         }
-    }
-
-    protected int getJumpDelay() {
-        return this.random.nextInt(20) + 10;
-    }
-
-    protected boolean doPlayJumpSound() {
-        return true; //this.getSize() > 0;
-    }
-
-    protected void jumpFromGround() {
-//        logger.info("jumpFromGround");
-        Vec3 vec3 = this.getDeltaMovement();
-        this.setDeltaMovement(vec3.x, (double)this.getJumpPower(), vec3.z);
-//        logger.info("jump delta {}", this.getJumpPower());
-        this.hasImpulse = true;
-    }
-
-    float getSoundPitch() {
-        float f = /*this.isTiny() ? 1.4F :*/ 0.8F;
-        return ((this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F) * f;
-    }
-
-    protected SoundEvent getJumpSound() {
-        return /*this.isTiny() ? SoundEvents.SLIME_JUMP_SMALL :*/ SoundEvents.SLIME_JUMP;
     }
 
     // ====================================================================================== //

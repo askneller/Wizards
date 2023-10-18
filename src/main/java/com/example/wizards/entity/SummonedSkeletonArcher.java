@@ -1,24 +1,33 @@
 package com.example.wizards.entity;
 
+import com.mojang.logging.LogUtils;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.RangedBowAttackGoal;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import org.slf4j.Logger;
 
 public class SummonedSkeletonArcher extends SummonedSkeleton {
 
     public static final String spell_name = "summon_skeleton_archer";
 
-    public SummonedSkeletonArcher(EntityType<? extends SummonedSkeleton> entityType, Level level) {
+    public SummonedSkeletonArcher(EntityType<? extends PathfinderMob> entityType, Level level) {
         super(entityType, level);
+        logger = LogUtils.getLogger();
+    }
+
+    public SummonedSkeletonArcher(EntityType<? extends SummonedSkeleton> entityType, Level level, int power, int toughness) {
+        super(entityType, level, power, toughness);
+        logger = LogUtils.getLogger();
     }
 
     protected void registerLookAndAttackGoals() {
@@ -34,6 +43,7 @@ public class SummonedSkeletonArcher extends SummonedSkeleton {
         this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.BOW));
     }
 
+    // TODO add standard power for projectiles
     public void performRangedAttack(LivingEntity p_32141_, float p_32142_) {
         ItemStack itemstack = this.getProjectile(this.getItemInHand(ProjectileUtil.getWeaponHoldingHand(this, item -> item instanceof net.minecraft.world.item.BowItem)));
         AbstractArrow abstractarrow = this.getArrow(itemstack, p_32142_);

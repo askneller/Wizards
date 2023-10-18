@@ -13,6 +13,8 @@ public class Spell {
 
     // Summoned creature
     private Class<?> creatureClass;
+    private int power = 0;
+    private int toughness = 0;
 
     // Projectile
     private Class<?> projectileClass;
@@ -41,6 +43,14 @@ public class Spell {
 
     public Class<?> getCreatureClass() {
         return creatureClass;
+    }
+
+    public int getPower() {
+        return power;
+    }
+
+    public int getToughness() {
+        return toughness;
     }
 
     public EntityType<?> getEntityType() {
@@ -75,6 +85,12 @@ public class Spell {
         public Builder withCreature(Class<?> creatureClass, EntityType<?> entityType) {
             this.spell.creatureClass = creatureClass;
             this.spell.entityType = entityType;
+            return this;
+        }
+
+        public Builder withPowerToughness(int power, int toughness) {
+            this.spell.power = power;
+            this.spell.toughness = toughness;
             return this;
         }
 

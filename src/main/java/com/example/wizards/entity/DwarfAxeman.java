@@ -1,5 +1,6 @@
 package com.example.wizards.entity;
 
+import com.mojang.logging.LogUtils;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.EntityType;
@@ -11,10 +12,18 @@ import net.minecraft.world.level.Level;
 
 public class DwarfAxeman extends BaseDwarf {
 
+//    protected static final Logger logger = LogUtils.getLogger();
+
     public static final String spell_name = "summon_dwarf_axeman";
 
     public DwarfAxeman(EntityType<? extends PathfinderMob> entityType, Level level) {
         super(entityType, level);
+        logger = LogUtils.getLogger();
+    }
+
+    public DwarfAxeman(EntityType<? extends PathfinderMob> entityType, Level level, int power, int toughness) {
+        super(entityType, level, power, toughness);
+        logger = LogUtils.getLogger();
     }
 
     @Override

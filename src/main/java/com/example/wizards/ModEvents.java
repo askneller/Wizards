@@ -19,6 +19,7 @@ import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -130,5 +131,10 @@ public class ModEvents {
         MutableComponent message = Component.literal(destroyer.getName().getString()).withStyle(ChatFormatting.RED);
         message.append(Component.literal(" destroyed your mana totem").withStyle(ChatFormatting.WHITE));
         owner.sendSystemMessage(message);
+    }
+
+    @SubscribeEvent
+    public static void onDamage(LivingDamageEvent event) {
+        logger.info("LivingDamage: {} to {} from {}", event.getAmount(), event.getEntity(), event.getSource());
     }
 }

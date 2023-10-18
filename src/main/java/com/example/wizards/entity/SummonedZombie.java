@@ -1,5 +1,6 @@
 package com.example.wizards.entity;
 
+import com.mojang.logging.LogUtils;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
@@ -11,6 +12,12 @@ public class SummonedZombie extends SummonedCreature {
 
     public SummonedZombie(EntityType<? extends PathfinderMob> entityType, Level level) {
         super(entityType, level);
+        logger = LogUtils.getLogger();
+    }
+
+    public SummonedZombie(EntityType<? extends PathfinderMob> entityType, Level level, int power, int toughness) {
+        super(entityType, level, power, toughness);
+        logger = LogUtils.getLogger();
     }
 
     @Override

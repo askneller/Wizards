@@ -30,18 +30,63 @@ import static com.example.wizards.entity.ModEntities.SUMMONED_ZOMBIE;
 
 public class Spells {
 
-    public static final Spell SUMMON_ZOMBIE = new Spell("Zombie", SummonedZombie.class, SUMMONED_ZOMBIE, ManaColor.COLORLESS);
-    public static final Spell SUMMON_SKELETON = new Spell("Skeleton", SummonedSkeleton.class, SUMMONED_SKELETON, ManaColor.COLORLESS);
-    public static final Spell SUMMON_SPIDER = new Spell("Spider", SummonedSpider.class, SUMMONED_SPIDER, ManaColor.COLORLESS);
-    public static final Spell SUMMON_POLAR_BEAR = new Spell("Polar Bear", SummonedPolarBear.class, SUMMONED_POLAR_BEAR, ManaColor.COLORLESS, ManaColor.COLORLESS);
+    public static final Spell SUMMON_ZOMBIE = new Spell.Builder("Zombie")
+            .withCreature(SummonedZombie.class, SUMMONED_ZOMBIE)
+            .withPowerToughness(1, 1)
+            .withCost(ManaColor.COLORLESS)
+            .build();
+    public static final Spell SUMMON_SKELETON = new Spell.Builder("Skeleton")
+            .withCreature(SummonedSkeleton.class, SUMMONED_SKELETON)
+            .withPowerToughness(1, 1)
+            .withCost(ManaColor.COLORLESS)
+            .build();
+    public static final Spell SUMMON_SPIDER = new Spell.Builder("Spider")
+            .withCreature(SummonedSpider.class, SUMMONED_SPIDER)
+            .withPowerToughness(1, 1)
+            .withCost(ManaColor.COLORLESS)
+            .build();
+    public static final Spell SUMMON_POLAR_BEAR = new Spell.Builder("Polar Bear")
+            .withCreature(SummonedPolarBear.class, SUMMONED_POLAR_BEAR)
+            .withPowerToughness(2, 2)
+            .withCost(ManaColor.COLORLESS, ManaColor.COLORLESS)
+            .build();
     public static final Spell SUMMON_PHANTOM = new Spell("Phantom", SummonedPhantom.class, EntityType.PHANTOM, ManaColor.COLORLESS, ManaColor.COLORLESS);
-    public static final Spell SUMMON_SLIME = new Spell("Slime", SummonedSlime.class, SUMMONED_SLIME, ManaColor.COLORLESS);
-    public static final Spell SUMMON_SKELETON_ARCHER = new Spell("Skeleton Archer", SummonedSkeletonArcher.class, SUMMONED_SKELETON_ARCHER, ManaColor.COLORLESS, ManaColor.COLORLESS);
-    public static final Spell SMALL_FIREBALL = new Spell.Builder("Fireball (S)").withProjectile(SmallFireball.class, EntityType.SMALL_FIREBALL).withCost(ManaColor.COLORLESS).build();
-    public static final Spell LARGE_FIREBALL = new Spell.Builder("Fireball (L)").withProjectile(LargeFireball.class, EntityType.FIREBALL).withForce(2.0f).withCost(ManaColor.COLORLESS, ManaColor.COLORLESS).build();
-    public static final Spell CODE_OF_ARROWS = new Spell.Builder("Cone of Arrows").withProjectile(Arrow.class, EntityType.ARROW).withQuantity(10).withForce(3.0f).withSpread(0.2f).withCost(ManaColor.COLORLESS, ManaColor.COLORLESS).build();
-    public static final Spell SUMMON_ORC = new Spell.Builder("Orc").withCreature(Orc.class, ORC).withCost(ManaColor.COLORLESS).build();
-    public static final Spell SUMMON_DWARF_AXEMAN = new Spell.Builder("Dwarf Axeman").withCreature(DwarfAxeman.class, DWARF_AXEMAN).withCost(ManaColor.COLORLESS).build();
+    public static final Spell SUMMON_SLIME = new Spell.Builder("Slime")
+            .withCreature(SummonedSlime.class, SUMMONED_SLIME)
+            .withPowerToughness(2, 2)
+            .withCost(ManaColor.COLORLESS)
+            .build();
+    public static final Spell SUMMON_SKELETON_ARCHER = new Spell.Builder("Skeleton Archer")
+            .withCreature(SummonedSkeletonArcher.class, SUMMONED_SKELETON_ARCHER)
+            .withPowerToughness(1, 1)
+            .withCost(ManaColor.COLORLESS, ManaColor.COLORLESS)
+            .build();
+    public static final Spell SMALL_FIREBALL = new Spell.Builder("Fireball (S)")
+            .withProjectile(SmallFireball.class, EntityType.SMALL_FIREBALL)
+            .withCost(ManaColor.COLORLESS)
+            .build();
+    public static final Spell LARGE_FIREBALL = new Spell.Builder("Fireball (L)")
+            .withProjectile(LargeFireball.class, EntityType.FIREBALL)
+            .withForce(2.0f)
+            .withCost(ManaColor.COLORLESS, ManaColor.COLORLESS)
+            .build();
+    public static final Spell CODE_OF_ARROWS = new Spell.Builder("Cone of Arrows")
+            .withProjectile(Arrow.class, EntityType.ARROW)
+            .withQuantity(10)
+            .withForce(3.0f)
+            .withSpread(0.2f)
+            .withCost(ManaColor.COLORLESS, ManaColor.COLORLESS)
+            .build();
+    public static final Spell SUMMON_ORC = new Spell.Builder("Orc")
+            .withCreature(Orc.class, ORC)
+            .withPowerToughness(2, 1)
+            .withCost(ManaColor.COLORLESS)
+            .build();
+    public static final Spell SUMMON_DWARF_AXEMAN = new Spell.Builder("Dwarf Axeman")
+            .withCreature(DwarfAxeman.class, DWARF_AXEMAN)
+            .withPowerToughness(1, 1)
+            .withCost(ManaColor.COLORLESS)
+            .build();
 
     private static final Map<String, Spell> spellsByName = new HashMap<>();
 

@@ -21,9 +21,10 @@ TODO
 Gameplay Systems
 - <DONE> Assignable targets for summoned creatures
 - <DONE> Summoned creatures associated to controller on re-load
+- <PARTIAL> Standard power / toughness for all creatures
 - Non-instant casting times
 - Other spell types like Enchantment, Instant (e.g. Counterspell)
-- Standard power / defense system for all creatures
+- Add standard power for projectiles
 - Individually assignable targets for summoned creatures
   [Future | MtG-like]
 - Abilities from MtG like Trample, Flying, Vigilance etc.
@@ -31,10 +32,12 @@ Gameplay Systems
 - Variable costs / pump-able spells (e.g. for extra power)
 - Draw mana separate from casting
 Visuals
+- <DONE> Consolidate client GUIs into one
 - Casting visual indicator (more particles), and progress bar
 - Mana totems invisible to non-owner
-- <DONE> Consolidate client GUIs into one
 - Outline around selected creature / target
+- Fix Slime rendered size vs bounding box
+- Visual list of controlled creatures
 Coding / Other
 - List of player's controlled entities <PARTIAL - CastingSystem.playerControlled>
 - ManaSource as interface on ManaTotemBlockEntity

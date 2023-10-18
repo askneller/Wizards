@@ -73,6 +73,7 @@ public class ModEntities {
                                 .clientTrackingRange(10)
                 );
 
+                // TODO fix size and bounding box
                 SUMMONED_SLIME = build(event.getForgeRegistry(), SummonedSlime.spell_name,
                         EntityType.Builder.<SummonedSlime>of(SummonedSlime::new, MobCategory.CREATURE) // MobCategory.MONSTER)
                                 .sized(2.0F, 2.0F)

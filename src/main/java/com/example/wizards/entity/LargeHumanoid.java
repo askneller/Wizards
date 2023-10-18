@@ -9,10 +9,12 @@ import org.slf4j.Logger;
 
 public class LargeHumanoid extends SummonedCreature {
 
-    private static final Logger logger = LogUtils.getLogger();
-
     public LargeHumanoid(EntityType<? extends PathfinderMob> entityType, Level level) {
         super(entityType, level);
+    }
+
+    public LargeHumanoid(EntityType<? extends PathfinderMob> entityType, Level level, int power, int toughness) {
+        super(entityType, level, power, toughness);
     }
 
     @Override

@@ -9,11 +9,14 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.AnimationState;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
@@ -23,6 +26,10 @@ import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.AxeItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import org.slf4j.Logger;
 
@@ -32,7 +39,11 @@ public abstract class SummonedCreature extends PathfinderMob implements Controll
     protected static final EntityDataAccessor<Boolean> ATTACKING = SynchedEntityData.defineId(SummonedCreature.class, EntityDataSerializers.BOOLEAN);
     protected static final EntityDataAccessor<Integer> ATTACK_ANIMATION_DURATION = SynchedEntityData.defineId(SummonedCreature.class, EntityDataSerializers.INT);
 
-    protected static final Logger logger = LogUtils.getLogger();
+    protected static Logger logger = LogUtils.getLogger();
+
+    // Stats
+    protected int power = 0;
+    protected int toughness = 0;
 
     // Ai
     protected FollowControllerGoal followControllerGoal;
@@ -49,6 +60,20 @@ public abstract class SummonedCreature extends PathfinderMob implements Controll
 
     public SummonedCreature(EntityType<? extends PathfinderMob> entityType, Level level) {
         super(entityType, level);
+        logger.info("small construct {}", this.getClass().getSimpleName());
+    }
+
+    public SummonedCreature(EntityType<? extends PathfinderMob> entityType, Level level, int power, int toughness) {
+        this(entityType, level);
+        this.power = power;
+        this.toughness = toughness;
+        this.updateAttributes();
+
+        AttributeInstance attribute = this.getAttribute(Attributes.MAX_HEALTH);
+        logger.info("big construct {}", this.getClass().getSimpleName());
+        logger.info("\nHealth {}", attribute.getBaseValue());
+        attribute = this.getAttribute(Attributes.ATTACK_DAMAGE);
+        logger.info("\nATTACK_DAMAGE {}", attribute.getBaseValue());
     }
 
     @Override
@@ -97,6 +122,26 @@ public abstract class SummonedCreature extends PathfinderMob implements Controll
                 .add(Attributes.ATTACK_DAMAGE, 3.0D)
                 .add(Attributes.ARMOR, 2.0D)
                 .add(Attributes.SPAWN_REINFORCEMENTS_CHANCE);
+    }
+
+    protected void updateAttributes() {
+        if (this.power > 0) {
+            logger.info("updating power {}", power);
+            this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(this.power);
+        }
+        if (this.toughness > 0) {
+            logger.info("updating toughness {}", toughness);
+            this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(this.toughness * 10.0);
+        }
+
+        logger.info("update");
+        AttributeInstance attribute = this.getAttribute(Attributes.MAX_HEALTH);
+        logger.info("\nHealth {}", attribute.getBaseValue());
+        attribute = this.getAttribute(Attributes.ATTACK_DAMAGE);
+        logger.info("\nATTACK_DAMAGE {}", attribute.getBaseValue());
+
+        this.setHealth(this.getMaxHealth());
+        logger.info("Current health: {}", this.getHealth());
     }
 
     @Override
@@ -181,12 +226,62 @@ public abstract class SummonedCreature extends PathfinderMob implements Controll
         if (getControllerUuid() != null) {
             tag.putString("ControllerUuid", getControllerUuid());
         }
+        tag.putInt("Power", power);
+        tag.putInt("Toughness", toughness);
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         this.controllerUuid = tag.getString("ControllerUuid");
+        this.power = tag.getInt("Power");
+        this.toughness = tag.getInt("Toughness");
+        this.updateAttributes();
+    }
+
+    @Override
+    public boolean doHurtTarget(Entity entity) {
+        float f = (float)this.getAttributeValue(Attributes.ATTACK_DAMAGE);
+        float f1 = (float)this.getAttributeValue(Attributes.ATTACK_KNOCKBACK);
+        if (entity instanceof LivingEntity) {
+            f += EnchantmentHelper.getDamageBonus(this.getMainHandItem(), ((LivingEntity)entity).getMobType());
+            f1 += (float)EnchantmentHelper.getKnockbackBonus(this);
+        }
+
+        int i = EnchantmentHelper.getFireAspect(this);
+        if (i > 0) {
+            entity.setSecondsOnFire(i * 4);
+        }
+
+        logger.info("Hurting for {}, {}", f, entity);
+        boolean flag = entity.hurt(this.damageSources().mobAttack(this), f);
+        if (flag) {
+            if (f1 > 0.0F && entity instanceof LivingEntity) {
+                ((LivingEntity)entity).knockback((double)(f1 * 0.5F), (double) Mth.sin(this.getYRot() * ((float)Math.PI / 180F)), (double)(-Mth.cos(this.getYRot() * ((float)Math.PI / 180F))));
+                this.setDeltaMovement(this.getDeltaMovement().multiply(0.6D, 1.0D, 0.6D));
+            }
+
+            if (entity instanceof Player) {
+                Player player = (Player)entity;
+                this.maybeDisableShield(player, this.getMainHandItem(), player.isUsingItem() ? player.getUseItem() : ItemStack.EMPTY);
+            }
+
+            this.doEnchantDamageEffects(this, entity);
+            this.setLastHurtMob(entity);
+        }
+
+        return flag;
+    }
+
+    private void maybeDisableShield(Player p_21425_, ItemStack p_21426_, ItemStack p_21427_) {
+        if (!p_21426_.isEmpty() && !p_21427_.isEmpty() && p_21426_.getItem() instanceof AxeItem && p_21427_.is(Items.SHIELD)) {
+            float f = 0.25F + (float)EnchantmentHelper.getBlockEfficiency(this) * 0.05F;
+            if (this.random.nextFloat() < f) {
+                p_21425_.getCooldowns().addCooldown(Items.SHIELD, 100);
+                this.level().broadcastEntityEvent(p_21425_, (byte)30);
+            }
+        }
+
     }
 
     @Override

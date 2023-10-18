@@ -103,8 +103,8 @@ public class CastingSystem {
     private static Object spawnSummonedEntity(Spell spell, Level level, Vec3 spawnPos, Player controller) {
         try {
             Class creatureClass = spell.getCreatureClass();
-            Constructor<?> constructor = creatureClass.getConstructor(EntityType.class, Level.class);
-            Object o = constructor.newInstance(spell.getEntityType(), level);
+            Constructor<?> constructor = creatureClass.getConstructor(EntityType.class, Level.class, int.class, int.class);
+            Object o = constructor.newInstance(spell.getEntityType(), level, spell.getPower(), spell.getToughness());
             logger.info("Spell {}, {}", o, o.getClass());
             if (o instanceof LivingEntity le) {
                 le.setPos(spawnPos);

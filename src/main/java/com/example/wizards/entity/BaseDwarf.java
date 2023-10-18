@@ -11,6 +11,10 @@ public class BaseDwarf extends SummonedCreature {
         super(entityType, level);
     }
 
+    public BaseDwarf(EntityType<? extends PathfinderMob> entityType, Level level, int power, int toughness) {
+        super(entityType, level, power, toughness);
+    }
+
     @Override
     protected void registerLookAndAttackGoals() {
         this.animatedAttackGoal = new AnimatedAttackGoal<>(this, 1.0, true, 14, 4);
