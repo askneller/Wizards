@@ -11,6 +11,7 @@ public class Orc extends LargeHumanoid {
 //    protected static final Logger logger = LogUtils.getLogger();
 
     public static final String spell_name = "summon_orc";
+    public static final String entity_name = "orc";
 
     public Orc(EntityType<? extends PathfinderMob> entityType, Level level) {
         super(entityType, level);

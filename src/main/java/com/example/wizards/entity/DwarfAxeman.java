@@ -15,6 +15,7 @@ public class DwarfAxeman extends BaseDwarf {
 //    protected static final Logger logger = LogUtils.getLogger();
 
     public static final String spell_name = "summon_dwarf_axeman";
+    public static final String entity_name = "dwarf_axeman";
 
     public DwarfAxeman(EntityType<? extends PathfinderMob> entityType, Level level) {
         super(entityType, level);

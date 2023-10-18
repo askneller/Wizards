@@ -33,6 +33,7 @@ public class SummonedSpider extends Spider implements ControlledEntity {
     private static final Logger logger = LogUtils.getLogger();
 
     public static final String spell_name = "summon_spider";
+    public static final String entity_name = "summoned_spider";
 
     // Stats
     private int power = 0;

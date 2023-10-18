@@ -29,6 +29,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -237,5 +238,9 @@ public class CastingSystem {
             }
         }
         return true;
+    }
+
+    public static List<LivingEntity> getControlled(String controllerUuid) {
+        return playerControlled.getOrDefault(controllerUuid, Collections.emptyList());
     }
 }

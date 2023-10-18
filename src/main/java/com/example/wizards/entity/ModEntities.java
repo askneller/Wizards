@@ -42,31 +42,31 @@ public class ModEntities {
         public static void setupEntities(RegisterEvent event) {
             if (event.getRegistryKey().equals(ForgeRegistries.Keys.ENTITY_TYPES)) {
                 logger.info("Setting up mod entities");
-                SUMMONED_ZOMBIE = build(event.getForgeRegistry(), SummonedZombie.spell_name,
+                SUMMONED_ZOMBIE = build(event.getForgeRegistry(), getKey(SummonedZombie.entity_name),
                         EntityType.Builder.<SummonedZombie>of(SummonedZombie::new, MobCategory.CREATURE) // MobCategory.MONSTER)
                                 .sized(0.6F, 1.95F)
                                 .clientTrackingRange(8)
                 );
 
-                SUMMONED_SKELETON = build(event.getForgeRegistry(), SummonedSkeleton.spell_name,
+                SUMMONED_SKELETON = build(event.getForgeRegistry(), getKey(SummonedSkeleton.entity_name),
                         EntityType.Builder.<SummonedSkeleton>of(SummonedSkeleton::new, MobCategory.CREATURE) // MobCategory.MONSTER)
                                 .sized(0.6F, 1.99F)
                                 .clientTrackingRange(8)
                 );
 
-                SUMMONED_SKELETON_ARCHER = build(event.getForgeRegistry(), SummonedSkeletonArcher.spell_name,
+                SUMMONED_SKELETON_ARCHER = build(event.getForgeRegistry(), getKey(SummonedSkeletonArcher.entity_name),
                         EntityType.Builder.<SummonedSkeleton>of(SummonedSkeletonArcher::new, MobCategory.CREATURE) // MobCategory.MONSTER)
                                 .sized(0.6F, 1.99F)
                                 .clientTrackingRange(8)
                 );
 
-                SUMMONED_SPIDER = build(event.getForgeRegistry(), SummonedSpider.spell_name,
+                SUMMONED_SPIDER = build(event.getForgeRegistry(), getKey(SummonedSpider.entity_name),
                         EntityType.Builder.<Spider>of(SummonedSpider::new, MobCategory.CREATURE) // MobCategory.MONSTER)
                                 .sized(1.4F, 0.9F)
                                 .clientTrackingRange(8)
                 );
 
-                SUMMONED_POLAR_BEAR = build(event.getForgeRegistry(), SummonedPolarBear.spell_name,
+                SUMMONED_POLAR_BEAR = build(event.getForgeRegistry(), getKey(SummonedPolarBear.entity_name),
                         EntityType.Builder.<PolarBear>of(SummonedPolarBear::new, MobCategory.CREATURE) // MobCategory.MONSTER)
                                 .immuneTo(Blocks.POWDER_SNOW)
                                 .sized(1.4F, 1.4F)
@@ -74,43 +74,43 @@ public class ModEntities {
                 );
 
                 // TODO fix size and bounding box
-                SUMMONED_SLIME = build(event.getForgeRegistry(), SummonedSlime.spell_name,
+                SUMMONED_SLIME = build(event.getForgeRegistry(), getKey(SummonedSlime.entity_name),
                         EntityType.Builder.<SummonedSlime>of(SummonedSlime::new, MobCategory.CREATURE) // MobCategory.MONSTER)
                                 .sized(2.0F, 2.0F)
                                 .clientTrackingRange(10)
                 );
 
-                HUMAN = build(event.getForgeRegistry(), "human",
+                HUMAN = build(event.getForgeRegistry(), getKey("human"),
                         EntityType.Builder.<BaseHuman>of(BaseHuman::new, MobCategory.CREATURE) // MobCategory.MONSTER)
                                 .sized(0.6F, 1.9F)
                                 .clientTrackingRange(10)
                 );
 
-                LARGER_HUMANOID = build(event.getForgeRegistry(), "larger_humanoid",
+                LARGER_HUMANOID = build(event.getForgeRegistry(), getKey("larger_humanoid"),
                         EntityType.Builder.<LargerHumanoid>of(LargerHumanoid::new, MobCategory.CREATURE) // MobCategory.MONSTER)
                                 .sized(0.7F, 2.1F)
                                 .clientTrackingRange(10)
                 );
 
-                LARGE_HUMANOID = build(event.getForgeRegistry(), "large_humanoid",
+                LARGE_HUMANOID = build(event.getForgeRegistry(), getKey("large_humanoid"),
                         EntityType.Builder.<LargeHumanoid>of(LargeHumanoid::new, MobCategory.CREATURE) // MobCategory.MONSTER)
                                 .sized(0.6F, 1.95F)
                                 .clientTrackingRange(10)
                 );
 
-                ORC = build(event.getForgeRegistry(), Orc.spell_name,
+                ORC = build(event.getForgeRegistry(), getKey(Orc.entity_name),
                         EntityType.Builder.<Orc>of(Orc::new, MobCategory.CREATURE) // MobCategory.MONSTER)
                                 .sized(0.6F, 1.95F)
                                 .clientTrackingRange(10)
                 );
 
-                BASE_DWARF = build(event.getForgeRegistry(), "dwarf",
+                BASE_DWARF = build(event.getForgeRegistry(), getKey("dwarf"),
                         EntityType.Builder.<BaseDwarf>of(BaseDwarf::new, MobCategory.CREATURE) // MobCategory.MONSTER)
                                 .sized(0.7F, 1.4F)
                                 .clientTrackingRange(10)
                 );
 
-                DWARF_AXEMAN = build(event.getForgeRegistry(), DwarfAxeman.spell_name,
+                DWARF_AXEMAN = build(event.getForgeRegistry(), getKey(DwarfAxeman.entity_name),
                         EntityType.Builder.<BaseDwarf>of(DwarfAxeman::new, MobCategory.CREATURE) // MobCategory.MONSTER)
                                 .sized(0.7F, 1.4F)
                                 .clientTrackingRange(10)

@@ -19,6 +19,7 @@ import org.slf4j.Logger;
 public class SummonedSkeletonArcher extends SummonedSkeleton {
 
     public static final String spell_name = "summon_skeleton_archer";
+    public static final String entity_name = "skeleton_archer";
 
     public SummonedSkeletonArcher(EntityType<? extends PathfinderMob> entityType, Level level) {
         super(entityType, level);

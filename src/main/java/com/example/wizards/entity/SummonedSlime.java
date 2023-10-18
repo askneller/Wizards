@@ -33,6 +33,7 @@ public class SummonedSlime extends SummonedCreature {
     private static final EntityDataAccessor<Integer> ID_SIZE = SynchedEntityData.defineId(SummonedSlime.class, EntityDataSerializers.INT);
 
     public static final String spell_name = "summon_slime";
+    public static final String entity_name = "summoned_slime";
 
     public float squish;
     public float oSquish;

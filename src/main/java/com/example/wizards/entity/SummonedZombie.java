@@ -9,6 +9,7 @@ import net.minecraft.world.level.Level;
 public class SummonedZombie extends SummonedCreature {
 
     public static final String spell_name = "summon_zombie";
+    public static final String entity_name = "summoned_zombie";
 
     public SummonedZombie(EntityType<? extends PathfinderMob> entityType, Level level) {
         super(entityType, level);

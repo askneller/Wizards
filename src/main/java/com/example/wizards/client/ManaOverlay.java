@@ -1,16 +1,21 @@
 package com.example.wizards.client;
 
+import com.example.wizards.magic.CastingSystem;
 import com.example.wizards.magic.ManaColor;
 import com.example.wizards.magic.ManaPool;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.client.gui.overlay.IGuiOverlay;
 
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static com.example.wizards.magic.ManaColor.BLACK;
 import static com.example.wizards.magic.ManaColor.BLUE;
@@ -91,6 +96,16 @@ public class ManaOverlay {
         // Selected entity
         String str = "[" + getSelected() + "]";
         guiGraphics.drawString(Minecraft.getInstance().font, str, startX2, startY2 + 13, 14737632);
+
+        // Controlled entities
+        List<Component> controlled = getControlled();
+        int startX3 = 8;
+        int startY3 = 8;
+        for (Component comp: controlled) {
+            // TODO do height check to make sure list doesn't go off screen
+            guiGraphics.drawString(Minecraft.getInstance().font, comp, startX3, startY3, 14737632);
+            startY3 += 13;
+        }
     });
 
     private static String getManaForColor(ManaPool pool, ManaColor color) {
@@ -113,6 +128,14 @@ public class ManaOverlay {
         }
 //        print();
         return selected.getName().getString() + " (" + selected.getId() + ")";
+    }
+
+    private static List<Component> getControlled() {
+        LocalPlayer player = Minecraft.getInstance().player;
+        List<LivingEntity> controlled = CastingSystem.getControlled(player.getStringUUID());
+        return controlled.stream()
+                .map(LivingEntity::getName)
+                .collect(Collectors.toList());
     }
 
     private static String getPercentageString() {

@@ -1,0 +1,11 @@
+{
+
+  "entity.wizards.dwarf_axeman": "Dwarf Axeman",
+  "entity.wizards.orc": "Orc",
+  "entity.wizards.summoned_polar_bear": "Polar Bear",
+  "entity.wizards.summoned_skeleton": "Skeleton",
+  "entity.wizards.skeleton_archer": "Skeleton Archer",
+  "entity.wizards.summoned_slime": "Slime",
+  "entity.wizards.summoned_spider": "Spider",
+  "entity.wizards.summoned_zombie": "Zombie"
+}

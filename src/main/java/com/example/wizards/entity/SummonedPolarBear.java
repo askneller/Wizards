@@ -32,6 +32,7 @@ public class SummonedPolarBear extends PolarBear implements ControlledEntity {
     private static final Logger logger = LogUtils.getLogger();
 
     public static final String spell_name = "summon_polar_bear";
+    public static final String entity_name = "summoned_polar_bear";
 
     // Stats
     private int power = 0;

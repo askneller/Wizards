@@ -16,6 +16,7 @@ import net.minecraft.world.level.Level;
 public class SummonedSkeleton extends SummonedCreature implements RangedAttackMob {
 
     public static final String spell_name = "summon_skeleton";
+    public static final String entity_name = "summoned_skeleton";
 
     protected RangedBowAttackGoal<SummonedSkeleton> bowGoal = new RangedBowAttackGoal<>(this, 1.0D, 20, 15.0F);
     protected final MeleeAttackGoal meleeGoal = new MeleeAttackGoal(this, 1.2D, false) {
