@@ -25,8 +25,8 @@ public class ModEntities {
     public static EntityType<? extends SummonedZombie> SUMMONED_ZOMBIE;
     public static EntityType<? extends SummonedSkeleton> SUMMONED_SKELETON;
     public static EntityType<? extends SummonedSkeleton> SUMMONED_SKELETON_ARCHER;
-    public static EntityType<? extends Spider> SUMMONED_SPIDER;
-    public static EntityType<? extends PolarBear> SUMMONED_POLAR_BEAR;
+    public static EntityType<? extends SummonedSpider> SUMMONED_SPIDER;
+    public static EntityType<? extends SummonedPolarBear> SUMMONED_POLAR_BEAR;
     public static EntityType<? extends SummonedSlime> SUMMONED_SLIME;
     public static EntityType<? extends BaseHuman> HUMAN;
     public static EntityType<? extends LargerHumanoid> LARGER_HUMANOID;
@@ -61,13 +61,13 @@ public class ModEntities {
                 );
 
                 SUMMONED_SPIDER = build(event.getForgeRegistry(), getKey(SummonedSpider.entity_name),
-                        EntityType.Builder.<Spider>of(SummonedSpider::new, MobCategory.CREATURE) // MobCategory.MONSTER)
+                        EntityType.Builder.<SummonedSpider>of(SummonedSpider::new, MobCategory.CREATURE) // MobCategory.MONSTER)
                                 .sized(1.4F, 0.9F)
                                 .clientTrackingRange(8)
                 );
 
                 SUMMONED_POLAR_BEAR = build(event.getForgeRegistry(), getKey(SummonedPolarBear.entity_name),
-                        EntityType.Builder.<PolarBear>of(SummonedPolarBear::new, MobCategory.CREATURE) // MobCategory.MONSTER)
+                        EntityType.Builder.<SummonedPolarBear>of(SummonedPolarBear::new, MobCategory.CREATURE) // MobCategory.MONSTER)
                                 .immuneTo(Blocks.POWDER_SNOW)
                                 .sized(1.4F, 1.4F)
                                 .clientTrackingRange(10)
