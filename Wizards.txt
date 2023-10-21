@@ -23,12 +23,13 @@ Gameplay Systems
 - Other spell types like Enchantment, Instant (e.g. Counterspell)
 - Add standard power for projectiles
 - Individually assignable targets for summoned creatures
-- <PARTIAL> Standard power / toughness for all creatures
+- Standardised attack duration and delay
+- <DONE> Standard power / toughness for all creatures
 - <DONE> Assignable targets for summoned creatures
 - <DONE> Summoned creatures associated to controller on re-load
   [Future | MtG-like]
 - Abilities from MtG like Trample, Flying, Vigilance etc.
-- Permanents with activatable effects
+- Permanents with activate-able effects
 - Variable costs / pump-able spells (e.g. for extra power)
 - Draw mana separate from casting
 Visuals
@@ -36,12 +37,13 @@ Visuals
 - Mana totems invisible to non-owner
 - Outline around selected creature / target
 - Fix Slime rendered size vs bounding box
+- Show power / toughness on creature list
 - <DONE> Consolidate client GUIs into one
 - <DONE> Visual list of controlled creatures
 Coding / Other
 - ManaSource as interface on ManaTotemBlockEntity
-- <PARTIAL> Make all summoned creatures extend common ancestor
 - Spell castable predicates that check position, surrounding blocks etc.
 - Separate out spell effect system
 - Spells as json files
-- List of player's controlled entities <PARTIAL - CastingSystem.playerControlled>
+- <DONE> List of player's controlled entities
+- <DONE> Make all summoned creatures extend common ancestor

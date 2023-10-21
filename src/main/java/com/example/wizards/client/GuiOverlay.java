@@ -1,5 +1,6 @@
 package com.example.wizards.client;
 
+import com.example.wizards.entity.SummonedCreature;
 import com.example.wizards.magic.CastingSystem;
 import com.example.wizards.magic.ManaColor;
 import com.example.wizards.magic.ManaPool;
@@ -25,7 +26,7 @@ import static com.example.wizards.magic.ManaColor.RED;
 import static com.example.wizards.magic.ManaColor.WHITE;
 import static com.example.wizards.client.ClientSideHelper.setRenderColor;
 
-public class ManaOverlay {
+public class GuiOverlay {
 
     private static String message = "Hello world";
     private static float percentage = -1.0f;
@@ -134,7 +135,15 @@ public class ManaOverlay {
         LocalPlayer player = Minecraft.getInstance().player;
         List<LivingEntity> controlled = CastingSystem.getControlled(player.getStringUUID());
         return controlled.stream()
-                .map(LivingEntity::getName)
+                .map(entity -> {
+                    Component name = entity.getName();
+                    if (entity instanceof SummonedCreature sc) {
+                        MutableComponent copy = name.copy();
+                        copy.append(" " + sc.getCurrentPower() + "/" + sc.getCurrentToughness());
+                        return copy;
+                    }
+                    return name;
+                })
                 .collect(Collectors.toList());
     }
 
@@ -148,15 +157,15 @@ public class ManaOverlay {
     public static void update(String message) {
         fadeStartTimer = START_MAX;
         fadeCountdown = COUNTDOWN_MAX;
-        ManaOverlay.message = message;
-        ManaOverlay.percentage = -1.0f;
+        GuiOverlay.message = message;
+        GuiOverlay.percentage = -1.0f;
     }
 
     public static void update(String message, float percentage) {
         fadeStartTimer = START_MAX;
         fadeCountdown = COUNTDOWN_MAX;
-        ManaOverlay.message = message;
-        ManaOverlay.percentage = percentage;
+        GuiOverlay.message = message;
+        GuiOverlay.percentage = percentage;
     }
 
     public static void clear() {

@@ -43,7 +43,9 @@ public abstract class SummonedCreature extends PathfinderMob implements Controll
 
     // Stats
     protected int power = 0;
+    protected int currentPower = 0;
     protected int toughness = 0;
+    protected int currentToughness = 0;
 
     // Ai
     protected FollowControllerGoal followControllerGoal;
@@ -66,7 +68,9 @@ public abstract class SummonedCreature extends PathfinderMob implements Controll
     public SummonedCreature(EntityType<? extends PathfinderMob> entityType, Level level, int power, int toughness) {
         this(entityType, level);
         this.power = power;
+        this.currentPower = power;
         this.toughness = toughness;
+        this.currentToughness = toughness;
         this.updateAttributes();
 
         AttributeInstance attribute = this.getAttribute(Attributes.MAX_HEALTH);
@@ -125,13 +129,13 @@ public abstract class SummonedCreature extends PathfinderMob implements Controll
     }
 
     protected void updateAttributes() {
-        if (this.power > 0) {
-            logger.info("updating power {}", power);
-            this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(this.power);
+        if (this.currentPower > -1) {
+            logger.info("updating power {}", currentPower);
+            this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(this.currentPower);
         }
-        if (this.toughness > 0) {
-            logger.info("updating toughness {}", toughness);
-            this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(this.toughness * 10.0);
+        if (this.currentToughness > 0) {
+            logger.info("updating toughness {}", currentToughness);
+            this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(this.currentToughness * 10.0);
         }
 
         logger.info("update");
@@ -235,7 +239,9 @@ public abstract class SummonedCreature extends PathfinderMob implements Controll
         super.readAdditionalSaveData(tag);
         this.controllerUuid = tag.getString("ControllerUuid");
         this.power = tag.getInt("Power");
+        this.currentPower = this.power;
         this.toughness = tag.getInt("Toughness");
+        this.currentToughness = this.toughness;
         this.updateAttributes();
     }
 
@@ -315,6 +321,14 @@ public abstract class SummonedCreature extends PathfinderMob implements Controll
         if (this.assignedTargetGoal != null) {
             this.assignedTargetGoal.assignTarget(livingEntity);
         }
+    }
+
+    public int getCurrentPower() {
+        return currentPower;
+    }
+
+    public int getCurrentToughness() {
+        return currentToughness;
     }
 
 }

@@ -4,7 +4,7 @@ import com.example.wizards.client.BaseDwarfModel;
 import com.example.wizards.client.BaseHumanModel;
 import com.example.wizards.client.LargerHumanoidModel;
 import com.example.wizards.client.LargeHumanoidModel;
-import com.example.wizards.client.ManaOverlay;
+import com.example.wizards.client.GuiOverlay;
 import com.example.wizards.client.ModModelLayers;
 import com.example.wizards.client.renderer.entity.BaseDwarfRenderer;
 import com.example.wizards.client.renderer.entity.BaseHumanRenderer;
@@ -81,6 +81,6 @@ public class ModClientEvents {
 
     @SubscribeEvent
     public static void registerGuiOverlays(RegisterGuiOverlaysEvent event) {
-        event.registerAboveAll("mana", ManaOverlay.GUI_OVERLAY);
+        event.registerAboveAll("mana", GuiOverlay.GUI_OVERLAY);
     }
 }
