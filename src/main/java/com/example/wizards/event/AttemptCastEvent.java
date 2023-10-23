@@ -10,22 +10,25 @@ public class AttemptCastEvent extends Event {
     private String spellName;
     private Player player;
     private BlockPos blockPos;
+    private int targetEntityId;
 
     public AttemptCastEvent(int spell, Player player) {
-        this(spell, player, BlockPos.ZERO);
+        this(spell, player, BlockPos.ZERO, -1);
+    }
+
+    public AttemptCastEvent(int spell, Player player, int targetEntityId) {
+        this(spell, player, BlockPos.ZERO, targetEntityId);
     }
 
     public AttemptCastEvent(int spell, Player player, BlockPos blockPos) {
-        this.spell = spell;
-        this.player = player;
-        this.blockPos = blockPos;
+        this(spell, player, blockPos, -1);
     }
 
-    public AttemptCastEvent(int spell, Player player, BlockPos blockPos, String name) {
+    public AttemptCastEvent(int spell, Player player, BlockPos blockPos, int targetEntityId) {
         this.spell = spell;
         this.player = player;
         this.blockPos = blockPos;
-        this.spellName = name;
+        this.targetEntityId = targetEntityId;
     }
 
     public int getSpell() {
@@ -60,6 +63,14 @@ public class AttemptCastEvent extends Event {
         this.blockPos = blockPos;
     }
 
+    public int getTargetEntityId() {
+        return targetEntityId;
+    }
+
+    public void setTargetEntityId(int targetEntityId) {
+        this.targetEntityId = targetEntityId;
+    }
+
     @Override
     public String toString() {
         return "AttemptCastEvent{" +
@@ -67,6 +78,7 @@ public class AttemptCastEvent extends Event {
                 ", spellName='" + spellName + '\'' +
                 ", player=" + player +
                 ", blockPos=" + blockPos +
+                ", targetEntityId=" + targetEntityId +
                 '}';
     }
 }

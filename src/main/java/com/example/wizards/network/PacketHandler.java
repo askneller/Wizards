@@ -93,4 +93,9 @@ public class PacketHandler {
     public static void sendToServer(int entityId) {
         INSTANCE.sendToServer(new EntitySelectedC2SPacket(entityId));
     }
+
+    public static void sendToServer(Player player, int spellId, int entityId) {
+        INSTANCE.sendToServer(new AttemptCastC2SPacket(spellId, player.getId(), entityId));
+    }
+
 }

@@ -76,6 +76,7 @@ public class ForgeClientEvents {
             assert player != null;
 
             BlockPos finalPos = ClientSideHelper.getBlockHitLocation();
+            Entity selectedEntity = ClientSideHelper.getSelectedEntity();
             player.getCapability(MANA_POOL).ifPresent(pool -> {
 
                 int spellNumber = ClientSpellList.getSelectedNumber();
@@ -83,7 +84,14 @@ public class ForgeClientEvents {
                 if (finalPos == null && namedSpell.isPresent() && namedSpell.get().getCreatureClass() != null) {
                     player.sendSystemMessage(Component.literal("Cannot cast spell: No target position").withStyle(ChatFormatting.RED));
                 } else {
-                    if (finalPos == null) {
+                    if (namedSpell.isPresent() && namedSpell.get().getEffect() != null) {
+                        if (selectedEntity == null) {
+                            player.sendSystemMessage(Component.literal("Cannot cast spell: No target selected").withStyle(ChatFormatting.RED));
+                        } else {
+                            PacketHandler.sendToServer(player, spellNumber, selectedEntity.getId());
+                        }
+                    }
+                    else if (finalPos == null) {
                         PacketHandler.sendToServer(player, spellNumber);
                     } else {
                         PacketHandler.sendToServer(player, spellNumber, finalPos);

@@ -27,7 +27,7 @@ public class ClientSpellList {
     private static final Logger logger = LogUtils.getLogger();
 
     private static int index = 0;
-    public static int[] spells = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
+    public static int[] spells = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13};
 
     public static void inc() {
         ++index;
@@ -78,6 +78,8 @@ public class ClientSpellList {
                 return Orc.spell_name;
             case 12:
                 return DwarfAxeman.spell_name;
+            case 13:
+                return "minor_strength";
             default:
                 return null;
         }

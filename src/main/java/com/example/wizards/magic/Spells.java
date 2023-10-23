@@ -88,6 +88,11 @@ public class Spells {
             .withCost(ManaColor.COLORLESS)
             .build();
 
+    public static final Spell MINOR_STRENGTH = new Spell.Builder("Minor Strength")
+            .withEffect(new PowerToughnessEnchantment(1, 1))
+            .withCost(ManaColor.COLORLESS)
+            .build();
+
     private static final Map<String, Spell> spellsByName = new HashMap<>();
 
     static {
@@ -103,6 +108,7 @@ public class Spells {
         spellsByName.put("codeofarrows", CODE_OF_ARROWS);
         spellsByName.put(Orc.spell_name, SUMMON_ORC);
         spellsByName.put(DwarfAxeman.spell_name, SUMMON_DWARF_AXEMAN);
+        spellsByName.put("minor_strength", MINOR_STRENGTH);
     }
 
     public static Optional<Spell> getSpellByName(String name) {

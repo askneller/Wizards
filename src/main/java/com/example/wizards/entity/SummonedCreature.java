@@ -4,6 +4,8 @@ import com.example.wizards.entity.ai.AnimatedAttackGoal;
 import com.example.wizards.entity.ai.AssignedTargetGoal;
 import com.example.wizards.entity.ai.ControllerHurtByTargetGoal;
 import com.example.wizards.entity.ai.FollowControllerGoal;
+import com.example.wizards.magic.PowerToughnessEnchantment;
+import com.example.wizards.magic.SpellEffect;
 import com.mojang.logging.LogUtils;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -33,6 +35,9 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import org.slf4j.Logger;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class SummonedCreature extends PathfinderMob implements ControlledEntity {
 
 
@@ -46,6 +51,9 @@ public abstract class SummonedCreature extends PathfinderMob implements Controll
     protected int currentPower = 0;
     protected int toughness = 0;
     protected int currentToughness = 0;
+
+    // Effects
+    protected List<SpellEffect> effects = new ArrayList<>();
 
     // Ai
     protected FollowControllerGoal followControllerGoal;
@@ -329,6 +337,25 @@ public abstract class SummonedCreature extends PathfinderMob implements Controll
 
     public int getCurrentToughness() {
         return currentToughness;
+    }
+
+    public void addEffect(SpellEffect effect) {
+        this.effects.add(effect);
+        effect.apply(this.level(), this);
+
+        if (effect instanceof PowerToughnessEnchantment) {
+            this.updateAttributes();
+        }
+    }
+
+    public void addPowerToughness(int power, int toughness) {
+        this.currentPower = this.currentPower + power;
+        this.currentToughness = this.currentToughness + toughness;
+    }
+
+    public void removePowerToughness(int power, int toughness) {
+        this.currentPower = this.currentPower - power;
+        this.currentToughness = this.currentToughness - toughness;
     }
 
 }

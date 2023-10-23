@@ -22,6 +22,9 @@ public class Spell {
     private float force = 0.0f;
     private float spread = 0.0f;
 
+    // Spell effect
+    private SpellEffect effect;
+
     public Spell(String name) {
         this.name = name;
     }
@@ -73,6 +76,10 @@ public class Spell {
         return spread;
     }
 
+    public SpellEffect getEffect() {
+        return effect;
+    }
+
 
 
     public static class Builder {
@@ -117,6 +124,11 @@ public class Spell {
 
         public Builder withCost(ManaColor ...cost) {
             this.spell.cost = Arrays.asList(cost);
+            return this;
+        }
+
+        public Builder withEffect(SpellEffect effect) {
+            this.spell.effect = effect;
             return this;
         }
 

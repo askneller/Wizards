@@ -1,6 +1,7 @@
 package com.example.wizards.magic;
 
 import com.example.wizards.entity.ControlledEntity;
+import com.example.wizards.entity.SummonedCreature;
 import com.example.wizards.event.AttemptCastEvent;
 import com.example.wizards.event.ConsumeManaEvent;
 import com.example.wizards.event.ManaRegenerateEvent;
@@ -69,6 +70,14 @@ public class CastingSystem {
                 return;
             }
             spellCast = spellOptional.get().getName();
+        } else if (spellOptional.isPresent() && spellOptional.get().getEffect() != null) {
+            int targetId = event.getTargetEntityId();
+            Entity entity = player.level().getEntity(targetId);
+            if (entity instanceof SummonedCreature sc) {
+                logger.info("Adding spell effect to {}", sc);
+                sc.addEffect(spellOptional.get().getEffect());
+            }
+            spellCast = spellOptional.get().getName();
         }
         else if (event.getBlockPos() != null && !event.getBlockPos().equals(BlockPos.ZERO)) {
             Vec3 spawnPos = new Vec3(
@@ -76,14 +85,14 @@ public class CastingSystem {
                     event.getBlockPos().getY() + 1.0,
                     event.getBlockPos().getZ() + 0.5);
 
-            if (event.getSpellName() != null) {
-                spellOptional = Spells.getSpellByName(event.getSpellName());
+//            if (event.getSpellName() != null) {
+//                spellOptional = Spells.getSpellByName(event.getSpellName());
                 if (spellOptional.isPresent()) {
                     Object summonedEntity = spawnSummonedEntity(spellOptional.get(), player.level(), spawnPos, player);
                     spellCast = "Summon " + spellOptional.get().getName();
                     logger.info("SPECIAL!! Summoned creature successfully");
                 }
-            }
+//            }
 
             if (player instanceof ServerPlayer serverPlayer) {
                 // TODO change the BlockPos to Vec3 spawnPos above

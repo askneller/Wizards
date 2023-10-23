@@ -37,7 +37,7 @@ Visuals
 - Mana totems invisible to non-owner
 - Outline around selected creature / target
 - Fix Slime rendered size vs bounding box
-- Show power / toughness on creature list
+- <DONE> Show power / toughness on creature list
 - <DONE> Consolidate client GUIs into one
 - <DONE> Visual list of controlled creatures
 Coding / Other
